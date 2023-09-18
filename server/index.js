@@ -81,6 +81,7 @@ app.put("/perte/:id", updatePerte)
 app.delete("/perte/:id", deletePerte)
 
 
-app.listen((port), () => {
-    console.log(`Server listening on : ${port}`);
-})
+app.listen(port, () => {
+    console.log(`Server listening on port: ${port}`);
+});
+

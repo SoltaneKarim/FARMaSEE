@@ -1,15 +1,6 @@
 import React, { useState } from "react";
-import {
-	StyleSheet,
-	Text,
-	View,
-	Image,
-	ScrollView,
-	TouchableOpacity,
-	TextInput,
-	Modal,
-	FlatList,
-} from "react-native";
+import axios from "axios";
+import {StyleSheet,Text,View,Image,ScrollView,TouchableOpacity,TextInput,Modal,FlatList,Button} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 const Stock = () => {
@@ -22,11 +13,23 @@ const Stock = () => {
 
 	const [selectedAnimalType, setSelectedAnimalType] = useState(null);
 	const [selectedAnimalOption, setSelectedAnimalOption] = useState(null);
+
+	const [selectedTreeType, setSelectedTreeType] = useState(null);
+	const [selectedTreeOption, setSelectedTreeOption] = useState(null);
+	const [treeModalVisible, setTreeModalVisible] = useState(false);
+
 	const [age, setAge] = useState("");
 	const [weight, setWeight] = useState("");
+
+	const [ageTree, setAgeTree] = useState(0); // Age of the selected tree
+	const [quantityTree, setQuantityTree] = useState(0);
 	const randomAnimalOptions = [
 		{ label: "Cow", imageSource: require("../../assets/animal6.png") },
 		{ label: "Sheep", imageSource: require("../../assets/sheep.png") },
+		// Add more options as needed with their respective image sources
+	];
+	const randomTreeOptions = [
+		{ label: "Olive", imageSource: require("../../assets/tree.png") },
 		// Add more options as needed with their respective image sources
 	];
 
@@ -38,7 +41,40 @@ const Stock = () => {
 	const toggleAdding = () => {
 		setIsAdding(!isAdding);
 	};
-
+	//the axios for posting 
+	const addtree = () => {
+		if (selectedTreeType && ageTree && quantityTree) {
+		  // Create an object to send to your API or database
+		  const treeData = {
+			type: selectedTreeType,
+			age: ageTree,
+			quantity: quantityTree,
+		  };
+	  
+		  // Send the tree data to your API or database here
+		  axios
+			.post('http://127.0.0.1:5000/tree', treeData, 
+			{ withCredentials: true }
+			)
+			.then((response) => {
+			  // Handle the response here, e.g., show a success message
+			  console.log('Tree data posted successfully:', response.data);
+			})
+			.catch((error) => {
+			  // Handle errors here, e.g., show an error message
+			  console.error('Error posting tree data:', error.message);
+			})
+			.finally(() => {
+			  // After successfully saving the data, you can reset the form
+			  setSelectedTreeType("");
+			  setAgeTree(0);
+			  setQuantityTree(0);
+			  // Close the modal or perform any other necessary actions
+			  setTreeModalVisible(false);
+			});
+		}
+	  };
+	  
 	const renderItemAnimal = () => {
 		if (isAdding) {
 			return (
@@ -161,10 +197,21 @@ const Stock = () => {
 								value={weight}
 								onChangeText={(text) => setWeight(text)}
 							/>
-							{/* Add a submit button or logic here */}
+								<TouchableOpacity
+								style={{
+									backgroundColor: "green", // Set the background color to green
+									borderRadius: 10, // Set the border radius
+									padding: 10, // Add some padding for better appearance
+								}}
+								onPress={() => {
+									// Your button click logic here
+								}}>
+								<Text style={{ color: "white", textAlign: "center" }}>
+									Submit
+								</Text>
+							</TouchableOpacity>
 						</>
 					) : (
-						
 						<>
 							<Image
 								style={{ width: 200, height: 200 }}
@@ -172,40 +219,40 @@ const Stock = () => {
 							/>
 							<TouchableOpacity
 								style={styles.dropdown}
-								onPress={() => setAnimalModalVisible(true)}>
-								{selectedAnimalType ? (
+								onPress={() => setTreeModalVisible(true)}>
+								{selectedTreeType ? (
 									<View style={styles.selectedOptionContainer}>
 										<Image
-											source={selectedAnimalOption.imageSource}
+											source={selectedTreeOption.imageSource}
 											style={styles.optionImage}
 										/>
 										<Text style={styles.selectedOptionText}>
-											{selectedAnimalType}
+											{selectedTreeType}
 										</Text>
 									</View>
 								) : (
-									<Text style={styles.placeholderText}>Select an animal</Text>
+									<Text style={styles.placeholderText}>Select a tree</Text>
 								)}
 							</TouchableOpacity>
 
-							{/* Custom dropdown modal for Animal */}
+							{/* Custom dropdown modal for Tree */}
 							<Modal
 								transparent={true}
 								animationType="slide"
-								visible={animalModalVisible}
-								onRequestClose={() => setAnimalModalVisible(false)}>
+								visible={treeModalVisible}
+								onRequestClose={() => setTreeModalVisible(false)}>
 								<View style={styles.modalContainer}>
 									<View style={styles.modalContent}>
 										<FlatList
-											data={randomAnimalOptions}
+											data={randomTreeOptions}
 											keyExtractor={(item, index) => index.toString()}
 											renderItem={({ item }) => (
 												<TouchableOpacity
 													style={styles.optionContainer}
 													onPress={() => {
-														setSelectedAnimalType(item.label);
-														setSelectedAnimalOption(item);
-														setAnimalModalVisible(false);
+														setSelectedTreeType(item.label);
+														setSelectedTreeOption(item);
+														setTreeModalVisible(false);
 													}}>
 													<Image
 														source={item.imageSource}
@@ -218,73 +265,36 @@ const Stock = () => {
 									</View>
 								</View>
 							</Modal>
-
-							{/* Custom dropdown for selecting Sexe */}
-							<TouchableOpacity
-								style={styles.dropdown}
-								onPress={() => setGenderModalVisible(true)}>
-								{selectedSexe ? (
-									<View style={styles.selectedOptionContainer}>
-										<Image
-											source={selectedSexe.imageSource}
-											style={styles.optionImage}
-										/>
-										<Text style={styles.selectedOptionText}>
-											{selectedSexe.label}
-										</Text>
-									</View>
-								) : (
-									<Text style={styles.placeholderText}>Select Sexe</Text>
-								)}
-							</TouchableOpacity>
-
-							{/* Custom dropdown modal for Sexe */}
-							<Modal
-								transparent={true}
-								animationType="slide"
-								visible={genderModalVisible}
-								onRequestClose={() => setGenderModalVisible(false)}>
-								<View style={styles.modalContainer}>
-									<View style={styles.modalContent}>
-										<FlatList
-											data={genderOptions}
-											keyExtractor={(item, index) => index.toString()}
-											renderItemAnimal={({ item }) => (
-												<TouchableOpacity
-													style={styles.optionContainer}
-													onPress={() => {
-														setSelectedSexe(item);
-														setGenderModalVisible(false);
-													}}>
-													<Image
-														source={item.imageSource}
-														style={styles.optionImage}
-													/>
-													<Text style={styles.optionText}>{item.label}</Text>
-												</TouchableOpacity>
-											)}
-										/>
-									</View>
-								</View>
-							</Modal>
-
 							<TextInput
 								style={styles.input}
 								placeholder="Age"
 								keyboardType="numeric"
-								value={age}
-								onChangeText={(text) => setAge(text)}
+								value={ageTree}
+								onChangeText={(text) => setAgeTree(text)}
 							/>
+
 							<TextInput
 								style={styles.input}
-								placeholder="Weight"
+								placeholder="Quantity"
 								keyboardType="numeric"
-								value={weight}
-								onChangeText={(text) => setWeight(text)}
+								value={quantityTree}
+								onChangeText={(text) => setQuantityTree(text)}
 							/>
-							{/* Add a submit button or logic here */}
+
+							<TouchableOpacity
+								style={{
+									backgroundColor: "green", // Set the background color to green
+									borderRadius: 10, // Set the border radius
+									padding: 10, // Add some padding for better appearance
+								}}
+								onPress={() => {
+									addtree()
+								}}>
+								<Text style={{ color: "white", textAlign: "center" }}>
+									Submit
+								</Text>
+							</TouchableOpacity>
 						</>
-					
 					)}
 				</View>
 			);
@@ -333,7 +343,7 @@ const Stock = () => {
 		<View style={styles.container}>
 			{renderItemAnimal()}
 			<TouchableOpacity style={styles.plusButton} onPress={toggleAdding}>
-				<Text style={styles.plusButtonText}>{isAdding ? "Save" : "+"}</Text>
+				<Text style={styles.plusButtonText}>{isAdding ? "Done" : "+"}</Text>
 			</TouchableOpacity>
 			{isAdding && (
 				<TouchableOpacity
@@ -420,7 +430,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	dropdown: {
-		height: "8%",
+		height: 50,
 		borderWidth: 1,
 		borderColor: "gray",
 		padding: 10,
