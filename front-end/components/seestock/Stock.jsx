@@ -1,18 +1,30 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {StyleSheet,Text,View,Image,ScrollView,TouchableOpacity,TextInput,Modal,FlatList,Button} from "react-native";
+import {
+	StyleSheet,
+	Text,
+	View,
+	Image,
+	ScrollView,
+	TouchableOpacity,
+	TextInput,
+	Modal,
+	FlatList,
+	Button,
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 const Stock = () => {
 	const [isAdding, setIsAdding] = useState(false);
 	const [itemType, setItemType] = useState("animal");
-	const [selectedSexe, setSelectedSexe] = useState("");
 	const [selectedOption, setSelectedOption] = useState(null); // Selected option from the custom dropdown
 	const [animalModalVisible, setAnimalModalVisible] = useState(false);
-	const [genderModalVisible, setGenderModalVisible] = useState(false);
 
 	const [selectedAnimalType, setSelectedAnimalType] = useState(null);
 	const [selectedAnimalOption, setSelectedAnimalOption] = useState(null);
+
+	const [selectedSexe, setSelectedSexe] = useState(null);
+	const [genderModalVisible, setGenderModalVisible] = useState(false);
 
 	const [selectedTreeType, setSelectedTreeType] = useState(null);
 	const [selectedTreeOption, setSelectedTreeOption] = useState(null);
@@ -41,40 +53,64 @@ const Stock = () => {
 	const toggleAdding = () => {
 		setIsAdding(!isAdding);
 	};
-	//the axios for posting 
-	const addtree = () => {
+	//the axios for posting
+	const addtree = async () => {
 		if (selectedTreeType && ageTree && quantityTree) {
-		  // Create an object to send to your API or database
-		  const treeData = {
-			type: selectedTreeType,
-			age: ageTree,
-			quantity: quantityTree,
-		  };
-	  
-		  // Send the tree data to your API or database here
-		  axios
-			.post('http://127.0.0.1:5000/tree', treeData, 
-			{ withCredentials: true }
-			)
-			.then((response) => {
-			  // Handle the response here, e.g., show a success message
-			  console.log('Tree data posted successfully:', response.data);
-			})
-			.catch((error) => {
-			  // Handle errors here, e.g., show an error message
-			  console.error('Error posting tree data:', error.message);
-			})
-			.finally(() => {
-			  // After successfully saving the data, you can reset the form
-			  setSelectedTreeType("");
-			  setAgeTree(0);
-			  setQuantityTree(0);
-			  // Close the modal or perform any other necessary actions
-			  setTreeModalVisible(false);
-			});
+			const treeData = {
+				type: selectedTreeType,
+				age: ageTree,
+				quantity: quantityTree,
+				report: "",
+			};
+
+			try {
+				const response = await axios.post(
+					"http://192.168.100.62:5000/tree",
+					treeData,
+				);
+
+				if (response.status === 200) {
+					console.log("Tree data posted successfully");
+					// Reset your form and perform other necessary actions
+				} else {
+					console.error("Error posting tree data");
+					// Handle the error as needed
+				}
+			} catch (error) {
+				console.error("Error posting tree data:", error.message);
+				// Handle the error as needed
+			} finally {
+				// Clear the input fields
+				setSelectedTreeType("");
+				setAgeTree("");
+				setQuantityTree("");
+				// You can also reset your form in this block if needed
+			}
 		}
-	  };
+	};
+
+	const postAnimalData = () => {
+		// Create a data object with the information you want to send
+		const data = {
+		  type: selectedAnimalType, // Assuming selectedAnimalType is a string like 'Sheep' or 'Cow'
+		  sexe: selectedSexe.label, // Assuming selectedSexe is an object with a 'label' property like 'Male' or 'Female'
+		  age: parseInt(age), // Convert age to an integer
+		  weight: parseFloat(weight), // Convert weight to a floating-point number
+		  // You can add more properties here as needed
+		};
 	  
+		// Make the POST request to your localhost server
+		axios
+		  .post('http://192.168.100.62:5000/animal', data)
+		  .then((response) => {
+			// Handle the response here if needed
+			console.log('Animal data posted successfully:', response.data);
+		  })
+		  .catch((error) => {
+			// Handle errors here
+			console.error('Error posting animal data:', error);
+		  });
+	  };
 	const renderItemAnimal = () => {
 		if (isAdding) {
 			return (
@@ -153,7 +189,6 @@ const Stock = () => {
 								)}
 							</TouchableOpacity>
 
-							{/* Custom dropdown modal for Sexe */}
 							<Modal
 								transparent={true}
 								animationType="slide"
@@ -164,7 +199,7 @@ const Stock = () => {
 										<FlatList
 											data={genderOptions}
 											keyExtractor={(item, index) => index.toString()}
-											renderItemAnimal={({ item }) => (
+											renderItem={({ item }) => (
 												<TouchableOpacity
 													style={styles.optionContainer}
 													onPress={() => {
@@ -197,14 +232,14 @@ const Stock = () => {
 								value={weight}
 								onChangeText={(text) => setWeight(text)}
 							/>
-								<TouchableOpacity
+							<TouchableOpacity
 								style={{
 									backgroundColor: "green", // Set the background color to green
 									borderRadius: 10, // Set the border radius
 									padding: 10, // Add some padding for better appearance
 								}}
 								onPress={() => {
-									// Your button click logic here
+									postAnimalData
 								}}>
 								<Text style={{ color: "white", textAlign: "center" }}>
 									Submit
@@ -288,7 +323,7 @@ const Stock = () => {
 									padding: 10, // Add some padding for better appearance
 								}}
 								onPress={() => {
-									addtree()
+									addtree();
 								}}>
 								<Text style={{ color: "white", textAlign: "center" }}>
 									Submit
@@ -310,7 +345,7 @@ const Stock = () => {
 									style={{
 										fontSize: 24,
 										fontWeight: "600",
-										fontFamily: "Poppins-SemiBold",
+										fontFamily: "sans-serif",
 										color: "#3a3f47",
 									}}>
 									This is what you have
@@ -443,6 +478,7 @@ const styles = StyleSheet.create({
 	selectedOptionContainer: {
 		flexDirection: "row",
 		alignItems: "center",
+		width: 150,
 	},
 	selectedOptionText: {
 		marginLeft: 10,

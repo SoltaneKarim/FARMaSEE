@@ -1,7 +1,7 @@
 // /* fonts */
 // export const FontFamily = {
-//     interRegular: "Inter-Regular",
-//     poppinsSemiBold: "Poppins-SemiBold",
+//     interRegular: "sans-serif",
+//     poppinsSemiBold: "sans-serif",
 //   };
 //   /* font sizes */
 //   export const FontSize = {

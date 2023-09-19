@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `farm`.`animal` (
   `type` VARCHAR(45) NOT NULL,
   `sexe` ENUM('Male', 'Female') NOT NULL,
   `age` INT NOT NULL,
-  `consumption` DECIMAL(8,3) NOT NULL,
+  `consumption` DECIMAL(8,3) NULL DEFAULT NULL,
   `birthday` VARCHAR(200) NULL DEFAULT NULL,
   `weight` DECIMAL(8,3) NULL DEFAULT NULL,
   `priceB` DECIMAL(8,3) NULL DEFAULT NULL,
@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `farm`.`trees` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(45) NOT NULL,
   `age` INT NOT NULL,
-  `quantity` INT NOT NULL,
+  `quantity` INT DEFAULT NULL,
   `report` VARCHAR(1000) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
