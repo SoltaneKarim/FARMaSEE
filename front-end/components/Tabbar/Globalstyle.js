@@ -1,7 +1,7 @@
 /* fonts */
 export const FontFamily = {
-    interRegular: "Inter-Regular",
-    interMedium: "Inter-Medium",
+    interRegular: "sans-serif",
+    interMedium: "sans-serif",
     interSemiBold: "Inter-SemiBold",
   };
   /* font sizes */
