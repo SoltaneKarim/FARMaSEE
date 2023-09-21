@@ -10,11 +10,19 @@ import {
 } from "react-native";
 import { Color, FontFamily, FontSize, Border, Padding } from "./GlobalStyle.js";
 import { useRouter } from "expo-router";
+import { useSelector } from "react-redux";
+import { Dimensions } from "react-native";
+
+const windowWidth = Dimensions.get("window").width;
 const IPhone13ProMax3 = () => {
+	const user = useSelector((state) => state.user); // Assuming your user object in Redux has a 'name' property
+	console.log(user);
+
 	const router = useRouter();
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
-			<ScrollView>
+		<SafeAreaView  >
+			<ScrollView style={styles.all}>
+				
 				<View style={[styles.iphone13ProMax3, styles.signInLayout]}>
 					<View style={styles.signInParent}>
 						<View style={[styles.signIn, styles.signInLayout]}>
@@ -22,7 +30,7 @@ const IPhone13ProMax3 = () => {
 							<View style={[styles.frameParent, styles.frameParentShadowBox]}>
 								<View style={styles.hollaKevinParent}>
 									<Text style={[styles.hollaKevin, styles.augs2022Typo]}>
-										Holla, tochtacha!
+										{`Hello ${user?.fullName}!`}
 									</Text>
 									<Text
 										style={[
@@ -32,7 +40,6 @@ const IPhone13ProMax3 = () => {
 										Check your plants today
 									</Text>
 								</View>
-
 								<View style={styles.groupParent}>
 									<Image
 										style={styles.frameLayout}
@@ -51,8 +58,8 @@ const IPhone13ProMax3 = () => {
 						</View>
 						<TouchableOpacity
 							onPress={() => router.push("weather")}
-							style={[styles.rectangleParent, styles.groupChildLayout]}>
-							<View >
+							style={[styles.rectangleParent, styles.groupChildLayout],{ justifyContent: 'center' }}>
+							<View style={{top:-650}}>
 								<View style={[styles.groupChild, styles.groupChildLayout]} />
 								<View style={styles.frameGroup}>
 									<View>
@@ -75,11 +82,7 @@ const IPhone13ProMax3 = () => {
 												20 Augs 2022
 											</Text>
 										</View>
-										<Image
-											style={styles.frameInner}
-											contentFit="cover"
-											source={require("../../assets/Sun.png")}
-										/>
+									
 									</View>
 									<View style={styles.frameParent1}>
 										<View style={styles.frameView}>
@@ -106,141 +109,11 @@ const IPhone13ProMax3 = () => {
 								</View>
 							</View>
 						</TouchableOpacity>
-
-						<View style={[styles.groupItem, styles.groupItemPosition]} />
-						<Text style={[styles.news, styles.newsLayout]}>News</Text>
-						<Text style={[styles.contactAnExpert, styles.chiliPlantTypo]}>
-							Contact an expert
-						</Text>
-						<View style={[styles.rectangleGroup, styles.groupLayout]}>
-							<View style={[styles.groupInner, styles.groupLayout]} />
-							<View style={styles.rectangleView} />
-							<View style={[styles.aboutToRipenWrapper, styles.newsLayout]}>
-								<Text style={[styles.aboutToRipen, styles.aboutToRipenFlexBox]}>
-									About to ripen
-								</Text>
-							</View>
-							<View style={[styles.chiliPlantParent, styles.chiliPosition]}>
-								<Text style={[styles.chiliPlant, styles.chiliPlantTypo]}>
-									Chili plant
-								</Text>
-								<View style={styles.vuesaxoutlinelocationGroup}>
-									<Image
-										style={styles.vuesaxoutlinelocationIcon1}
-										contentFit="cover"
-										source={require("../../assets/Base-color.png")}
-									/>
-									<Text style={[styles.ranjiganWangon, styles.homeTypo]}>
-										Ranjigan, wangon
-									</Text>
 								</View>
-							</View>
-						</View>
-						<View style={[styles.rectangleContainer, styles.groupLayout]}>
-							<View style={[styles.groupInner, styles.groupLayout]} />
-							<View style={styles.rectangleView} />
-							<View style={[styles.aboutToRipenWrapper, styles.newsLayout]}>
-								<Text style={[styles.aboutToRipen, styles.aboutToRipenFlexBox]}>
-									About to ripen
-								</Text>
-							</View>
-							<View style={[styles.chiliPlantParent, styles.chiliPosition]}>
-								<Text style={[styles.chiliPlant, styles.chiliPlantTypo]}>
-									Chili plant
-								</Text>
-								<View style={styles.vuesaxoutlinelocationGroup}>
-									<Image
-										style={styles.vuesaxoutlinelocationIcon1}
-										contentFit="cover"
-										source={require("../../assets/Base-color.png")}
-									/>
-									<Text style={[styles.ranjiganWangon, styles.homeTypo]}>
-										Ranjigan, wangon
-									</Text>
-								</View>
-							</View>
-						</View>
-						<View style={[styles.groupView, styles.groupViewPosition]}>
-							<View style={[styles.groupInner, styles.groupLayout]} />
-							<View style={styles.rectangleView} />
-							<View style={[styles.aboutToRipenWrapper, styles.newsLayout]}>
-								<Text style={[styles.aboutToRipen, styles.aboutToRipenFlexBox]}>
-									About to ripen
-								</Text>
-							</View>
-							<View style={[styles.chiliPlantContainer, styles.chiliPosition]}>
-								<Text style={[styles.chiliPlant, styles.chiliPlantTypo]}>
-									Chili plant
-								</Text>
-								<View style={styles.vuesaxoutlinelocationGroup}>
-									<Image
-										style={styles.vuesaxoutlinelocationIcon1}
-										contentFit="cover"
-										source={require("../../assets/Base-color.png")}
-									/>
-									<Text style={[styles.ranjiganWangon, styles.homeTypo]}>
-										Bojong, wangon
-									</Text>
-								</View>
-							</View>
-						</View>
-						<View style={[styles.rectangleParent1, styles.groupViewPosition]}>
-							<View style={[styles.groupInner, styles.groupLayout]} />
-							<View style={styles.rectangleView} />
-							<View style={[styles.aboutToRipenWrapper, styles.newsLayout]}>
-								<Text style={[styles.aboutToRipen, styles.aboutToRipenFlexBox]}>
-									About to ripen
-								</Text>
-							</View>
-							<View style={[styles.chiliPlantParent, styles.chiliPosition]}>
-								<Text style={[styles.chiliPlant, styles.chiliPlantTypo]}>
-									Chili plant
-								</Text>
-								<View style={styles.vuesaxoutlinelocationGroup}>
-									<Image
-										style={styles.vuesaxoutlinelocationIcon1}
-										contentFit="cover"
-										source={require("../../assets/Base-color.png")}
-									/>
-									<Text style={[styles.ranjiganWangon, styles.homeTypo]}>
-										Ranjigan, wangon
-									</Text>
-								</View>
-							</View>
-						</View>
-						<Image
-							style={[
-								styles.vuesaxboldgalleryIcon,
-								styles.vuesaxboldgalleryIconLayout,
-							]}
-							contentFit="cover"
-							source={require("../../assets/Base-color.png")}
-						/>
-						<Image
-							style={[
-								styles.vuesaxboldgalleryIcon1,
-								styles.vuesaxboldgalleryIconLayout,
-							]}
-							contentFit="cover"
-							source={require("../../assets/Base-color.png")}
-						/>
-						<Image
-							style={[
-								styles.vuesaxboldgalleryIcon2,
-								styles.vuesaxboldgalleryIconPosition,
-							]}
-							contentFit="cover"
-							source={require("../../assets/Base-color.png")}
-						/>
-						<Image
-							style={[
-								styles.vuesaxboldgalleryIcon3,
-								styles.vuesaxboldgalleryIconPosition,
-							]}
-							contentFit="cover"
-							source={require("../../assets/Base-color.png")}
-						/>
-					</View>
+				</View>
+				<View style={{position:"absolute",marginTop:"80%",backgroundColor:"white",width:"100%",borderTopLeftRadius: 10, // Adjust the radius as needed
+            borderTopRightRadius: 10,height:"100%"}}>
+					<Text>hey</Text>
 				</View>
 			</ScrollView>
 		</SafeAreaView>
@@ -248,8 +121,26 @@ const IPhone13ProMax3 = () => {
 };
 
 const styles = StyleSheet.create({
+	all:{
+
+	},
+	news: {
+		 // Set your desired z-index value
+		width: '100%', // Full width
+		height: 500, // Fixed height of 500px
+		backgroundColor: 'rgba(0, 0, 0, 0.6)', // Semi-transparent background
+		borderRadius: 10, // Add rounded corners for a smooth design
+		padding: 20, // Add padding for content inside
+		justifyContent: 'center', // Center content vertically
+		alignItems: 'center', // C// Set your desired z-index value
+	  },
+	  newsText: {
+		color: '#fff', // Text color
+		fontSize: 18, // Adjust font size as needed
+		fontWeight: 'bold', // Adjust font weight as needed
+	  },
 	signInLayout: {
-		overflow: "hidden",
+		// overflow: "hidden",
 		height: 926,
 	},
 	frameParentShadowBox: {
@@ -373,30 +264,31 @@ const styles = StyleSheet.create({
 	},
 	checkYourPlants: {
 		marginTop: 4,
-		fontFamily: FontFamily.interSemiBold,
-		fontWeight: "600",
+		fontWeight: "bold",
 		fontSize: 16,
 		textAlign: "center",
 		lineHeight: 21,
 		alignSelf: "stretch",
+		left: "-20%",
 	},
 	hollaKevinParent: {
-		width: 188,
+		marginTop: 20,
+		width: "90%",
+		// left: "-20%",
 	},
 	frameItem: {
-		marginLeft: 8,
+		marginLeft: 7,
 	},
 	groupParent: {
-		marginLeft: 93,
 		flexDirection: "row",
+		justifyContent: "flex-start", // This will place it on the left
 	},
 	frameParent: {
 		height: "4.97%",
 		width: "76.43%",
 		top: "2.89%",
-		right: "11.64%",
 		bottom: "92.14%",
-		left: "11.93%",
+		left: "7.93%",
 		shadowRadius: 4,
 		elevation: 4,
 		alignItems: "center",
@@ -413,18 +305,18 @@ const styles = StyleSheet.create({
 		],
 		position: "absolute",
 	},
+
 	signIn: {
 		bottom: 1,
 		backgroundColor: "#5db075",
-		width: 427,
+		width: windowWidth * 1, // Adjust the percentage as needed
 		transform: [
 			{
 				rotate: "-0.06deg",
 			},
 		],
-		right: -10,
-		position: "absolute",
 	},
+
 	groupChild: {
 		bottom: 0,
 		borderRadius: 16,
@@ -493,17 +385,19 @@ const styles = StyleSheet.create({
 		marginTop: 15.63,
 		alignItems: "center",
 		flexDirection: "row",
+		marginLeft: "3%",
 	},
 	frameGroup: {
-		right: 18,
+		justifyContent: "center",
+		left: "8%",
 		bottom: 19,
-		width: 324,
+		width: "100%",
 		height: 119,
 		position: "absolute",
 	},
 	rectangleParent: {
-		left: 38,
-		top:250,
+		
+		top: 250,
 		// bottom: 658,
 		shadowRadius: 4.47,
 		elevation: 4.47,
@@ -671,8 +565,8 @@ const styles = StyleSheet.create({
 	},
 	signInParent: {
 		bottom: -1,
-		width: 430,
-		height: 927,
+		// width: "100%",
+
 		right: 0,
 		position: "absolute",
 	},

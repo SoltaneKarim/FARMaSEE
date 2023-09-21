@@ -14,7 +14,7 @@ const IPhone13ProMax3 = () => {
 	const router = useRouter();
 
 	return (
-		<View>
+		<View style={styles.all}>
 			<View style={[styles.frameParent2, styles.groupItemPosition]}>
 				<TouchableOpacity
 					
@@ -82,6 +82,8 @@ const IPhone13ProMax3 = () => {
 };
 
 const styles = StyleSheet.create({
+	all:{
+	},
 	signInLayout: {
 		overflow: "hidden",
 		height: 926,
@@ -484,6 +486,7 @@ const styles = StyleSheet.create({
 		marginLeft:10
 	},
 	frameParent2: {
+		
 		shadowColor: "rgba(204, 204, 204, 0.12)",
 		shadowRadius: 32,
 		elevation: 32,
@@ -505,6 +508,7 @@ const styles = StyleSheet.create({
 		height: 927,
 		right: 0,
 		position: "absolute",
+		zIndex:9999
 	},
 	iphone13ProMax3: {
 		width: "100%",

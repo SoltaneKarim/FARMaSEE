@@ -1,7 +1,8 @@
 import React from "react";
 import { Stack, useNavigation } from "expo-router";
 import { Button, Image, TouchableHighlight, LogBox } from "react-native";
-
+import { Provider } from 'react-redux';
+import store from '../redux/store'; 
 function StackLayout() {
 	const navigation = useNavigation();
 	//
@@ -9,6 +10,7 @@ function StackLayout() {
 		"Non-serializable values were found in the navigation state",
 	]);
 	return (
+		<Provider store={store}>
 		<Stack>
 			<Stack.Screen
 				name="index"
@@ -24,7 +26,7 @@ function StackLayout() {
 			/>
 			<Stack.Screen
 				name="tabbar"
-				options={{ headerTitle: "tabbar", headerShown: true }}
+				options={{ headerTitle: "tabbar", headerShown: false }}
 			/>
 			<Stack.Screen
 				name="notification"
@@ -47,7 +49,7 @@ function StackLayout() {
 					},
 				}}
 			/>
-			<Stack.Screen name='weather' options={{headerShown: true}} />
+			<Stack.Screen name='weather' options={{headerShown: false}} />
 			<Stack.Screen
 				name="stock"
 				options={{
@@ -58,7 +60,9 @@ function StackLayout() {
 					},
 				}}
 			/>
+			<Stack.Screen name='onboarding' options={{headerShown: false}} />
 		</Stack>
+		</Provider>
 	);
 }
 

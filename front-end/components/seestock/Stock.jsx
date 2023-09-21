@@ -30,6 +30,10 @@ const Stock = () => {
 	const [selectedTreeOption, setSelectedTreeOption] = useState(null);
 	const [treeModalVisible, setTreeModalVisible] = useState(false);
 
+	//adding the animals
+	const [birthday, setBirthday] = useState("");
+	const [priceB, setPriceB] = useState("");
+	////////////////////////////////////////////////////////////////
 	const [age, setAge] = useState("");
 	const [weight, setWeight] = useState("");
 
@@ -55,6 +59,7 @@ const Stock = () => {
 	};
 	//the axios for posting
 	const addtree = async () => {
+		console.log("hey");
 		if (selectedTreeType && ageTree && quantityTree) {
 			const treeData = {
 				type: selectedTreeType,
@@ -65,7 +70,7 @@ const Stock = () => {
 
 			try {
 				const response = await axios.post(
-					"http://192.168.100.62:5000/tree",
+					"http://192.168.100.63:5000/tree",
 					treeData,
 				);
 
@@ -90,27 +95,40 @@ const Stock = () => {
 	};
 
 	const postAnimalData = () => {
-		// Create a data object with the information you want to send
+		// Construct the data object to send to the server
+		console.log('you have');
 		const data = {
-		  type: selectedAnimalType, // Assuming selectedAnimalType is a string like 'Sheep' or 'Cow'
-		  sexe: selectedSexe.label, // Assuming selectedSexe is an object with a 'label' property like 'Male' or 'Female'
-		  age: parseInt(age), // Convert age to an integer
-		  weight: parseFloat(weight), // Convert weight to a floating-point number
-		  // You can add more properties here as needed
+			type: selectedAnimalType,
+			sexe: selectedSexe.label,
+			age: parseInt(age),
+			weight: parseFloat(weight),
+			birthday: birthday,
+			priceB: parseFloat(priceB),
 		};
-	  
-		// Make the POST request to your localhost server
+
+		// Send the data to the server using Axios
 		axios
-		  .post('http://192.168.100.62:5000/animal', data)
-		  .then((response) => {
-			// Handle the response here if needed
-			console.log('Animal data posted successfully:', response.data);
-		  })
-		  .catch((error) => {
-			// Handle errors here
-			console.error('Error posting animal data:', error);
-		  });
-	  };
+			.post("http://192.168.1.4:5000/animal", data)
+			.then((response) => {
+				// Handle the response (e.g., display a success message)
+				console.log("Animal data successfully posted:", response.data);
+				alert("Animal data successfully posted");
+				// Optionally, reset the form fields or perform other actions
+				setSelectedAnimalType("");
+				setSelectedSexe("");
+				setAge("");
+				setWeight("");
+				setBirthday("");
+				setPriceB("");
+				setPriceS("");
+				setDescription("");
+			})
+			.catch((error) => {
+				alert("Error", error);
+				// Handle any errors (e.g., display an error message)
+				console.error("Error posting animal data:", error);
+			});
+	};
 	const renderItemAnimal = () => {
 		if (isAdding) {
 			return (
@@ -119,7 +137,7 @@ const Stock = () => {
 						<>
 							<Image
 								style={{ width: 200, height: 200 }}
-								source={require("../../assets/sheep.png")}
+								source={require("../../assets/cow2.png")}
 							/>
 							<TouchableOpacity
 								style={styles.dropdown}
@@ -232,6 +250,22 @@ const Stock = () => {
 								value={weight}
 								onChangeText={(text) => setWeight(text)}
 							/>
+
+							<TextInput
+								style={styles.input}
+								placeholder="Birthday (e.g., 2023-09-20)"
+								value={birthday}
+								onChangeText={(text) => setBirthday(text)}
+							/>
+
+							<TextInput
+								style={styles.input}
+								placeholder="Price (Buying) (e.g., 50.000)"
+								keyboardType="numeric"
+								value={priceB}
+								onChangeText={(text) => setPriceB(text)}
+							/>
+
 							<TouchableOpacity
 								style={{
 									backgroundColor: "green", // Set the background color to green
@@ -239,7 +273,7 @@ const Stock = () => {
 									padding: 10, // Add some padding for better appearance
 								}}
 								onPress={() => {
-									postAnimalData
+									postAnimalData;
 								}}>
 								<Text style={{ color: "white", textAlign: "center" }}>
 									Submit
