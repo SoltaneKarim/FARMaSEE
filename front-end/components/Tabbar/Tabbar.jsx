@@ -1,17 +1,17 @@
 import * as React from "react";
 import {
-	StyleSheet,
-	View,
-	Text,
-	SafeAreaView,
-	ScrollView,
-	TouchableOpacity,
-	Image
+  StyleSheet,
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  Image,
 } from "react-native";
 import { Color, FontFamily, FontSize, Border, Padding } from "./Globalstyle.js";
 import { useRouter } from "expo-router";
 const IPhone13ProMax3 = () => {
-	const router = useRouter();
+  const router = useRouter();
 
 	return (
 		<View style={styles.all}>
@@ -31,54 +31,51 @@ const IPhone13ProMax3 = () => {
 					</View>
 				</TouchableOpacity>
 
-                <TouchableOpacity
-					
-                    style={styles.vuesaxboldhome2Parent}
-					onPress={() => router.push("care")}>
+        <TouchableOpacity
+          style={styles.vuesaxboldhome2Parent}
+          onPress={() => router.push("chat")}
+        >
+          <View>
+            <Image
+              style={styles.vectorIcon}
+              contentFit="cover"
+              source={require("../../assets/Vectora.png")}
+            />
 
-				<View >
-					<Image
-						style={styles.vectorIcon}
-						contentFit="cover"
-						source={require("../../assets/Vectora.png")}
-					/>
+            <Text style={[styles.home, styles.homeTypo]}>Care</Text>
+          </View>
+        </TouchableOpacity>
 
-					<Text style={[styles.home, styles.homeTypo]}>Care</Text>
-				</View>
-                </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.vuesaxboldhome2Parent}
+          onPress={() => router.push("planning")}
+        >
+          <View>
+            <Image
+              style={styles.icTimeIcon}
+              contentFit="cover"
+              source={require("../../assets/ic_time.png")}
+            />
+            <Text style={[styles.home, styles.homeTypo]}>Planning</Text>
+          </View>
+        </TouchableOpacity>
 
-
-                <TouchableOpacity
-					
-                    style={styles.vuesaxboldhome2Parent}
-					onPress={() => router.push("planning")}>
-				<View >
-					<Image
-						style={styles.icTimeIcon}
-						contentFit="cover"
-						source={require("../../assets/ic_time.png")}
-					/>
-					<Text style={[styles.home, styles.homeTypo]}>Planning</Text>
-				</View>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity
-					
-                    style={styles.vuesaxboldhome2Parent}
-					onPress={() => router.push("profile")}>
-				<View style={styles.vuesaxboldhome2Parent}>
-					<Image
-						style={styles.vuesaxboldhome2Icon}
-						contentFit="cover"
-						source={require("../../assets/frame.png")}
-					/>
-					<Text style={[styles.home, styles.homeTypo]}>Profile</Text>
-				</View>
-                </TouchableOpacity>
-			</View>
-		</View>
-	);
+        <TouchableOpacity
+          style={styles.vuesaxboldhome2Parent}
+          onPress={() => router.push("profile")}
+        >
+          <View style={styles.vuesaxboldhome2Parent}>
+            <Image
+              style={styles.vuesaxboldhome2Icon}
+              contentFit="cover"
+              source={require("../../assets/frame.png")}
+            />
+            <Text style={[styles.home, styles.homeTypo]}>Profile</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
