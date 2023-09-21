@@ -27,24 +27,24 @@ const getAllUsers = function (req, res) {
 };
 
 const addUser = function (req, res) {
-  const query = "INSERT INTO user (fullName, email, password, address, phoneNumber, budget, likes, premium) values (?,?,?,?,?,?,?,?)";
+  const query =
+    "INSERT INTO user (fullName, email, password, address, phoneNumber, budget, likes, premium) VALUES (?,?,?,?,?,?,?,?)";
   const { fullName, email, password, address, phoneNumber, budget, likes, premium } =
     req.body;
-  bcrypt.hash(password, 10, (err, hashedPassword) => {
-    if (err) {
-      console.log("Error hashing password:", err);
-      return res.status(500).json({ error: "Internal server error" });
-    }
-    connection.query( query, [fullName, email, hashedPassword, address, phoneNumber, budget, likes, premium], (err, results) => {
-        if (err) {
-          console.log("Error inserting data into the database:", err);
-          return res.status(500).json({ error: "Internal server error" });
-        }
-        const token = jwt.sign({ userId: results.insertId }, 'YourSecretKey'); // Replace with your secret key
-        res.json({ success: true, message: "user added successfully", token });
+
+  // Insert the user's data into the database without hashing the password
+  connection.query(
+    query,
+    [fullName, email, password, address, phoneNumber, budget, likes, premium],
+    (err, results) => {
+      if (err) {
+        console.log("Error inserting data into the database:", err);
+        return res.status(500).json({ error: "Internal server error" });
       }
-    );
-  });
+
+      res.json({ success: true, message: "User added successfully" });
+    }
+  );
 };
 
 const updateUser = function (req, res) {

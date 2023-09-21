@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
 import { Stack, useRouter } from "expo-router";
-
+import { Provider } from 'react-redux';
+import store from '../../redux/store';
 function Loader() {
 
 
@@ -10,7 +11,7 @@ function Loader() {
   useEffect(() => {
     // Wait for 3 seconds and then navigate to "/Login"
     const timeout = setTimeout(() => {
-      router.push("/Login");
+      router.push("/onboarding");
     }, 3000);
 
     return () => {
