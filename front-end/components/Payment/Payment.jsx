@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, View, Image, TouchableOpacity,ScrollView } from "react-native";
 import { Color, FontFamily, FontSize, Border, Padding } from "./GlobalStyle.js";
 
 const Care = () => {
@@ -7,6 +7,8 @@ const Care = () => {
     alert("Pay Now clicked!");
   };
   return (
+    <ScrollView>
+
     <View style={styles.paymentSuccess}>
       <TouchableOpacity onPress={handlePayNowClick}>
         <View style={[styles.button, styles.buttonFlexBox]}>
@@ -101,6 +103,8 @@ const Care = () => {
       <Text style={[styles.chat1, styles.chat1Typo]}>Chat</Text>
       <Text style={[styles.healthCare1, styles.chat1Typo]}>Health-care</Text>
     </View>
+    </ScrollView>
+
   );
 };
 

@@ -180,11 +180,10 @@ CREATE TABLE IF NOT EXISTS `farm`.`user` (
   `budget` VARCHAR(45) NOT NULL,
   `likes` VARCHAR(45) NULL DEFAULT NULL,
   `premium` VARCHAR(20) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 2
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+  `imageUrl` VARCHAR(255) NULL DEFAULT NULL,  -- Add the imageUrl column here
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
 
 
 -- -----------------------------------------------------

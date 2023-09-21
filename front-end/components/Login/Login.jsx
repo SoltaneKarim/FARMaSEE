@@ -7,14 +7,17 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	StyleSheet,
-	ActivityIndicator, // Import ActivityIndicator
+	ActivityIndicator,
+	PermissionsAndroid,
+	Platform,
+	Button,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch } from "react-redux";
 import { login, signup } from "../../redux/actions";
 import axios from "axios";
-
+import Inpp from "./auth";
 const AuthScreen = () => {
 	const dispatch = useDispatch();
 	const router = useRouter();
@@ -27,6 +30,7 @@ const AuthScreen = () => {
 	const [budget, setBudget] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [loading, setLoading] = useState(false); // State to track loading status
+	const [selectedImage, setSelectedImage] = useState(null);
 
 	useEffect(() => {
 		setLoading(false); // Reset loading state when the component mounts
@@ -36,10 +40,16 @@ const AuthScreen = () => {
 		setIsSignUp(!isSignUp);
 	};
 
+	const changeImage = (pic) => {
+		setSelectedImage(pic)
+	}
+
+	
+
 	const handleLogin = async () => {
 		try {
 			setLoading(true); // Set loading to true while waiting for the response
-			const response = await axios.get("http://192.168.100.63:5000/user");
+			const response = await axios.get("http://192.168.100.48:5000/user");
 			const users = response.data;
 			const lowerCaseEmail = email.toLowerCase();
 			const user = users.find(
@@ -63,35 +73,42 @@ const AuthScreen = () => {
 		}
 	};
 
-	const handleSignUp = () => {
-		setLoading(true); // Set loading to true while waiting for the response
-		axios
-			.post("http://192.168.100.63:5000/user", {
-				fullName,
-				email,
-				password,
-				address,
-				phoneNumber,
-				budget,
-			})
-			.then((response) => {
-				console.log("User signed up successfully:", response.data);
-				dispatch(signup(response.data));
-				router.push("/home");
-			})
-			.catch((error) => {
-				console.error("Error signing up:", error);
-			})
-			.finally(() => {
-				setLoading(false); // Set loading to false when the response is received
-			});
+	const handleSignUp = async () => {
+		setLoading(true);
+
+		// Upload the image to Cloudinary
+		try {
+			// Continue with user registration including the image URL
+			axios
+				.post("http://192.168.100.48:5000/user", {
+					fullName,
+					email,
+					password,
+					address,
+					phoneNumber,
+					budget,
+					imageUrl:selectedImage,
+				})
+				.then((response) => {
+					console.log("User signed up successfully:", response.data);
+					dispatch(signup(response.data));
+					router.push("/home");
+				})
+				.catch((error) => {
+					console.error("Error signing up:", error);
+				});
+		} catch (error) {
+			console.error("Error uploading image to Cloudinary:", error);
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
 		<View style={styles.main}>
 			{loading ? ( // Show the ActivityIndicator while loading
-        <ActivityIndicator size="large" color="#fffff" />
-      ) : isSignUp ? (
+				<ActivityIndicator size="large" color="#fffff" />
+			) : isSignUp ? (
 				<>
 					<Image
 						style={styles.image}
@@ -199,6 +216,16 @@ const AuthScreen = () => {
 									onChangeText={(text) => setBudget(text)}
 								/>
 							</View>
+							<View style={styles.inputWrap}>
+								<Image
+									style={{ height: 20, width: 20, marginRight: 10 }}
+									source={require("../../assets/photo.png")}
+								/>
+								<Text style={styles.centeredText}>
+									Choose a picture or Take one
+								</Text>
+							</View>
+							<Inpp changeImage={changeImage} />
 						</View>
 					</KeyboardAwareScrollView>
 					<TouchableOpacity
@@ -319,6 +346,23 @@ const styles = StyleSheet.create({
 		// gap: 10,
 
 		width: 250,
+	},
+	imagePickerButton: {
+		backgroundColor: "#4CAF50",
+		paddingVertical: 10,
+		paddingHorizontal: 20,
+		borderRadius: 25,
+		marginTop: 10,
+	},
+	selectedImage: {
+		width: 100,
+		height: 100,
+		resizeMode: "cover",
+		marginTop: 10,
+	},
+	centeredText: {
+		fontSize: 15,
+		textAlign: "center",
 	},
 });
 
