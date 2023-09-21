@@ -4,8 +4,6 @@ import { Stack,useRouter } from "expo-router";
 import Loader from "../components/Loader/Loader.jsx";
 import Tabbar from "../components/Tabbar/Tabbar.jsx";
 import Login from "../components/Login/Login.jsx";
-import Home from "../components/Home/Home.jsx";
-import Chate from "../components/Login/auth.jsx";
 const App = () => {
     return (
       <SafeAreaView style={styles.container}>
