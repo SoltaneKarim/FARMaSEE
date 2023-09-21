@@ -1,297 +1,108 @@
-import * as React from "react";
-import { useState } from "react";
-import {
-	Text,
-	StyleSheet,
-	View,
-	TextInput,
-	Button,
-	TouchableHighlight,
-	Pressable,
-	Image,
-	SafeAreaView
-} from "react-native";
-import { Stack, useRouter } from "expo-router";
-import { FontFamily, Color, FontSize, Border } from "./GlobalStyles.js";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, Button, TextInput, Image, SafeAreaView, TouchableOpacity, StatusBar, Alert } from "react-native";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/config.js";
+const backImage = require("../../assets/ic_back.png");
 
-const IPhone13ProMax2 = () => {
-	const router = useRouter();
-	const [email, onChangeEmail] = useState("");
-	const [password, onChangePassword] = useState("");
-	const handlelogin = () => {
-		console.log(email);
-		console.log(password);
-		router.push("/home");
-	};
-	return (
-		<SafeAreaView style={[styles.iphone13ProMax2, styles.signInLayout]}>
-			<View style={[styles.signInParent, styles.signPosition]}>
-				<View style={[styles.signIn, styles.signPosition, ]}>
-					<Text
-						onPress={() => {
-							console.log("sign up");
-						}}
-						style={[styles.signUp, styles.groupParentLayout,styles.justthis]}>
-						Sign up
-					</Text>
-					<View style={[styles.groupParent, styles.groupParentLayout]}>
-						<View style={[styles.rectangleParent, styles.groupParentLayout]}>
-							<View style={[styles.groupChild, styles.groupLayout]} />
-							<TextInput
-								onChangeText={onChangePassword}
-								value={password}
-								placeholder="Your password"
-								secureTextEntry={true}
-								style={[styles.groupChild, styles.groupLayout]}
-							/>
-							<Image
-								style={[styles.groupItem, styles.iconLayout]}
-								contentFit="contain"
-								source={require("../../assets/Group9.png")}
-							/>
-						</View>
+export default function Login({ navigation }) {
 
-						<Text
-							onPress={() => {
-								console.log("forgot it");
-							}}
-							style={[styles.forgotYourPassword, styles.passwordFlexBox]}>
-							Forgot your password?
-						</Text>
-						<Text style={[styles.password, styles.passwordFlexBox]}>
-							Password
-						</Text>
-					</View>
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-					<Pressable>
-						<TouchableHighlight onPress={handlelogin} activeOpacity={0.7}>
-							<View style={[styles.rectangleGroup, styles.groupParentLayout]}>
-								<View style={[styles.groupInner, styles.groupLayout]} />
-								<Text style={[styles.login, styles.groupParentLayout]}>
-									Login
-								</Text>
-							</View>
-						</TouchableHighlight>
-					</Pressable>
-					<View style={[styles.emailParent, styles.groupParentLayout]}>
-						<Text style={[styles.password, styles.passwordFlexBox]}>Email</Text>
-						<View style={[styles.rectangleParent, styles.groupParentLayout]}>
-							<TextInput
-								onChangeText={onChangeEmail}
-								value={email}
-								placeholder="Type your email"
-								style={[styles.groupChild, styles.groupLayout]}
-							/>
-							{/* <Text style={[styles.text, styles.passwordFlexBox]}>
-								iqbal.syafiq.rozaan@gmail.com
-							</Text> */}
-							<Image
-								style={[styles.vectorIcon, styles.iconLayout]}
-								contentFit="contain"
-								source={require("../../assets/Vector.png")}
-							/>
-						</View>
-					</View>
-				</View>
-				<Text style={[styles.signInTo, styles.signFlexBox]}>
-					Sign in to continue
-				</Text>
-				<Image
-					style={[styles.icEmailSubmitLogoIcon, styles.iconLayout]}
-					contentFit="cover"
-					source={require("../../assets/ic_email_submit_logo.png")}
-				/>
-			</View>
-		</SafeAreaView>
-	);
-};
-
+  const onHandleLogin = () => {
+    if (email !== "" && password !== "") {
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => console.log("Login success"))
+        .catch((err) => Alert.alert("Login error", err.message));
+    }
+  };
+  
+  return (
+    <View style={styles.container}>
+      <Image source={backImage} style={styles.backImage} />
+      <View style={styles.whiteSheet} />
+      <SafeAreaView style={styles.form}>
+        <Text style={styles.title}>Log In</Text>
+         <TextInput
+        style={styles.input}
+        placeholder="Enter email"
+        autoCapitalize="none"
+        keyboardType="email-address"
+        textContentType="emailAddress"
+        autoFocus={true}
+        value={email}
+        onChangeText={(text) => setEmail(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Enter password"
+        autoCapitalize="none"
+        autoCorrect={false}
+        secureTextEntry={true}
+        textContentType="password"
+        value={password}
+        onChangeText={(text) => setPassword(text)}
+      />
+      <TouchableOpacity style={styles.button} onPress={onHandleLogin}>
+        <Text style={{fontWeight: 'bold', color: '#fff', fontSize: 18}}> Log In</Text>
+      </TouchableOpacity>
+      <View style={{marginTop: 20, flexDirection: 'row', alignItems: 'center', alignSelf: 'center'}}>
+        <Text style={{color: 'gray', fontWeight: '600', fontSize: 14}}>Don't have an account? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+          <Text style={{color: '#f57c00', fontWeight: '600', fontSize: 14}}> Sign Up</Text>
+        </TouchableOpacity>
+      </View>
+      </SafeAreaView>
+      <StatusBar barStyle="light-content" />
+    </View>
+  );
+}
 const styles = StyleSheet.create({
-	justthis:{
-		left:10,
-	
-	},
-	signInLayout: {
-		height: "100%",
-	},
-	signPosition: {
-		width: "100%",
-		position: "absolute",
-		left: 0,
-	},
-	groupParentLayout: {
-		width: "100%",
-		position: "absolute",
-	},
-	groupLayout: {
-		borderRadius: 9,
-		height: 59,
-		width: 359,
-		left: 0,
-		top: 0,
-		position: "absolute",
-		textAlign: "center",
-	},
-	passwordFlexBox: {
-		textAlign: "left",
-		position: "absolute",
-	},
-	iconLayout: {
-		maxHeight: "100%",
-		maxWidth: "100%",
-		position: "absolute",
-	},
-	signFlexBox: {
-		justifyContent: "center",
-		display: "flex",
-		textAlign: "center",
-		
-		alignItems: "center",
-		color: Color.colorWhitesmoke,
-		fontWeight: "600",
-	},
-	signUp: {
-		top: 743,
-		height: 59,
-		justifyContent: "center",
-		display: "flex",
-		textAlign: "center",
-	
-		alignItems: "center",
-		color: Color.colorWhitesmoke,
-		fontWeight: "600",
-		fontSize: 21,
-		width: 359,
-		left: 34,
-	},
-	groupChild: {
-		backgroundColor: Color.colorGainsboro,
-	},
-	text: {
-		left: 64,
-		color: Color.colorDarkslategray,
-		width: 274,
-
-		fontWeight: "500",
-		fontSize: 16,
-		textAlign: "left",
-		display: "flex",
-		top: 0,
-		height: 59,
-		alignItems: "center",
-	},
-	groupItem: {
-		height: "36.54%",
-		width: "3.27%",
-		top: "31.73%",
-		right: "89.54%",
-		bottom: "31.73%",
-		left: "6.19%",
-	},
-	rectangleParent: {
-		top: 32,
-		height: 59,
-		left: 0,
-		padding: 5,
-	},
-	forgotYourPassword: {
-		marginLeft: -174.61,
-		bottom: 0,
-		left: "50%",
-		fontSize: FontSize.uI16Semi_size,
-		fontFamily: FontFamily.uI16Semi,
-		color: Color.colorWhite,
-		textAlign: "left",
-		fontWeight: "600",
-	},
-	password: {
-		alignItems: "flex-end",
-		width: 211,
-
-		fontWeight: "500",
-		fontSize: 16,
-		textAlign: "left",
-		display: "flex",
-		top: 0,
-		color: Color.colorWhitesmoke,
-		left: 0,
-	},
-	groupParent: {
-		top: 498,
-		height: 120,
-		left: 34,
-	},
-	groupInner: {
-		borderStyle: "solid",
-		borderColor: Color.colorWhitesmoke,
-		borderWidth: 3.4,
-		backgroundColor: Color.colorMediumseagreen,
-	},
-	login: {
-		height: 59,
-		justifyContent: "center",
-		display: "flex",
-		textAlign: "center",
-		fontFamily: FontFamily.poppinsSemiBold,
-		alignItems: "center",
-		color: Color.colorWhitesmoke,
-		fontWeight: "600",
-		fontSize: 21,
-		width: 359,
-		left: -25,
-		top: 12,
-	},
-	rectangleGroup: {
-		top: 684,
-		height: 59,
-		left: 34,
-	},
-	vectorIcon: {
-		height: "34.62%",
-		width: "4.71%",
-		height: "37%",
-		top: "32.69%",
-		right: "87.94%",
-		bottom: "32.69%",
-		left: "6.35%",
-	},
-	emailParent: {
-		top: 383,
-		height: 91,
-		left: 34,
-	},
-	signIn: {
-		backgroundColor: Color.colorMediumseagreen,
-		borderRadius: Border.br_8xl,
-		top: 0,
-	
-		height: "100%",
-	},
-	signInTo: {
-		top: 297,
-		fontSize: 27,
-		width: 428,
-		position: "absolute",
-		left: 0,
-	},
-	icEmailSubmitLogoIcon: {
-		height: "16.2%",
-		width: "39.86%",
-		top: "11.99%",
-		right: "30.99%",
-		bottom: "71.81%",
-		left: "31.07%",
-	},
-	signInParent: {
-		top: 0,
-		height: 926,
-		position: "absolute",
-	},
-	iphone13ProMax2: {
-		backgroundColor: Color.colorWhite,
-		flexSrink: 1,
-		width: "100%",
-	},
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  title: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: "orange",
+    alignSelf: "center",
+    paddingBottom: 24,
+  },
+  input: {
+    backgroundColor: "#F6F7FB",
+    height: 58,
+    marginBottom: 20,
+    fontSize: 16,
+    borderRadius: 10,
+    padding: 12,
+  },
+  backImage: {
+    width: "100%",
+    height: 340,
+    position: "absolute",
+    top: 0,
+    resizeMode: 'cover',
+  },
+  whiteSheet: {
+    width: '100%',
+    height: '75%',
+    position: "absolute",
+    bottom: 0,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 60,
+  },
+  form: {
+    flex: 1,
+    justifyContent: 'center',
+    marginHorizontal: 30,
+  },
+  button: {
+    backgroundColor: '#f57c00',
+    height: 58,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+  },
 });
-
-export default IPhone13ProMax2;
