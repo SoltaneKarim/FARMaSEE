@@ -3,14 +3,12 @@ import { View , Text , StyleSheet , SafeAreaView , Image ,ScrollView} from "reac
 import { Stack,useRouter } from "expo-router";
 import Loader from "../components/Loader/Loader.jsx";
 import Tabbar from "../components/Tabbar/Tabbar.jsx";
-import Chat from "../components/chat/Chat.jsx";
 import Login from "../components/Login/Login.jsx";
-import Home from "../components/Home/Home.jsx";
 const App = () => {
     return (
       <SafeAreaView style={styles.container}>
     
-         <Loader/>
+         <Loader />
 
       </SafeAreaView>
     );

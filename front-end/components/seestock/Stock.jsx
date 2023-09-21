@@ -70,7 +70,7 @@ const Stock = () => {
 
 			try {
 				const response = await axios.post(
-					"http://192.168.100.63:5000/tree",
+					"http://192.168.100.48:5000/tree",
 					treeData,
 				);
 

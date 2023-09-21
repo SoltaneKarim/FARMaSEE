@@ -28,14 +28,14 @@ const getAllUsers = function (req, res) {
 
 const addUser = function (req, res) {
   const query =
-    "INSERT INTO user (fullName, email, password, address, phoneNumber, budget, likes, premium) VALUES (?,?,?,?,?,?,?,?)";
-  const { fullName, email, password, address, phoneNumber, budget, likes, premium } =
+    "INSERT INTO user (fullName, email, password, address, phoneNumber, budget, likes, premium,imageUrl) VALUES (?,?,?,?,?,?,?,?,?)";
+  const { fullName, email, password, address, phoneNumber, budget, likes, premium, imageUrl } =
     req.body;
 
   // Insert the user's data into the database without hashing the password
   connection.query(
     query,
-    [fullName, email, password, address, phoneNumber, budget, likes, premium],
+    [fullName, email, password, address, phoneNumber, budget, likes, premium , imageUrl],
     (err, results) => {
       if (err) {
         console.log("Error inserting data into the database:", err);
