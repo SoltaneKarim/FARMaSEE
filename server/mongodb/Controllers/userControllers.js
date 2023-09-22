@@ -2,11 +2,18 @@ const User = require('../Models/userModels'); // Make sure the path is correct
 
 async function createUser(req, res) {
   try {
-    const { fullname , specificId } = req.body;
+    const { fullname, specificId } = req.body;
 
     // Ensure the request body contains the necessary properties
     if (!specificId || !fullname) {
       return res.status(400).json({ error: 'Invalid request. Please provide specificId and fullname in the request body.' });
+    }
+
+    // Check if a user with the specificId already exists
+    const existingUser = await User.findOne({ specificId });
+
+    if (existingUser) {
+      return res.status(200).json({ user: existingUser }); // Return the existing user
     }
 
     // Create the new user with the provided specificId, fullname, and an empty messages array
@@ -21,6 +28,7 @@ async function createUser(req, res) {
     res.status(400).json({ error: error.message });
   }
 }
+
 async function updateUserMessages(req, res) {
   try {
     const { params, body } = req;
@@ -69,7 +77,14 @@ async function getUserById(req, res) {
 async function getUserByUsername(req, res) {
   try {
     const { fullname } = req.params;
-    const user = await User.findOne({ fullname });
+    // Remove leading and trailing spaces and create a regex pattern
+    const trimmedFullname = fullname.trim();
+    const regexPattern = new RegExp(
+      trimmedFullname.replace(/\s+/g, '\\s*').replace(/ /g, '.*?'),
+      'i'
+    );
+
+    const user = await User.findOne({ fullname: regexPattern });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -77,12 +92,40 @@ async function getUserByUsername(req, res) {
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
   }
+
 }
+
+async function updateMessages(req, res) {
+  const { fullname } = req.params;
+  const { text, usercontacted } = req.body; // Destructure text and usercontacted
+
+  try {
+    // Use the fullname from the request parameters directly
+    const user = await User.findOne({ fullname: { $regex: new RegExp(fullname, 'i') } });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Push the new message object into the messages array with text and usercontacted
+    user.messages.push({ text, usercontacted });
+
+    // Save the updated user
+    await user.save();
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
 
 module.exports = {
   createUser,
   getUsers,
   getUserById,
   getUserByUsername,
-  updateUserMessages
+  updateUserMessages,
+  updateMessages
 };

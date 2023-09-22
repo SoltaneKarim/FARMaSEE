@@ -1,9 +1,19 @@
-import React from 'react'
-import Care from "../components/Payment/Payment"
-const payment = () => {
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import Care from '../components/Payment/Payment';
+
+const Payment = () => {
   return (
-    <Care />
-  )
+    <View style={styles.container}>
+      <Care />
+    </View>
+  );
 }
 
-export default payment
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, // Take up all available space
+  },
+});
+
+export default Payment;
