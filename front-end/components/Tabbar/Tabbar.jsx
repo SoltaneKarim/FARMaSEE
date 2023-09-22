@@ -19,7 +19,7 @@ const IPhone13ProMax3 = () => {
 				<TouchableOpacity
 					
                     style={styles.vuesaxboldhome2Parent}
-					onPress={() => alert("Pressed!")}>
+					onPress={() => router.push("home")}>
                     
 					<View >
 						<Image
@@ -33,7 +33,7 @@ const IPhone13ProMax3 = () => {
 
         <TouchableOpacity
           style={styles.vuesaxboldhome2Parent}
-          onPress={() => router.push("chat")}
+          onPress={() => router.push("care")}
         >
           <View>
             <Image

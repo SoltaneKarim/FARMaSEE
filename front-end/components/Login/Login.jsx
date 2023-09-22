@@ -49,7 +49,7 @@ const AuthScreen = () => {
 	const handleLogin = async () => {
 		try {
 			setLoading(true); // Set loading to true while waiting for the response
-			const response = await axios.get("http://192.168.100.48:5000/user");
+			const response = await axios.get("http://192.168.1.4:5000/user");
 			const users = response.data;
 			const lowerCaseEmail = email.toLowerCase();
 			const user = users.find(
@@ -75,35 +75,32 @@ const AuthScreen = () => {
 
 	const handleSignUp = async () => {
 		setLoading(true);
-
-		// Upload the image to Cloudinary
+	  
 		try {
-			// Continue with user registration including the image URL
-			axios
-				.post("http://192.168.100.48:5000/user", {
-					fullName,
-					email,
-					password,
-					address,
-					phoneNumber,
-					budget,
-					imageUrl:selectedImage,
-				})
-				.then((response) => {
-					console.log("User signed up successfully:", response.data);
-					dispatch(signup(response.data));
-					router.push("/home");
-				})
-				.catch((error) => {
-					console.error("Error signing up:", error);
-				});
+		  
+	  
+		  // Continue with user registration including the image URL
+		  const userResponse = await axios.post('http://192.168.1.4:5000/user', {
+			fullName,
+			email,
+			password,
+			address,
+			phoneNumber,
+			budget,
+			imageUrl:selectedImage,
+		  });
+	  
+		  console.log('User signed up successfully:', userResponse.data);
+		  dispatch(signup(userResponse.data));
+		  router.push('/home');
 		} catch (error) {
-			console.error("Error uploading image to Cloudinary:", error);
+		  console.error('Error during sign-up:', error);
+		  alert('An error occurred during sign-up. Please try again later.');
 		} finally {
-			setLoading(false);
+		  setLoading(false);
 		}
-	};
-
+	  };
+	  
 	return (
 		<View style={styles.main}>
 			{loading ? ( // Show the ActivityIndicator while loading
