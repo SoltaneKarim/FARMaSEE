@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
 	},
 	groupChildLayout: {
 		height: 152,
-		// left: 10,
+		left: 17,
 		width: "90%",
 		position: "absolute",
 	},
@@ -328,17 +328,17 @@ const styles = StyleSheet.create({
 		width: 27,
 	},
 	colomaduIndonesia: {
-		marginLeft: 6.7,
+		marginLeft: 1,
 	},
 	frameView: {
 		alignItems: "center",
 		flexDirection: "row",
-		left: 10,
+		left: 5,
 	},
 	augs2022: {
 		fontSize: 13,
 		lineHeight: 20,
-		marginLeft: 48.01,
+		marginLeft: 35,
 	},
 	frameInner: {
 		width: 329,
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	partlyCloudyParent: {
-		marginLeft: 44.66,
+		marginLeft: 30,
 	},
 	frameParent1: {
 		marginTop: 15.63,

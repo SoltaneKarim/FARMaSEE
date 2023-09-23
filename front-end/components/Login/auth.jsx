@@ -117,3 +117,4 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+// .result.classification.suggestions[0]

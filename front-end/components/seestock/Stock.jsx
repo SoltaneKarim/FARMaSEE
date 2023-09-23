@@ -108,7 +108,7 @@ const Stock = () => {
 
 		// Send the data to the server using Axios
 		axios
-			.post("http://192.168.1.4:5000/animal", data)
+			.post("http://192.168.100.48:5000/animal", data)
 			.then((response) => {
 				// Handle the response (e.g., display a success message)
 				console.log("Animal data successfully posted:", response.data);

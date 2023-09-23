@@ -38,7 +38,7 @@ const ChatBest = () => {
 
 			try {
 				const response = await axios.put(
-					`http://192.168.1.4:5000/chat/users/update/${selectedUser.fullName}`,
+					`http://192.168.100.48:5000/chat/users/update/${selectedUser.fullName}`,
 					newMessage,
 				);
 				console.log("Message sent and user updated:", response.data);
@@ -59,7 +59,7 @@ const ChatBest = () => {
 		try {
 			// Fetch messages sent by the selected user (you to them)
 			const selectedUserMessagesResponse = await axios.get(
-				`http://192.168.1.4:5000/chat/users/user/${selectedUser.fullName}`,
+				`http://192.168.100.48:5000/chat/users/user/${selectedUser.fullName}`,
 				{
 					params: { usercontacted: Currentuser.id },
 				},
@@ -69,7 +69,7 @@ const ChatBest = () => {
 
 			// Fetch messages sent by you (selected user to you)
 			const currentUserMessagesResponse = await axios.get(
-				`http://192.168.1.4:5000/chat/users/user/${Currentuser.fullName}`,
+				`http://192.168.100.48:5000/chat/users/user/${Currentuser.fullName}`,
 				{
 					params: { usercontacted: selectedUser.id },
 				},
