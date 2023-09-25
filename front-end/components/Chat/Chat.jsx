@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, StyleSheet, View,Image } from "react-native";
 import { FontFamily, Color, FontSize, Border } from "./GlobalStyles";
 
-const ChatScreen = () => {
+const Chat = () => {
   return (
     <View style={styles.chatScreen}>
       <Text style={[styles.tittle, styles.tittleLayout]}>Yuji Itadori</Text>
@@ -526,4 +526,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChatScreen;
+export default Chat;

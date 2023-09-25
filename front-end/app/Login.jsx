@@ -3,7 +3,7 @@ import { View } from "react-native";
 import Loginn from "../components/Login/Login";
 function Login() {
   return (
-   <Loginn/>
+    <Loginn/>
   )
 }
 

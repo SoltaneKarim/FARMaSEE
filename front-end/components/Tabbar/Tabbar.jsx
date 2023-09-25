@@ -33,7 +33,7 @@ const IPhone13ProMax3 = () => {
 
         <TouchableOpacity
           style={styles.vuesaxboldhome2Parent}
-          onPress={() => router.push("chat")}
+          onPress={() => router.push("paymentFailure")}
         >
           <View>
             <Image

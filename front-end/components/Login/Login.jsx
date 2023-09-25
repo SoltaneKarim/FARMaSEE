@@ -39,7 +39,7 @@ const AuthScreen = () => {
 	const handleLogin = async () => {
 		try {
 			setLoading(true); // Set loading to true while waiting for the response
-			const response = await axios.get("http://192.168.100.63:5000/user");
+			const response = await axios.get("http://192.168.100.44:5000/user");
 			const users = response.data;
 			const lowerCaseEmail = email.toLowerCase();
 			const user = users.find(
@@ -66,7 +66,7 @@ const AuthScreen = () => {
 	const handleSignUp = () => {
 		setLoading(true); // Set loading to true while waiting for the response
 		axios
-			.post("http://192.168.100.63:5000/user", {
+			.post("http://192.168.100.44:5000/user", {
 				fullName,
 				email,
 				password,
