@@ -5,11 +5,13 @@ import Loader from "../components/Loader/Loader.jsx";
 import Tabbar from "../components/Tabbar/Tabbar.jsx";
 import Login from "../components/Login/Login.jsx";
 import Chou from "../components/chatbest/chatbest.jsx";
+import Identify from "../components/identify/identify.jsx";
+import Test from "../components/test/test.jsx";
 const App = () => {
     return (
       <SafeAreaView style={styles.container}>
     
-         <Loader />
+         <Loader/>
 
       </SafeAreaView>
     );
@@ -18,6 +20,7 @@ const App = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+      
       // Add any necessary styling for the container
     },
   });

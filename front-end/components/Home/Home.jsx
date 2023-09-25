@@ -7,7 +7,9 @@ import {
 	ScrollView,
 	TouchableOpacity,
 	Image,
+	
 } from "react-native";
+import News from "./News";
 import { Color, FontFamily, FontSize, Border, Padding } from "./GlobalStyle.js";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
@@ -112,8 +114,8 @@ const IPhone13ProMax3 = () => {
 								</View>
 				</View>
 				<View style={{position:"absolute",marginTop:"80%",backgroundColor:"white",width:"100%",borderTopLeftRadius: 10, // Adjust the radius as needed
-            borderTopRightRadius: 10,height:"100%"}}>
-					<Text>hey</Text>
+            borderTopRightRadius: 10}}>
+					<News/>
 				</View>
 			</ScrollView>
 		</SafeAreaView>
@@ -168,7 +170,7 @@ const styles = StyleSheet.create({
 	},
 	groupChildLayout: {
 		height: 152,
-		// left: 10,
+		left: 17,
 		width: "90%",
 		position: "absolute",
 	},
@@ -328,17 +330,17 @@ const styles = StyleSheet.create({
 		width: 27,
 	},
 	colomaduIndonesia: {
-		marginLeft: 6.7,
+		marginLeft: 1,
 	},
 	frameView: {
 		alignItems: "center",
 		flexDirection: "row",
-		left: 10,
+		left: 5,
 	},
 	augs2022: {
 		fontSize: 13,
 		lineHeight: 20,
-		marginLeft: 48.01,
+		marginLeft: 35,
 	},
 	frameInner: {
 		width: 329,
@@ -379,7 +381,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	partlyCloudyParent: {
-		marginLeft: 44.66,
+		marginLeft: 30,
 	},
 	frameParent1: {
 		marginTop: 15.63,

@@ -8,7 +8,7 @@ const UserList = ({ onSelectUser, Currentuser }) => {
 
   useEffect(() => {
     // Make an Axios GET request to fetch user data
-    axios.get('http://192.168.1.4:5000/user')
+    axios.get('http://192.168.100.45:5000/user')
       .then(response => {
         // Filter out the Currentuser from the response data
         const filteredUsers = response.data.filter(user => user.id !== Currentuser.id);

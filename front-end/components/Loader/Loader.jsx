@@ -21,10 +21,10 @@ function Loader() {
   }, []);
 
   return (
-    <SafeAreaView style={styles.main}>
+    <View style={styles.main}>
       <Image source={require("../../assets/ic_login_logo.png")} />
       <Text style={styles.farmasee}> Farm@see</Text>
-    </SafeAreaView>
+    </View>
   );
 }
 const styles = StyleSheet.create({
