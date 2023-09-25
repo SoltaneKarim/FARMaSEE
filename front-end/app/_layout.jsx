@@ -71,6 +71,26 @@ function StackLayout() {
 						},
 					}}
 				/>
+				<Stack.Screen
+					name="care"
+					options={{
+						headerTitle: "",
+						headerShown: false,
+						headerStyle: {
+							backgroundColor: "#5db075",
+						},
+					}}
+				/>
+				<Stack.Screen
+					name="checking"
+					options={{
+						headerTitle: "",
+						headerShown: true,
+						headerStyle: {
+							backgroundColor: "#5db075",
+						},
+					}}
+				/>
 			</Stack>
 		</Provider>
 	);

@@ -13,27 +13,26 @@ import { useSelector } from "react-redux";
 
 import { useRouter } from "expo-router";
 const Care = () => {
-  const user = useSelector((state) => state.user); // Assuming your user object in Redux has a 'name' property
-	console.log(user)
+	const user = useSelector((state) => state.user); // Assuming your user object in Redux has a 'name' property
+	console.log(user);
 	const router = useRouter();
-  const handlePayNowClick = async () => {
-    try {
-      // Replace 'your-api-endpoint' with the actual URL of your server's endpoint
-      const response = await axios.post('http://192.168.100.48:5000/chat/users', {
-        specificId: user.id,
-        fullname: user.fullName,
-        messages:[]
-      });
-  
-      // Handle the response, such as showing a success message or redirecting the user
-      console.log('User created successfully:', response.data);
-      router.push("chatbest")
+	const handlePayNowClick = async () => {
+		try {
+			// Replace 'your-api-endpoint' with the actual URL of your server's endpoint
+			const response = await axios.post("http://192.168.100.45:5000/chat/users", {
+				specificId: user.id,
+				fullname: user.fullName,
+				messages: [],
+			});
 
-    } catch (error) {
-      // Handle errors, such as displaying an error message to the user
-      console.error('Error creating user:', error);
-    }
-  };
+			// Handle the response, such as showing a success message or redirecting the user
+			console.log("User created successfully:", response.data);
+			router.push("chatbest");
+		} catch (error) {
+			// Handle errors, such as displaying an error message to the user
+			console.error("Error creating user:", error);
+		}
+	};
 	return (
 		<ScrollView>
 			<View style={styles.paymentSuccess}>
@@ -286,7 +285,7 @@ const styles = StyleSheet.create({
 		width: "7.03%",
 		height: "4.81%",
 		position: "absolute",
-		overflow: "hidden",
+		// overflow: "hidden",
 	},
 	vectorIcon3: {
 		maxHeight: "100%",
@@ -342,9 +341,9 @@ const styles = StyleSheet.create({
 		paddingVertical: 20,
 		justifyContent: "space-between",
 		left: 18,
-		alignItems: "center",
-		flexDirection: "row",
-		width: 327,
+		// alignItems: "center",
+		// flexDirection: "row",
+		width: "100%",
 		position: "absolute",
 	},
 	getPremium: {
@@ -406,7 +405,7 @@ const styles = StyleSheet.create({
 	content: {
 		top: 138,
 		height: 520,
-		width: 327,
+		// width: 327,
 		left: 24,
 		position: "absolute",
 	},
@@ -439,7 +438,7 @@ const styles = StyleSheet.create({
 	paymentSuccess: {
 		backgroundColor: "#CDEDD8",
 		flex: 1,
-		width: "100%",
+		// width: "100%",
 		height: 812,
 	},
 });

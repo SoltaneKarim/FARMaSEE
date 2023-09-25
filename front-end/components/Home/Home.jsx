@@ -7,7 +7,9 @@ import {
 	ScrollView,
 	TouchableOpacity,
 	Image,
+	
 } from "react-native";
+import News from "./News";
 import { Color, FontFamily, FontSize, Border, Padding } from "./GlobalStyle.js";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
@@ -112,8 +114,8 @@ const IPhone13ProMax3 = () => {
 								</View>
 				</View>
 				<View style={{position:"absolute",marginTop:"80%",backgroundColor:"white",width:"100%",borderTopLeftRadius: 10, // Adjust the radius as needed
-            borderTopRightRadius: 10,height:"100%"}}>
-					<Text>hey</Text>
+            borderTopRightRadius: 10}}>
+					<News/>
 				</View>
 			</ScrollView>
 		</SafeAreaView>

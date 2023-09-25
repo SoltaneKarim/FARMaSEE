@@ -16,10 +16,15 @@ import { useRouter } from "expo-router";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch } from "react-redux";
 
- import { login, signup } from "../../redux/actions";
+import { login, signup } from "../../redux/actions";
 import axios from "axios";
 import Inpp from "./auth";
+import { Dimensions } from "react-native";
+
+// Get the screen width
 const AuthScreen = () => {
+	const screenWidth = Dimensions.get("window").width;
+	const inputWrapWidth = 0.8 * screenWidth;
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const [email, setEmail] = useState("");
@@ -42,15 +47,13 @@ const AuthScreen = () => {
 	};
 
 	const changeImage = (pic) => {
-		setSelectedImage(pic)
-	}
-
-	
+		setSelectedImage(pic);
+	};
 
 	const handleLogin = async () => {
 		try {
 			setLoading(true); // Set loading to true while waiting for the response
-			const response = await axios.get("http://192.168.100.48:5000/user");
+			const response = await axios.get("http://192.168.100.45:5000/user");
 			const users = response.data;
 			const lowerCaseEmail = email.toLowerCase();
 			const user = users.find(
@@ -76,48 +79,51 @@ const AuthScreen = () => {
 
 	const handleSignUp = async () => {
 		setLoading(true);
-	  
+
 		try {
-		  
-	  
-		  // Continue with user registration including the image URL
-		  const userResponse = await axios.post('http://192.168.100.48:5000/user', {
-			fullName,
-			email,
-			password,
-			address,
-			phoneNumber,
-			budget,
-			imageUrl:selectedImage,
-		  });
-	  
-		  console.log('User signed up successfully:', userResponse.data);
-		  dispatch(signup(userResponse.data));
-		  router.push('/home');
+			// Continue with user registration including the image URL
+			const userResponse = await axios.post("http://192.168.100.45:5000/user", {
+				fullName,
+				email,
+				password,
+				address,
+				phoneNumber,
+				budget,
+				imageUrl: selectedImage,
+			});
+
+			console.log("User signed up successfully:", userResponse.data);
+			dispatch(signup(userResponse.data));
+			router.push("/home");
 		} catch (error) {
-		  console.error('Error during sign-up:', error);
-		  alert('An error occurred during sign-up. Please try again later.');
+			console.error("Error during sign-up:", error);
+			alert("An error occurred during sign-up. Please try again later.");
 		} finally {
-		  setLoading(false);
+			setLoading(false);
 		}
-	  };
-	  
+	};
+
 	return (
 		<View style={styles.main}>
 			{loading ? ( // Show the ActivityIndicator while loading
 				<ActivityIndicator size="large" color="#fffff" />
 			) : isSignUp ? (
-				<>
+				<View style={styles.container}>
 					<Image
 						style={styles.image}
 						source={require("../../assets/ic_email_submit_logo.png")}
 					/>
-					<Text style={styles.text}>Sign Up</Text>
 					<KeyboardAwareScrollView>
+						<Text style={styles.text}>Sign Up</Text>
 						<View style={styles.inputWrapSignup}>
 							<View style={[styles.inputWrap, { marginBottom: 10 }]}>
 								<Image
-									style={{ height: 20, width: 20, marginRight: 10 }}
+									style={{
+										height: 20,
+										width: 20,
+										marginRight: 10,
+										marginLeft: 10,
+									}}
 									source={require("../../assets/name.png")}
 								/>
 								<TextInput
@@ -131,7 +137,12 @@ const AuthScreen = () => {
 
 							<View style={[styles.inputWrap, { marginBottom: 10 }]}>
 								<Image
-									style={{ height: 20, width: 20, marginRight: 10 }}
+									style={{
+										height: 20,
+										width: 20,
+										marginRight: 10,
+										marginLeft: 10,
+									}}
 									source={require("../../assets/Vector.png")}
 								/>
 								<TextInput
@@ -145,7 +156,12 @@ const AuthScreen = () => {
 
 							<View style={[styles.inputWrap, { marginBottom: 10 }]}>
 								<Image
-									style={{ height: 20, width: 20, marginRight: 10 }}
+									style={{
+										height: 20,
+										width: 20,
+										marginRight: 10,
+										marginLeft: 10,
+									}}
 									source={require("../../assets/Group9.png")}
 								/>
 								<TextInput
@@ -175,7 +191,12 @@ const AuthScreen = () => {
 
 							<View style={[styles.inputWrap, { marginBottom: 10 }]}>
 								<Image
-									style={{ height: 20, width: 20, marginRight: 10 }}
+									style={{
+										height: 20,
+										width: 20,
+										marginRight: 10,
+										marginLeft: 10,
+									}}
 									source={require("../../assets/tunisia.png")}
 								/>
 								<TextInput
@@ -189,7 +210,12 @@ const AuthScreen = () => {
 
 							<View style={[styles.inputWrap, { marginBottom: 10 }]}>
 								<Image
-									style={{ height: 20, width: 20, marginRight: 10 }}
+									style={{
+										height: 20,
+										width: 20,
+										marginRight: 10,
+										marginLeft: 10,
+									}}
 									source={require("../../assets/phone-call.png")}
 								/>
 								<TextInput
@@ -203,7 +229,12 @@ const AuthScreen = () => {
 
 							<View style={styles.inputWrap}>
 								<Image
-									style={{ height: 20, width: 20, marginRight: 10 }}
+									style={{
+										height: 20,
+										width: 20,
+										marginRight: 10,
+										marginLeft: 10,
+									}}
 									source={require("../../assets/money.png")}
 								/>
 								<TextInput
@@ -214,16 +245,24 @@ const AuthScreen = () => {
 									onChangeText={(text) => setBudget(text)}
 								/>
 							</View>
-							<View style={styles.inputWrap}>
-								<Image
-									style={{ height: 20, width: 20, marginRight: 10 }}
-									source={require("../../assets/photo.png")}
-								/>
-								<Text style={styles.centeredText}>
-									Choose a picture or Take one
-								</Text>
+							<View style={{ backgroundColor: "#0000" }}>
+								<View style={(styles.inputWrap, { width: inputWrapWidth , flexDirection: 'row' ,marginBottom:10})}>
+									<Image
+										style={{
+											height: 20,
+											width: 20,
+											marginRight: 10,
+											marginLeft: 10,
+											marginTop: 5,
+										}}
+										source={require("../../assets/photo.png")}
+									/>
+									<Text style={styles.centeredText}>
+										Choose a picture or Take one
+									</Text>
+								</View>
+								<Inpp changeImage={changeImage} />
 							</View>
-							<Inpp changeImage={changeImage} />
 						</View>
 					</KeyboardAwareScrollView>
 					<TouchableOpacity
@@ -234,9 +273,9 @@ const AuthScreen = () => {
 					<Text style={styles.captionText} onPress={toggleAuthMode}>
 						Already have an account? Login
 					</Text>
-				</>
+				</View>
 			) : (
-				<>
+				<View style={styles.container}>
 					<Image
 						style={styles.image}
 						source={require("../../assets/ic_email_submit_logo.png")}
@@ -244,7 +283,12 @@ const AuthScreen = () => {
 					<Text style={styles.text}>Login</Text>
 					<View style={styles.inputWrap}>
 						<Image
-							style={{ height: 20, width: 20, marginRight: 10 }}
+							style={{
+								height: 20,
+								width: 20,
+								marginRight: 10,
+								marginLeft: 10,
+							}}
 							source={require("../../assets/Vector.png")}
 						/>
 						<TextInput
@@ -256,7 +300,12 @@ const AuthScreen = () => {
 					</View>
 					<View style={[styles.inputWrap, { marginBottom: 10 }]}>
 						<Image
-							style={{ height: 20, width: 20, marginRight: 10 }}
+							style={{
+								height: 20,
+								width: 20,
+								marginRight: 10,
+								marginLeft: 10,
+							}}
 							source={require("../../assets/Group9.png")}
 						/>
 						<TextInput
@@ -288,30 +337,42 @@ const AuthScreen = () => {
 						onPress={handleLogin}>
 						<Text style={styles.buttonText}>Login</Text>
 					</TouchableOpacity>
-					<Text style={styles.captionText} onPress={toggleAuthMode}>
-						Don't have an account? Sign Up
+					<Text style={styles.captionText}>
+						Don't have an account?
+						<Text style={styles.signUpText} onPress={toggleAuthMode}>
+							{" "}
+							Sign Up
+						</Text>
 					</Text>
-				</>
+				</View>
 			)}
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		alignItems: "center",
+		width: "80%",
+	},
 	main: {
 		flex: 1,
-		// justifyContent: "center",
+		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#5DB075",
+		backgroundColor: "#0000",
+		width: "100%",
 	},
 	image: {
 		marginBottom: 20,
 		marginTop: 70,
 	},
 	text: {
-		fontSize: 30,
-
-		marginBottom: 20,
+		fontSize: 40, // Set the font size
+		fontWeight: "bold", // Set the font weight to bold
+		color: "#333", // Set the text color
+		textAlign: "center", // Set text alignment to center
+		marginBottom: 20, // Add other styles as needed
 	},
 	textInput: {
 		flex: 1,
@@ -323,16 +384,21 @@ const styles = StyleSheet.create({
 	inputWrap: {
 		flexDirection: "row",
 		alignItems: "center",
-		width: 250,
+		width: "100%",
 		marginBottom: 10,
+		backgroundColor: "#ffffff",
 	},
 	buttonContainer: {
+		marginTop: 20,
 		backgroundColor: "#4CAF50",
 		paddingVertical: 10,
-		paddingHorizontal: 20,
-		borderRadius: 25,
+		paddingHorizontal: 60,
+		borderRadius: 6,
+		borderWidth: 3, // Set the border width
+		borderColor: "#ffff", // Set the border color (black in this example)
 	},
 	buttonText: {
+		alignSelf: "center",
 		color: "#ffffff",
 		fontSize: 18,
 	},
@@ -343,7 +409,7 @@ const styles = StyleSheet.create({
 	inputWrapSignup: {
 		// gap: 10,
 
-		width: 250,
+		width: "100%",
 	},
 	imagePickerButton: {
 		backgroundColor: "#4CAF50",
@@ -360,7 +426,19 @@ const styles = StyleSheet.create({
 	},
 	centeredText: {
 		fontSize: 15,
+		// textAlign: "center",
+	},
+	captionText: {
+		marginTop: 20,
+		fontSize: 16,
+		color: "#5DB075",
 		textAlign: "center",
+	},
+	signUpText: {
+		fontWeight: "bold",
+		fontSize: 20,
+		textDecorationLine: "underline", // Add an underline to make it look like a link
+		color: "#333", // You can set your desired color here
 	},
 });
 
