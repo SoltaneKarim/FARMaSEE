@@ -19,7 +19,7 @@ const Care = () => {
 	const handlePayNowClick = async () => {
 		try {
 			// Replace 'your-api-endpoint' with the actual URL of your server's endpoint
-			const response = await axios.post("http://192.168.100.45:5000/chat/users", {
+			const response = await axios.post("http://192.168.100.62:5000/chat/users", {
 				specificId: user.id,
 				fullname: user.fullName,
 				messages: [],

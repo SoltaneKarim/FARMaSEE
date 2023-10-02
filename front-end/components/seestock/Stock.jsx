@@ -14,8 +14,11 @@ import {
 	KeyboardAvoidingView,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { useSelector } from "react-redux";
 
 const Stock = () => {
+	const user = useSelector((state) => state.user); // Assuming your user object in Redux has a 'name' property
+	console.log("yhis is it", user);
 	const [isAdding, setIsAdding] = useState(false);
 	const [itemType, setItemType] = useState("animal");
 	const [selectedOption, setSelectedOption] = useState(null); // Selected option from the custom dropdown
@@ -30,10 +33,12 @@ const Stock = () => {
 	const [selectedTreeType, setSelectedTreeType] = useState(null);
 	const [selectedTreeOption, setSelectedTreeOption] = useState(null);
 	const [treeModalVisible, setTreeModalVisible] = useState(false);
+	const [animalData, setAnimalData] = useState([]);
+	const [treeData, setTreeData] = useState([]);
 
 	//adding the animals
 	const [birthday, setBirthday] = useState("");
-	const [priceB, setPriceB] = useState("");
+	const [priceB, setPriceB] = useState(null);
 	////////////////////////////////////////////////////////////////
 	const [age, setAge] = useState("");
 	const [weight, setWeight] = useState("");
@@ -67,11 +72,12 @@ const Stock = () => {
 				age: ageTree,
 				quantity: quantityTree,
 				report: "",
+				specificId: user.id,
 			};
 
 			try {
 				const response = await axios.post(
-					"http://192.168.100.45:5000/tree",
+					"http://192.168.100.62:5000/tree",
 					treeData,
 				);
 
@@ -97,7 +103,7 @@ const Stock = () => {
 
 	const postAnimalData = () => {
 		// Construct the data object to send to the server
-		console.log("you have");
+		console.log("you have",user.id);
 		const data = {
 			type: selectedAnimalType,
 			sexe: selectedSexe.label,
@@ -105,12 +111,12 @@ const Stock = () => {
 			weight: parseFloat(weight),
 			birthday: birthday,
 			priceB: parseFloat(priceB),
-			priceS: null,
+			specificId: user.id,
 		};
 
 		// Send the data to the server using Axios
 		axios
-			.post("http://192.168.100.45:5000/animal", data)
+			.post("http://192.168.100.62:5000/animal", data)
 			.then((response) => {
 				// Handle the response (e.g., display a success message)
 				console.log("Animal data successfully posted:", response.data);
@@ -126,33 +132,51 @@ const Stock = () => {
 				setDescription("");
 			})
 			.catch((error) => {
-				console.error("Error posting animal data:", error);
+				console.error("Error posting animal data:", error.message);
 			});
 	};
 
-	const [animalData, setAnimalData] = useState([]);
-	const [treeData, setTreeData] = useState([]);
+	
+	const fetchAnimalData = async () => {
+		try {
+			const response = await axios.get(
+				`http://192.168.100.62:5000/animal/one/${user.id}`,
+			);
 
+			if (response.status === 200) {
+				// Assuming the response.data is an array of animal data
+				setAnimalData(response.data.data);
+			
+			}
+		} catch (error) {
+			console.error("Error fetching animal data:", error.message);
+		}
+	};
+
+	// Function to fetch tree data based on user.id
+	const fetchTreeData = async () => {
+		try {
+			const response = await axios.get(
+				`http://192.168.100.62:5000/tree/one/${user.id}`,
+			);
+
+			if (response.status === 200) {
+				setTreeData(response.data.data);
+			
+			}
+		} catch (error) {
+			console.error("Error fetching tree data:", error.message);
+		}
+	};
+
+	// UseEffect for fetching animal data when the component mounts
 	useEffect(() => {
-		// Fetch animal dataRR2115454687dggdgd
-		axios
-			.get("http://192.168.100.45:5000/animal")
-			.then((response) => {
-				setAnimalData(response.data);
-			})
-			.catch((error) => {
-				console.error("Error fetching animal data:", error);
-			});
+		fetchAnimalData();
+	}, []); // The empty dependency array ensures this effect runs only once when the component mounts
 
-		// Fetch tree data
-		axios
-			.get("http://192.168.100.45:5000/tree")
-			.then((response) => {
-				setTreeData(response.data);
-			})
-			.catch((error) => {
-				console.error("Error fetching tree data:", error);
-			});
+	// UseEffect for fetching tree data when the component mounts
+	useEffect(() => {
+		fetchTreeData();
 	}, []);
 
 	// Filter animal data by type (e.g., "Cow" or "Sheep")
@@ -286,6 +310,7 @@ const Stock = () => {
 											placeholder="Age"
 											keyboardType="numeric"
 											value={age}
+											width="60%"
 											onChangeText={(text) => setAge(text)}
 										/>
 										<TextInput
@@ -397,19 +422,16 @@ const Stock = () => {
 							backgroundColor: "green",
 							borderRadius: 10,
 							padding: 10,
-							alignSelf:'center',
-							marginBottom:40,
-						// alignItems:"center",
+							alignSelf: "center",
+							marginBottom: 40,
+							// alignItems:"center",
 							width: "50%",
-
 						}}
 						onPress={() => {
-							if(itemType==="animal"){
-							postAnimalData();
-
-							}
-							else {
-								addtree()
+							if (itemType === "animal") {
+								postAnimalData();
+							} else {
+								addtree();
 							}
 						}}>
 						<Text style={{ color: "white", textAlign: "center" }}>Submit</Text>
@@ -580,7 +602,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		marginBottom: 10,
-		width: "50%",
+		width: "60%",
 	},
 	selectedOptionContainer: {
 		flexDirection: "row",
@@ -653,7 +675,7 @@ const styles = StyleSheet.create({
 		borderColor: "gray",
 		padding: 10,
 		borderRadius: 5,
-		width: "50%",
+		width: "60%",
 		marginBottom: 10,
 		height: "10%",
 	},

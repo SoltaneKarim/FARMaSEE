@@ -45,16 +45,16 @@ const Planing = () => {
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={styles.child}
-						onPress={() => handleItemClick("/manage")}>
+						onPress={() => handleItemClick("/groups")}>
 						<Text style={styles.text}>Manage your farm</Text>
 						<View style={styles.imageContainer}>
 							<Image
 								style={{
 									resizeMode: "contain",
 									height: 50,
-									width: 50,
+									width: 40,
 								}}
-								source={require("../../assets/mesha.png")}
+								source={require("../../assets/chronometer2.png")}
 							/>
 						</View>
 					</TouchableOpacity>

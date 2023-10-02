@@ -16,7 +16,7 @@ connectDatabase(); // Call the database connection function
 app.use('/chat', userRoutes);
 
 ///////////////////////////////
-const { getAllAnimals, addAnimal, updateAnimal, deleteAnimal, getAllTrees, addTree, updateTree, deleteTree, getAllResources, addResource, updateResource, deleteResource, getAllWallets, addWallet, updateWallet, deleteWallet, getAllUsers, addUser, updateUser, deleteUser, getAllCommerces, addCommerce, updateCommerce, deleteCommerce, getAllPrices, addPrice, updatePrice, deletePrice, getAllDiseases, addDisease, updateDisease, deleteDisease, getAllGroups, addGroup, updateGroup, deleteGroup, getAllPerte, addPerte, updatePerte, deletePerte, getAllDoctors, addDoctor, updateDoctor, deleteDoctor, getAllWorkers, addWorker, updateWorker, deleteWorker, getAllHistory, addHistory, updateHistory, deleteHistory } = require("./database/index.js")
+const { getAllAnimals, addAnimal, updateAnimal, deleteAnimal, getAllTrees, addTree, updateTree,getTreesBySpecificId, deleteTree, getAllResources, addResource, updateResource, deleteResource, getAllWallets, addWallet, updateWallet, deleteWallet, getAllUsers, addUser, updateUser, deleteUser, getAllCommerces, addCommerce, updateCommerce, deleteCommerce, getAllPrices, addPrice, updatePrice, deletePrice, getAllDiseases, addDisease, updateDisease, deleteDisease, getAllGroups, addGroup, updateGroup, deleteGroup, getAllPerte, addPerte, updatePerte, deletePerte, getAllDoctors, addDoctor, updateDoctor, deleteDoctor, getAllWorkers, addWorker, updateWorker, deleteWorker, getAllHistory, addHistory, updateHistory, deleteHistory,deleteBySpecificId ,getBySpecificId,getAnimalsBySpecificId} = require("./database/index.js")
 
 app.use(cors())
 app.use(bodyParser.json());
@@ -31,11 +31,13 @@ app.get("/animal", getAllAnimals)
 app.post("/animal", addAnimal)
 app.put("/animal/:id", updateAnimal)
 app.delete("/animal/:id", deleteAnimal)
+app.get("/animal/one/:specificId", getAnimalsBySpecificId)
 
 app.get("/tree", getAllTrees)
 app.post("/tree", addTree)
 app.put("/tree/:id", updateTree)
 app.delete("/tree/:id", deleteTree)
+app.get("/tree/one/:specificId",getTreesBySpecificId)
 
 app.get("/resource", getAllResources)
 app.post("/resource", addResource)
@@ -61,6 +63,8 @@ app.get("/group", getAllGroups)
 app.post("/group", addGroup)
 app.put("/group/:id", updateGroup)
 app.delete("/group/:id", deleteGroup)
+app.get("/group/one/:specificId",getBySpecificId)
+app.delete("/group/one/:specificId/:id",deleteBySpecificId)
 
 app.get("/price", getAllPrices)
 app.post("/price", addPrice)

@@ -53,7 +53,7 @@ const AuthScreen = () => {
 	const handleLogin = async () => {
 		try {
 			setLoading(true); // Set loading to true while waiting for the response
-			const response = await axios.get("http://192.168.100.45:5000/user");
+			const response = await axios.get("http://192.168.100.62:5000/user");
 			const users = response.data;
 			const lowerCaseEmail = email.toLowerCase();
 			const user = users.find(
@@ -82,7 +82,7 @@ const AuthScreen = () => {
 
 		try {
 			// Continue with user registration including the image URL
-			const userResponse = await axios.post("http://192.168.100.45:5000/user", {
+			const userResponse = await axios.post("http://192.168.100.62:5000/user", {
 				fullName,
 				email,
 				password,
@@ -94,12 +94,13 @@ const AuthScreen = () => {
 
 			console.log("User signed up successfully:", userResponse.data);
 			dispatch(signup(userResponse.data));
-			router.push("/home");
+			router.push("home");
 		} catch (error) {
 			console.error("Error during sign-up:", error);
 			alert("An error occurred during sign-up. Please try again later.");
 		} finally {
 			setLoading(false);
+
 		}
 	};
 
@@ -111,7 +112,7 @@ const AuthScreen = () => {
 				<View style={styles.container}>
 					<Image
 						style={styles.image}
-						source={require("../../assets/ic_email_submit_logo.png")}
+						source={require("../../assets/FarmingIllustration.png")}
 					/>
 					<KeyboardAwareScrollView>
 						<Text style={styles.text}>Sign Up</Text>
@@ -271,14 +272,18 @@ const AuthScreen = () => {
 						<Text style={styles.buttonText}>Sign Up</Text>
 					</TouchableOpacity>
 					<Text style={styles.captionText} onPress={toggleAuthMode}>
-						Already have an account? Login
+						Already have an account?
+						<Text style={styles.signUpText} onPress={toggleAuthMode}>
+							{" "}
+							Login
+						</Text>
 					</Text>
 				</View>
 			) : (
 				<View style={styles.container}>
 					<Image
 						style={styles.image}
-						source={require("../../assets/ic_email_submit_logo.png")}
+						source={require("../../assets/FarmingIllustration.png")}
 					/>
 					<Text style={styles.text}>Login</Text>
 					<View style={styles.inputWrap}>
@@ -366,6 +371,8 @@ const styles = StyleSheet.create({
 	image: {
 		marginBottom: 20,
 		marginTop: 70,
+		width: "100%",
+		height: "30%",
 	},
 	text: {
 		fontSize: 40, // Set the font size
