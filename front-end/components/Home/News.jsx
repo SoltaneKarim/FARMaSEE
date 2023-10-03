@@ -46,9 +46,9 @@ const NewsList = () => {
           flex: 1,
           flexDirection: "column",
           margin: 10,
-          borderRadius: 10,
+          borderRadius: 20,
           borderWidth: 1,
-          borderColor: "#ccc",
+          borderColor: "#93ac99",
         }}
       >
         <Image
@@ -56,11 +56,11 @@ const NewsList = () => {
           style={{
             width: 200,
             height: 150,
-            borderTopLeftRadius: 10,
-            borderTopRightRadius: 10,
+            borderTopLeftRadius: 18,
+            borderTopRightRadius: 18,
           }}
         />
-        <Text style={{ padding: 10 }}>
+        <Text style={{ padding: 10 , fontWeight:700, color:"#104242"}}>
           {item.title.length > 23 ? item.title.substr(0, 30) + "..." : item.title}
         </Text>
         <Text style={{ padding: 10, color: "gray" }}>
@@ -79,11 +79,11 @@ const NewsList = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#f2f2f2", marginLeft: 10 }}>
-      <Text style={{ fontSize: 24, fontWeight: "bold", color: "black" }}>
+    <View style={{ flex: 1, backgroundColor: "#f2f2f2", paddingVertical:25 }}>
+      <Text style={{ fontSize: 24, fontWeight: "bold", color: "#113f41",marginLeft: 10 }}>
         See what's new
       </Text>
-      <Text style={{ fontSize: 16, color: "gray" }}>
+      <Text style={{ fontSize: 16, color: "gray" ,marginLeft: 10}}>
         Concerns Tunisia overall
         <Text style={{ fontSize: 30 }}>↴</Text>
       </Text>

@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderRadius: 6,
 		borderWidth: 1,
-		borderColor: "#4CAF50",
+		borderColor: "#113f40",
 		marginBottom: 15,
 	},
 	buttonImage: {
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
 		marginRight: 8, // Adjust the spacing between image and text as needed
 	},
 	buttonText: {
-		color: "#4CAF50", // Text color
+		color: "#113f40", // Text color
 		fontWeight: "bold",
 		borderColor: "#4CAF50",
 	},

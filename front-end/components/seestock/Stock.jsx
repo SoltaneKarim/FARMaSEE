@@ -77,7 +77,7 @@ const Stock = () => {
 
 			try {
 				const response = await axios.post(
-					"http://192.168.100.62:5000/tree",
+					"http://192.168.1.17:5000/tree",
 					treeData,
 				);
 
@@ -116,7 +116,7 @@ const Stock = () => {
 
 		// Send the data to the server using Axios
 		axios
-			.post("http://192.168.100.62:5000/animal", data)
+			.post("http://192.168.1.17:5000/animal", data)
 			.then((response) => {
 				// Handle the response (e.g., display a success message)
 				console.log("Animal data successfully posted:", response.data);
@@ -140,7 +140,7 @@ const Stock = () => {
 	const fetchAnimalData = async () => {
 		try {
 			const response = await axios.get(
-				`http://192.168.100.62:5000/animal/one/${user.id}`,
+				`http://192.168.1.17:5000/animal/one/${user.id}`,
 			);
 
 			if (response.status === 200) {
@@ -157,7 +157,7 @@ const Stock = () => {
 	const fetchTreeData = async () => {
 		try {
 			const response = await axios.get(
-				`http://192.168.100.62:5000/tree/one/${user.id}`,
+				`http://192.168.1.17:5000/tree/one/${user.id}`,
 			);
 
 			if (response.status === 200) {
@@ -216,7 +216,7 @@ const Stock = () => {
 													</Text>
 												</View>
 											) : (
-												<Text style={styles.placeholderText}>
+												<Text style={[styles.placeholderText, styles.optionText]}>
 													Select an animal
 												</Text>
 											)}
@@ -310,7 +310,7 @@ const Stock = () => {
 											placeholder="Age"
 											keyboardType="numeric"
 											value={age}
-											width="60%"
+											width="80%"
 											onChangeText={(text) => setAge(text)}
 										/>
 										<TextInput
@@ -419,12 +419,11 @@ const Stock = () => {
 					{/* Submit button outside KeyboardAvoidingView */}
 					<TouchableOpacity
 						style={{
-							backgroundColor: "green",
+							backgroundColor: "#336b6d",
 							borderRadius: 10,
 							padding: 10,
 							alignSelf: "center",
 							marginBottom: 40,
-							// alignItems:"center",
 							width: "50%",
 						}}
 						onPress={() => {
@@ -448,10 +447,11 @@ const Stock = () => {
 							<View style={styles.title}>
 								<Text
 									style={{
-										fontSize: 24,
-										fontWeight: "600",
+										fontSize: 30,
+										fontWeight: "800",
 										fontFamily: "sans-serif",
-										color: "#3a3f47",
+										color: "#123f41",
+										textTransform:"capitalize"
 									}}>
 									This is what you have
 								</Text>
@@ -467,8 +467,8 @@ const Stock = () => {
 										style={{ width: 50, height: 50 }}
 										source={require("../../assets/cow4.png")} // Replace with your cow image
 									/>
-									<Text>Cows</Text>
-									<Text style={styles.quantityText}>
+									<Text style={{fontWeight:700, fontSize:20 , color:"#134042"}}>Cows</Text>
+									<Text style={styles.quantityText} style={{fontWeight:700, fontSize:15 , color:"#94a995"}}>
 										Quantity: {cowsData.length}
 									</Text>
 								</View>
@@ -477,8 +477,8 @@ const Stock = () => {
 										style={{ width: 50, height: 50 }}
 										source={require("../../assets/shep4.png")} // Replace with your sheep image
 									/>
-									<Text>Sheep</Text>
-									<Text style={styles.quantityText}>
+									<Text style={{fontWeight:700, fontSize:20 , color:"#134042"}}>Sheep</Text>
+									<Text style={styles.quantityText} style={{fontWeight:700, fontSize:15 , color:"#94a995"}}>
 										Quantity: {sheepData.length}
 									</Text>
 								</View>
@@ -487,8 +487,8 @@ const Stock = () => {
 										style={{ width: 50, height: 50 }}
 										source={require("../../assets/olives.png")} // Replace with your olive tree image
 									/>
-									<Text>Olive Trees:</Text>
-									<Text style={styles.quantityText}>
+									<Text style={{fontWeight:700, fontSize:20 , color:"#134042"}}>Olive Trees:</Text>
+									<Text style={styles.quantityText} style={{fontWeight:700, fontSize:15 , color:"#94a995"}}>
 										Quantity: {oliveTreeData.length}
 									</Text>
 								</View>
@@ -529,14 +529,18 @@ const styles = StyleSheet.create({
 	},
 	scrollView: {
 		flex: 1,
+		paddingVertical:30
 	},
 	all: {
 		alignItems: "center",
 		flex: 1,
+		
 	},
 	wrapper: {
-		marginTop: 20,
+		marginTop: 100,
 		width: "90%",
+		
+		
 	},
 	title: {
 		display: "flex",
@@ -554,14 +558,14 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		padding: 10,
 		borderWidth: 1,
-		borderColor: "gray",
+		borderColor: "#94a995",
 		borderRadius: 5,
 	},
 	plusButton: {
 		position: "absolute",
 		bottom: 40, // Adjust the value as needed to position the button at the desired distance from the bottom
 		right: 30,
-		backgroundColor: "blue", // Customize button styles as needed
+		backgroundColor: "#336b6d", // Customize button styles as needed
 		width: 50,
 		height: 50,
 		borderRadius: 25,
@@ -599,38 +603,52 @@ const styles = StyleSheet.create({
 		borderColor: "gray",
 		padding: 10,
 		borderRadius: 5,
-		justifyContent: "center",
-		alignItems: "center",
+		
 		marginBottom: 10,
-		width: "60%",
+textAlign: "left",
+
+		width: "80%",
+		
 	},
 	selectedOptionContainer: {
 		flexDirection: "row",
 		alignItems: "center",
-		width: 150,
+		width: "100%",
+		textAlign:"left"
+
 	},
 	selectedOptionText: {
 		marginLeft: 10,
+		textAlign:"left"
+		
 	},
 	placeholderText: {
 		color: "gray",
+		textAlign:"left"
+	
 	},
 	modalContainer: {
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: "rgba(0, 0, 0, 0.5)",
+		textAlign:"left"
+
 	},
 	modalContent: {
 		backgroundColor: "white",
 		borderRadius: 10,
 		padding: 20,
 		width: "80%",
+		textAlign:"left"
+
 	},
 	optionContainer: {
 		flexDirection: "row",
 		alignItems: "center",
 		marginBottom: 10,
+		textAlign:"left"
+		
 	},
 	optionImage: {
 		width: 24,
@@ -639,6 +657,9 @@ const styles = StyleSheet.create({
 	},
 	optionText: {
 		fontSize: 16,
+		textAlign:"left",
+
+		
 	},
 	// plusButton: {
 	// 	position: "absolute",
@@ -675,13 +696,13 @@ const styles = StyleSheet.create({
 		borderColor: "gray",
 		padding: 10,
 		borderRadius: 5,
-		width: "60%",
+		width: "80%",
 		marginBottom: 10,
+		textAlign:"left",
 		height: "10%",
 	},
 	inputwrapper: {
 		// width: "90%",
-
 		alignItems: "center",
 	},
 });

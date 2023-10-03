@@ -94,13 +94,15 @@ const Identify = () => {
 		});
 	};
 
-	const pieChartData = disease?.map((item) => ({
+	const predefinedColors = ['#94a995', '#27585b', '#0f4141', '#346c6e', '#e0dfdb', '#486d6f', '#468456'];
+
+	const pieChartData = disease?.map((item, index) => ({
 		name: item.name,
 		population: item.probability,
-		color: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Random color
+		color: predefinedColors[index % predefinedColors.length],
 		legendFontColor: "#7F7F7F",
 		legendFontSize: 9,
-	}));
+	  }));
 
 	const chartConfig = {
 		backgroundGradientFrom: "#ffffff",
@@ -206,7 +208,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 32,
 		borderRadius: 4,
 		elevation: 3,
-		backgroundColor: "black",
+		backgroundColor: "#336b6d",
 	},
 	imageContainer: {
 		marginBottom: 20,
@@ -239,6 +241,7 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		color: "white",
+		fontSize: 25
 	},
 });
 

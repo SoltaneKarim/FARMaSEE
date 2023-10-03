@@ -13,7 +13,7 @@ const IPhone13ProMax5 = () => {
 
 	useEffect(() => {
 		// Make an Axios GET request to fetch group data
-		Axios.get(`http://192.168.100.62:5000/group/one/${user.id}`)
+		Axios.get(`http://192.168.1.17:5000/group/one/${user.id}`)
 			.then((response) => {
 				setGroups(response.data.data);
 			})
@@ -54,7 +54,7 @@ const IPhone13ProMax5 = () => {
 			};
 		} else {
 			return {
-				backgroundColor: "green",
+				backgroundColor: "#26575a",
 				image: require("../../assets/Sprout.png"),
 			};
 		}
@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: "center",
+		marginTop:40
 	},
 	groupContainer: {
 		width: "90%", // Set a fixed width that suits your design
@@ -118,7 +119,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 8,
     margin: 8,
-    borderRadius: 8,
+	paddingVertical:20,
+    borderRadius: 15,
   	},
     image: {
       width: 50,

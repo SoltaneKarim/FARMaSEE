@@ -106,6 +106,9 @@ const styles = StyleSheet.create({
 	text: {
 		flex: 1, // Allow text to take available space
 		textAlign: "center",
+		fontWeight:700,
+		fontSize:16,
+		textTransform:"capitalize",
 	},
 	imageContainer: {
 		marginLeft: 10, // Add margin to image container for spacing

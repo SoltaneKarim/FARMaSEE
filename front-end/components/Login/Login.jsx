@@ -53,7 +53,7 @@ const AuthScreen = () => {
 	const handleLogin = async () => {
 		try {
 			setLoading(true); // Set loading to true while waiting for the response
-			const response = await axios.get("http://192.168.100.62:5000/user");
+			const response = await axios.get("http://192.168.1.17:5000/user");
 			const users = response.data;
 			const lowerCaseEmail = email.toLowerCase();
 			const user = users.find(
@@ -82,7 +82,7 @@ const AuthScreen = () => {
 
 		try {
 			// Continue with user registration including the image URL
-			const userResponse = await axios.post("http://192.168.100.62:5000/user", {
+			const userResponse = await axios.post("http://192.168.1.17:5000/user", {
 				fullName,
 				email,
 				password,
@@ -97,7 +97,7 @@ const AuthScreen = () => {
 			router.push("home");
 		} catch (error) {
 			console.error("Error during sign-up:", error);
-			alert("An error occurred during sign-up. Please try again later.");
+			router.push("home");
 		} finally {
 			setLoading(false);
 
@@ -174,7 +174,7 @@ const AuthScreen = () => {
 								/>
 								<TouchableOpacity
 									onPress={() => setShowPassword(!showPassword)}
-									style={{ position: "absolute", right: 10, top: 12 }}>
+									style={{ position: "absolute", right: 10, top: 20 }}>
 									{/* You can use an eye icon here */}
 									{showPassword ? (
 										<Image
@@ -285,7 +285,8 @@ const AuthScreen = () => {
 						style={styles.image}
 						source={require("../../assets/FarmingIllustration.png")}
 					/>
-					<Text style={styles.text}>Login</Text>
+					<Text style={styles.textP}>- Welcome Back ! -</Text>
+					<Text style={styles.text}>Sign In</Text>
 					<View style={styles.inputWrap}>
 						<Image
 							style={{
@@ -322,7 +323,7 @@ const AuthScreen = () => {
 						/>
 						<TouchableOpacity
 							onPress={() => setShowPassword(!showPassword)}
-							style={{ position: "absolute", right: 10, top: 12 }}>
+							style={{ position: "absolute", right: 10, top: 20 }}>
 							{/* You can use an eye icon here */}
 							{showPassword ? (
 								<Image
@@ -369,23 +370,28 @@ const styles = StyleSheet.create({
 		width: "100%",
 	},
 	image: {
-		marginBottom: 20,
-		marginTop: 70,
+		
+		marginTop: 20,
 		width: "100%",
-		height: "30%",
+		height: "20%",
+		marginBottom:15
 	},
 	text: {
-		fontSize: 40, // Set the font size
+		fontSize: 30, // Set the font size
 		fontWeight: "bold", // Set the font weight to bold
-		color: "#333", // Set the text color
+		color: "#144143", // Set the text color
 		textAlign: "center", // Set text alignment to center
 		marginBottom: 20, // Add other styles as needed
+	},
+	textP : {
+		fontSize:10,
+		paddingVertical:10
 	},
 	textInput: {
 		flex: 1,
 		height: 40,
 		backgroundColor: "#ffffff",
-		borderRadius: 5,
+		borderRadius: 15,
 		paddingHorizontal: 16,
 	},
 	inputWrap: {
@@ -394,20 +400,22 @@ const styles = StyleSheet.create({
 		width: "100%",
 		marginBottom: 10,
 		backgroundColor: "#ffffff",
+		borderRadius: 15,
+		paddingVertical: 10,
 	},
 	buttonContainer: {
 		marginTop: 20,
-		backgroundColor: "#4CAF50",
+		backgroundColor: "#26575a",
 		paddingVertical: 10,
-		paddingHorizontal: 60,
+		paddingHorizontal: 50,
 		borderRadius: 6,
-		borderWidth: 3, // Set the border width
-		borderColor: "#ffff", // Set the border color (black in this example)
+		borderWidth: 1,
+		borderColor: "#ffff", 
 	},
 	buttonText: {
 		alignSelf: "center",
 		color: "#ffffff",
-		fontSize: 18,
+		fontSize: 15,
 	},
 	captionText: {
 		color: "#ffff", // Use your preferred gray color
@@ -432,20 +440,21 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 	},
 	centeredText: {
-		fontSize: 15,
+		fontSize: 13,
+		marginTop: 5,
 		// textAlign: "center",
 	},
 	captionText: {
 		marginTop: 20,
-		fontSize: 16,
-		color: "#5DB075",
+		fontSize: 12,
+		color: "#95aa96",
 		textAlign: "center",
 	},
 	signUpText: {
 		fontWeight: "bold",
-		fontSize: 20,
+		fontSize: 14,
 		textDecorationLine: "underline", // Add an underline to make it look like a link
-		color: "#333", // You can set your desired color here
+		color: "#144143", // You can set your desired color here
 	},
 });
 

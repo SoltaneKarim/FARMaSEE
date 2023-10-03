@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Svg, Path } from 'react-native-svg';
+
 import {
   StyleSheet,
   Text,
@@ -41,7 +43,7 @@ const Groups = () => {
   useEffect(() => {
     // Fetch group data
     axios
-      .get(`http://192.168.100.62:5000/group/one/${user.id}`, {
+      .get(`http://192.168.1.17:5000/group/one/${user.id}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -57,7 +59,7 @@ const Groups = () => {
 
     // Fetch animal data
     axios
-      .get("http://192.168.100.62:5000/animal")
+      .get("http://192.168.1.17:5000/animal")
       .then((response) => {
         setAnimals(response.data);
       })
@@ -67,7 +69,7 @@ const Groups = () => {
 
     // Fetch tree data
     axios
-      .get("http://192.168.100.62:5000/tree")
+      .get("http://192.168.1.17:5000/tree")
       .then((response) => {
         setTrees(response.data);
       })
@@ -88,7 +90,7 @@ const Groups = () => {
 		};
 
 		axios
-			.post("http://192.168.100.62:5000/group", newGroup)
+			.post("http://192.168.1.17:5000/group", newGroup)
 			.then((response) => {
 				console.log("Group added successfully:", response.data);
 				setGroupName("");
@@ -143,7 +145,7 @@ const Groups = () => {
 					style: "destructive",
 					onPress: () => {
 						axios
-							.delete(`http://192.168.100.62:5000/group/one/${user.id}/${item.id}`)
+							.delete(`http://192.168.1.17:5000/group/one/${user.id}/${item.id}`)
 							.then((response) => {
 								console.log("Group deleted successfully:", response.data);
 								setGroupData((prevData) =>
@@ -182,7 +184,12 @@ const Groups = () => {
 							<View style={styles.groupHeader}>
 								<Text style={styles.groupName}>{item.name}</Text>
 								<TouchableOpacity onPress={() => handleDeleteGroup(item)}>
-									<Text style={styles.deleteButton}>X</Text>
+									<Text style={styles.deleteButton}>
+									<Svg width="25" height="25" fill="#346c6e" viewBox="0 0 16 16">
+  <Path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+</Svg>
+
+									</Text>
 								</TouchableOpacity>
 							</View>
 							<Text style={styles.groupCaption}>
@@ -331,10 +338,10 @@ const Groups = () => {
 										<View style={{ flex: 1, alignItems: "flex-end" }}>
 											<CheckBox
 												checked={selectedTrees.some((t) => t.id === item.id)}
-												checkedColor="#0F0"
+												checkedColor="#94a995"
 												onPress={() => toggleTreeSelection(item)}
 												size={20}
-												uncheckedColor="#F00"
+												uncheckedColor="#114243"
 											/>
 										</View>
 									</View>
@@ -410,26 +417,28 @@ const styles = StyleSheet.create({
 	section: {
 		alignItems: "center",
 		paddingTop: 20,
+		
 	},
 	sectionText: {
 		fontSize: 24,
 		fontWeight: "bold",
+		color:"#104142"
 	},
 	separator: {
 		borderBottomWidth: 1,
-		borderBottomColor: "black",
+		borderBottomColor: "#95aa96",
 		marginHorizontal: 20,
 		marginTop: 10,
 	},
 	groupItem: {
 		padding: 16,
 		borderBottomWidth: 1,
-		borderBottomColor: "#ddd",
+		borderBottomColor: "#95aa96",
 	},
 	plusButton: {
 		alignItems: "center",
 		justifyContent: "center",
-		backgroundColor: "#0F0E0E",
+		backgroundColor: "#346c6e",
 		width: 60,
 		height: 60,
 		borderRadius: 30,
@@ -477,7 +486,7 @@ const styles = StyleSheet.create({
 		color: "white",
 	},
 	createGroupButton: {
-		backgroundColor: "#007BFF",
+		backgroundColor: "#114243",
 		padding: 12,
 		borderRadius: 5,
 		alignItems: "center",
@@ -495,17 +504,22 @@ const styles = StyleSheet.create({
 	},
 
 	groupName: {
-		fontSize: 18,
+		fontSize: 30,
 		fontWeight: "bold",
 		marginBottom: 5,
+		color:"#114243",
+		marginLeft:0,
+		textTransform: "uppercase",
 	},
 
 	groupCaption: {
 		fontSize: 14,
 		color: "#666",
 		alignSelf: "flex-start",
-		borderTopWidth: 1,
-		borderTopColor: "#ddd",
+		/* borderTopWidth: 1,
+		borderTopColor: "#93aa95", */
+		paddingVertical:5,
+		marginLeft:9
 	},
 	groupHeader: {
 		flexDirection: "row",
