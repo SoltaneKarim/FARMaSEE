@@ -15,7 +15,7 @@ const Care = () => {
     console.log('hello')
     try {
       // Send the payment request
-      const response = await axios.post('http://192.168.1.92:5000/payment', form);
+      const response = await axios.post('http://192.168.1.20:5000/payment', form);
       console.log('response', response)
       setLink(result.link)
       const { result } = response.data;
@@ -24,7 +24,7 @@ const Care = () => {
       Linking.openURL(result.link)
 
       // Optionally, you can also create the user here if needed
-      const userResponse = await axios.post('http://192.168.1.92:5000/chat/users', {
+      const userResponse = await axios.post('http://192.168.1.20:5000/chat/users', {
         specificId: user.id,
         fullname: user.fullName,
         messages: [],
@@ -88,10 +88,10 @@ const Care = () => {
         </View>
       </TouchableOpacity>
         <View style={styles.content}>
-        <WebView
+        {/* <WebView
           source={{ uri: link }}
           scalesPageToFit={true}
-        />
+        /> */}
 
           <Image
             style={styles.backgroundIcon}

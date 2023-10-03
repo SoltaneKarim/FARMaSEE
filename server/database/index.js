@@ -123,6 +123,25 @@ const deleteUser = function (req, res) {
 };
 
 // animal functions
+const getAnimalsBySpecificId = function (req, res) {
+  const specificId = req.params.specificId; // Assuming you're passing the specificId as a route parameter
+
+  const query = "SELECT * FROM animal WHERE specificId = ?";
+  
+  connection.query(query, [specificId], (err, results) => {
+    if (err) {
+      console.log("Error retrieving data from the database:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "No animals found with the specificId" });
+    }
+
+    res.json({ success: true, data: results });
+  });
+};
+
 
 const getAllAnimals = function (req, res) {
   const query = "SELECT * FROM animal";
@@ -136,34 +155,10 @@ const getAllAnimals = function (req, res) {
 };
 
 const addAnimal = function (req, res) {
-  const query =
-    "INSERT INTO animal (type, sexe, age, consumption, birthday, weight, priceB, priceS, description) values (?,?,?,?,?,?,?,?,?)";
-  const {
-    type,
-    sexe,
-    age,
-    consumption,
-    birthday,
-    weight,
-    priceB,
-    priceS,
-    description,
-  } = req.body;
+  const query = "INSERT INTO animal (specificId, type, sexe, age, consumption, birthday, weight, priceB, priceS, description) values (?,?,?,?,?,?,?,?,?,?)";
+  const { specificId, type, sexe, age, consumption, birthday, weight, priceB, priceS, description } = req.body;
 
-  connection.query(
-    query,
-    [
-      type,
-      sexe,
-      age,
-      consumption,
-      birthday,
-      weight,
-      priceB,
-      priceS,
-      description,
-    ],
-    (err, results) => {
+  connection.query(query, [specificId, type, sexe, age, consumption, birthday, weight, priceB, priceS, description], (err, results) => {
       if (err) {
         console.log("Error inserting data into the database:", err);
         return res.status(500).json({ error: "Internal server error" });
@@ -450,6 +445,25 @@ const deleteResource = function (req, res) {
 };
 
 //   trees functions
+const getTreesBySpecificId = function (req, res) {
+  const specificId = req.params.specificId; // Assuming you're passing the specificId as a route parameter
+
+  const query = "SELECT * FROM trees WHERE specificId = ?";
+  
+  connection.query(query, [specificId], (err, results) => {
+    if (err) {
+      console.log("Error retrieving data from the database:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "No trees found with the specificId" });
+    }
+
+    res.json({ success: true, data: results });
+  });
+};
+
 
 const getAllTrees = function (req, res) {
   const query = "SELECT * FROM trees";
@@ -463,17 +477,16 @@ const getAllTrees = function (req, res) {
 };
 
 const addTree = function (req, res) {
-  const query =
-    "INSERT INTO trees (type, age, quantity, report) values (?,?,?,?)";
-  const { type, age, quantity, report } = req.body;
+  const query = "INSERT INTO trees (specificId, type, age, quantity, report) values (?,?,?,?,?)";
+  const { specificId, type, age, quantity, report } = req.body;
 
-  connection.query(query, [type, age, quantity, report], (err, results) => {
-    if (err) {
-      console.log("Error inserting data into the database:", err);
-      return res.status(500).json({ error: "Internal server error" });
-    }
-    res.json({ success: true, message: "tree added successfully" });
-  });
+  connection.query(query, [specificId, type, age, quantity, report], (err, results) => {
+      if (err) {
+        console.log("Error inserting data into the database:", err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+      res.json({ success: true, message: "tree added successfully" });
+    });
 };
 
 const updateTree = function (req, res) {
@@ -575,14 +588,10 @@ const getAllGroups = function (req, res) {
 };
 
 const addGroup = function (req, res) {
-  const query =
-    "INSERT INTO `groups` (name, members, consumption, eatingTime, duration) values (?,?,?,?,?)";
-  const { name, members, consumption, eatingTime, duration } = req.body;
+  const query = "INSERT INTO `groups` (specificId, name, members, consumption, eatingTime, duration) values (?,?,?,?,?,?)";
+  const { specificId, name, members, consumption, eatingTime, duration } = req.body;
 
-  connection.query(
-    query,
-    [name, members, consumption, eatingTime, duration],
-    (err, results) => {
+  connection.query(query, [specificId, name, members, consumption, eatingTime, duration], (err, results) => {
       if (err) {
         console.log("Error inserting data into the database:", err);
         return res.status(500).json({ error: "Internal server error" });
@@ -591,6 +600,50 @@ const addGroup = function (req, res) {
     }
   );
 };
+
+const getBySpecificId = function (req, res) {
+  const specificId = req.params.specificId; // Assuming you're passing the specificId as a route parameter
+
+  const query = "SELECT * FROM `groups` WHERE specificId = ?";
+  
+  connection.query(query, [specificId], (err, results) => {
+    if (err) {
+      console.log("Error retrieving data from the database:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Group not found" });
+    }
+
+    // Return all matching results in an array
+    const groupData = results;
+
+    res.json({ success: true, data: groupData });
+  });
+};
+const deleteBySpecificId = function (req, res) {
+  const specificId = req.params.specificId; // Assuming you're passing the specificId as a route parameter
+  const groupIdToDelete = req.params.id; // Assuming you're passing the groupId as a route parameter
+
+  const query = "DELETE FROM `groups` WHERE specificId = ? AND id = ?";
+  
+  connection.query(query, [specificId, groupIdToDelete], (err, results) => {
+    if (err) {
+      console.log("Error deleting data from the database:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: "No group found with the specified specificId and groupId" });
+    }
+
+    res.json({ success: true, message: "Group deleted successfully" });
+  });
+};
+
+
+
 
 const updateGroup = function (req, res) {
   const groupId = req.params.id;
@@ -921,6 +974,7 @@ module.exports = {
   updateUser,
   deleteUser,
   getAllAnimals,
+  getTreesBySpecificId,
   addAnimal,
   updateAnimal,
   deleteAnimal,
@@ -941,6 +995,7 @@ module.exports = {
   updateResource,
   deleteResource,
   getAllTrees,
+  getAnimalsBySpecificId,
   addTree,
   updateTree,
   deleteTree,
@@ -952,4 +1007,6 @@ module.exports = {
   addGroup,
   updateGroup,
   deleteGroup,
-};
+  getBySpecificId,
+  deleteBySpecificId
+}

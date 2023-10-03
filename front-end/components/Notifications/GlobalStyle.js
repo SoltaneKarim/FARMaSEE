@@ -1,4 +1,4 @@
-/* fonts */
+  /* fonts */
 export const FontFamily = {
     poppinsSemiBold: "sans-serif",
     poppinsRegular: "Poppins-Regular",

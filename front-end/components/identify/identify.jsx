@@ -94,21 +94,22 @@ const Identify = () => {
 		});
 	};
 
-	const pieChartData = disease?.map((item) => ({
+	const predefinedColors = ['#94a995', '#27585b', '#0f4141', '#346c6e', '#e0dfdb', '#486d6f', '#468456'];
+
+	const pieChartData = disease?.map((item, index) => ({
 		name: item.name,
 		population: item.probability,
-		color: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Random color
+		color: predefinedColors[index % predefinedColors.length],
 		legendFontColor: "#7F7F7F",
-		// legendFontSize: 15,
-	}));
+		legendFontSize: 9,
+	  }));
 
 	const chartConfig = {
 		backgroundGradientFrom: "#ffffff",
 		backgroundGradientTo: "#ffffff",
 		color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
 		// strokeWidth: 2,
-		// Number of decimal places for data values 
-		
+		// Number of decimal places for data values
 	};
 	return (
 		<ScrollView
@@ -169,20 +170,20 @@ const Identify = () => {
 						/>
 					</>
 				)}
-				<View>
-  {disease && disease.length > 0 && (
-    <PieChart
-      data={pieChartData}
-      width={Dimensions.get("window").width}
-      height={Dimensions.get("window").height*0.2} // Adjust the height as needed
-      chartConfig={chartConfig}
-      accessor="population"
-      backgroundColor="transparent"
-      // center={[Dimensions.get("window").width / 2, 50]} // Center horizontally
-    //   absolute
-    />
-  )}
-</View>
+				<ScrollView horizontal={true}>
+					<View style={{justifyContent:"center",alignItems:"center"}}>
+						{disease && disease.length > 0 && (
+							<PieChart
+								data={pieChartData}
+								width={Dimensions.get("window").width}
+								height={Dimensions.get("window").height * 0.2} // Adjust the height as needed
+								chartConfig={chartConfig}
+								accessor="population"
+								backgroundColor="transparent"
+							/>
+						)}
+					</View>
+				</ScrollView>
 			</View>
 		</ScrollView>
 	);
@@ -194,6 +195,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 	},
 	container: {
+		marginTop: 10,
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
@@ -206,7 +208,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 32,
 		borderRadius: 4,
 		elevation: 3,
-		backgroundColor: "black",
+		backgroundColor: "#336b6d",
 	},
 	imageContainer: {
 		marginBottom: 20,
@@ -239,6 +241,7 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		color: "white",
+		fontSize: 25
 	},
 });
 

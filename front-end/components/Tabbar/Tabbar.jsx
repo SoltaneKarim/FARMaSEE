@@ -25,7 +25,7 @@ const IPhone13ProMax3 = () => {
 						<Image
 							style={styles.vuesaxboldhome2Icon}
 							contentFit="cover"
-							source={require("../../assets/home-2.png")}
+							source={require("../../assets/loger.png")}
 						/>
 						<Text style={[styles.home, styles.homeTypo]}>Home</Text>
 					</View>
@@ -39,7 +39,7 @@ const IPhone13ProMax3 = () => {
             <Image
               style={styles.vectorIcon}
               contentFit="cover"
-              source={require("../../assets/Vectora.png")}
+              source={require("../../assets/hopital.png")}
             />
 
             <Text style={[styles.home, styles.homeTypo]}>Care</Text>
@@ -54,7 +54,7 @@ const IPhone13ProMax3 = () => {
             <Image
               style={styles.icTimeIcon}
               contentFit="cover"
-              source={require("../../assets/ic_time.png")}
+              source={require("../../assets/calendar.png")}
             />
             <Text style={[styles.home, styles.homeTypo]}>Planning</Text>
           </View>
@@ -68,7 +68,7 @@ const IPhone13ProMax3 = () => {
             <Image
               style={styles.vuesaxboldhome2Icon}
               contentFit="cover"
-              source={require("../../assets/frame.png")}
+              source={require("../../assets/profil.png")}
             />
             <Text style={[styles.home, styles.homeTypo]}>Profile</Text>
           </View>
@@ -80,6 +80,8 @@ const IPhone13ProMax3 = () => {
 
 const styles = StyleSheet.create({
 	all:{
+		backgroundColor: "#26585b",
+	
 	},
 	signInLayout: {
 		overflow: "hidden",
@@ -138,10 +140,11 @@ const styles = StyleSheet.create({
 		fontWeight: "500",
 	},
 	groupItemPosition: {
+		
 		width: "100%",
 		left: 0,
 
-		backgroundColor: Color.colorWhite,
+		backgroundColor: "#26585b",
 	},
 	newsLayout: {
 		height: 31,
@@ -167,6 +170,7 @@ const styles = StyleSheet.create({
 	homeTypo: {
 		fontSize: FontSize.size_xs,
 		textAlign: "center",
+		color:"#fff"
 	},
 	groupViewPosition: {
 		left: 222,
@@ -474,7 +478,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	vectorIcon: {
-		width: 20,
+		width: 24,
 		height: 24,
 	},
 	icTimeIcon: {
@@ -510,7 +514,7 @@ const styles = StyleSheet.create({
 	iphone13ProMax3: {
 		width: "100%",
 		flex: 1,
-		backgroundColor: Color.colorWhite,
+		backgroundColor: "#104242",
 		borderRadius: Border.br_8xl,
 	},
 });

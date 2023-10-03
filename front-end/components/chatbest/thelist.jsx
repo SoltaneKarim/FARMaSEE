@@ -6,14 +6,51 @@ const UserList = ({ onSelectUser, Currentuser }) => {
   const [users, setUsers] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState(null);
 
+  const agricultureSpecialities = [
+    "Crop Science",
+    "Horticulture",
+    "Agronomy",
+    "Soil Science",
+    "Plant Breeding",
+    "Genetic Engineering",
+    "Agricultural Economics",
+    "Agribusiness Management",
+    "Animal Science",
+    "Livestock Management",
+    "Poultry Science",
+    "Veterinary Medicine",
+    "Aquaculture",
+    "Forestry",
+    "Agricultural Engineering",
+    "Precision Agriculture",
+    "Food Science",
+    "Agroecology",
+    "Organic Farming",
+    "Sustainable Agriculture",
+    "Agricultural Education",
+    "Rural Development",
+    "Agri-Tourism",
+    "Farm Management",
+    "Agricultural Extension",
+  ];
+
+  const getRandomOccupation = () => {
+    const randomIndex = Math.floor(Math.random() * agricultureSpecialities.length);
+    return agricultureSpecialities[randomIndex];
+  };
+  
   useEffect(() => {
     // Make an Axios GET request to fetch user data
-    axios.get('http://192.168.100.45:5000/user')
+    axios.get('http://192.168.1.20:5000/user')
       .then(response => {
         // Filter out the Currentuser from the response data
         const filteredUsers = response.data.filter(user => user.id !== Currentuser.id);
-        setUsers(filteredUsers);
-        console.log(filteredUsers);
+        // Assign a random occupation to each user
+        const usersWithOccupation = filteredUsers.map(user => ({
+          ...user,
+          occupation: getRandomOccupation(),
+        }));
+        setUsers(usersWithOccupation);
       })
       .catch(error => {
         console.error('Error fetching user data:', error);
@@ -21,21 +58,28 @@ const UserList = ({ onSelectUser, Currentuser }) => {
   }, [Currentuser]); // Add Currentuser as a dependency to refresh when it changes
 
   // Define a renderItem function for the FlatList
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      style={[
-        styles.userContainer,
-        selectedUserId === item.id && styles.selectedUser, // Highlight the selected user
-      ]}
-      onPress={() => {
-        setSelectedUserId(item.id); // Set the selected user
-        onSelectUser(item); // Pass the selected user to the parent component
-      }}
-    >
+const renderItem = ({ item }) => (
+  <TouchableOpacity
+    style={[
+      styles.userContainer,
+      selectedUserId === item.id && styles.selectedUser, // Highlight the selected user
+    ]}
+    onPress={() => {
+      setSelectedUserId(item.id); // Set the selected user
+      onSelectUser(item); // Pass the selected user to the parent component
+    }}
+  >
+    <View style={styles.userInfoContainer}>
       <Image source={{ uri: item.imageUrl }} style={styles.userImage} />
-      <Text style={styles.userName}>{item.fullName}</Text>
-    </TouchableOpacity>
-  );
+      <View style={styles.textContainer}>
+        <Text style={styles.userName}>{item.fullName}</Text>
+        <Text style={styles.occupation}>{item.occupation}</Text>
+      </View>
+    </View>
+  </TouchableOpacity>
+);
+
+
 
   return (
     <View style={styles.container}>
@@ -43,25 +87,30 @@ const UserList = ({ onSelectUser, Currentuser }) => {
         data={users}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
-        horizontal // Make the FlatList horizontal
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  textContainer:{
+    marginLeft:10,
+    justifyContent: 'center'
+  },
+  userInfoContainer:{
+  flexDirection: 'row',
+  },
   container: {
     flexDirection: 'row', // Make the container display horizontally
     backgroundColor: '#f2f2f2', // Greyish background color
     padding: 8, // Add some padding to make it visually appealing
   },
   userContainer: {
-    alignItems: 'center',
+    // alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 8,
-    height: 200,
-    borderWidth: 1, // Add a border to user containers
-    borderColor: '#ccc', // Border color
+    // height: 200,
+
     borderRadius: 8, // Border radius
     marginRight: 8, // Add some spacing between users
   },
@@ -77,6 +126,10 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  occupation: {
+    fontSize: 14,
+    color: '#333', // Dark text color for occupation
   },
 });
 
