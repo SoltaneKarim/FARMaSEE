@@ -14,8 +14,11 @@ import {
 	KeyboardAvoidingView,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { useSelector } from "react-redux";
 
 const Stock = () => {
+	const user = useSelector((state) => state.user); // Assuming your user object in Redux has a 'name' property
+	console.log("yhis is it", user);
 	const [isAdding, setIsAdding] = useState(false);
 	const [itemType, setItemType] = useState("animal");
 	const [selectedOption, setSelectedOption] = useState(null); // Selected option from the custom dropdown
@@ -30,10 +33,12 @@ const Stock = () => {
 	const [selectedTreeType, setSelectedTreeType] = useState(null);
 	const [selectedTreeOption, setSelectedTreeOption] = useState(null);
 	const [treeModalVisible, setTreeModalVisible] = useState(false);
+	const [animalData, setAnimalData] = useState([]);
+	const [treeData, setTreeData] = useState([]);
 
 	//adding the animals
 	const [birthday, setBirthday] = useState("");
-	const [priceB, setPriceB] = useState("");
+	const [priceB, setPriceB] = useState(null);
 	////////////////////////////////////////////////////////////////
 	const [age, setAge] = useState("");
 	const [weight, setWeight] = useState("");
@@ -67,11 +72,12 @@ const Stock = () => {
 				age: ageTree,
 				quantity: quantityTree,
 				report: "",
+				specificId: user.id,
 			};
 
 			try {
 				const response = await axios.post(
-					"http://192.168.100.45:5000/tree",
+					"http://192.168.1.17:5000/tree",
 					treeData,
 				);
 
@@ -97,7 +103,7 @@ const Stock = () => {
 
 	const postAnimalData = () => {
 		// Construct the data object to send to the server
-		console.log("you have");
+		console.log("you have",user.id);
 		const data = {
 			type: selectedAnimalType,
 			sexe: selectedSexe.label,
@@ -105,12 +111,12 @@ const Stock = () => {
 			weight: parseFloat(weight),
 			birthday: birthday,
 			priceB: parseFloat(priceB),
-			priceS: null,
+			specificId: user.id,
 		};
 
 		// Send the data to the server using Axios
 		axios
-			.post("http://192.168.100.45:5000/animal", data)
+			.post("http://192.168.1.17:5000/animal", data)
 			.then((response) => {
 				// Handle the response (e.g., display a success message)
 				console.log("Animal data successfully posted:", response.data);
@@ -126,33 +132,51 @@ const Stock = () => {
 				setDescription("");
 			})
 			.catch((error) => {
-				console.error("Error posting animal data:", error);
+				console.error("Error posting animal data:", error.message);
 			});
 	};
 
-	const [animalData, setAnimalData] = useState([]);
-	const [treeData, setTreeData] = useState([]);
+	
+	const fetchAnimalData = async () => {
+		try {
+			const response = await axios.get(
+				`http://192.168.1.17:5000/animal/one/${user.id}`,
+			);
 
+			if (response.status === 200) {
+				// Assuming the response.data is an array of animal data
+				setAnimalData(response.data.data);
+			
+			}
+		} catch (error) {
+			console.error("Error fetching animal data:", error.message);
+		}
+	};
+
+	// Function to fetch tree data based on user.id
+	const fetchTreeData = async () => {
+		try {
+			const response = await axios.get(
+				`http://192.168.1.17:5000/tree/one/${user.id}`,
+			);
+
+			if (response.status === 200) {
+				setTreeData(response.data.data);
+			
+			}
+		} catch (error) {
+			console.error("Error fetching tree data:", error.message);
+		}
+	};
+
+	// UseEffect for fetching animal data when the component mounts
 	useEffect(() => {
-		// Fetch animal dataRR2115454687dggdgd
-		axios
-			.get("http://192.168.100.45:5000/animal")
-			.then((response) => {
-				setAnimalData(response.data);
-			})
-			.catch((error) => {
-				console.error("Error fetching animal data:", error);
-			});
+		fetchAnimalData();
+	}, []); // The empty dependency array ensures this effect runs only once when the component mounts
 
-		// Fetch tree data
-		axios
-			.get("http://192.168.100.45:5000/tree")
-			.then((response) => {
-				setTreeData(response.data);
-			})
-			.catch((error) => {
-				console.error("Error fetching tree data:", error);
-			});
+	// UseEffect for fetching tree data when the component mounts
+	useEffect(() => {
+		fetchTreeData();
 	}, []);
 
 	// Filter animal data by type (e.g., "Cow" or "Sheep")
@@ -192,7 +216,7 @@ const Stock = () => {
 													</Text>
 												</View>
 											) : (
-												<Text style={styles.placeholderText}>
+												<Text style={[styles.placeholderText, styles.optionText]}>
 													Select an animal
 												</Text>
 											)}
@@ -286,6 +310,7 @@ const Stock = () => {
 											placeholder="Age"
 											keyboardType="numeric"
 											value={age}
+											width="80%"
 											onChangeText={(text) => setAge(text)}
 										/>
 										<TextInput
@@ -394,22 +419,18 @@ const Stock = () => {
 					{/* Submit button outside KeyboardAvoidingView */}
 					<TouchableOpacity
 						style={{
-							backgroundColor: "green",
+							backgroundColor: "#336b6d",
 							borderRadius: 10,
 							padding: 10,
-							alignSelf:'center',
-							marginBottom:40,
-						// alignItems:"center",
+							alignSelf: "center",
+							marginBottom: 40,
 							width: "50%",
-
 						}}
 						onPress={() => {
-							if(itemType==="animal"){
-							postAnimalData();
-
-							}
-							else {
-								addtree()
+							if (itemType === "animal") {
+								postAnimalData();
+							} else {
+								addtree();
 							}
 						}}>
 						<Text style={{ color: "white", textAlign: "center" }}>Submit</Text>
@@ -426,10 +447,11 @@ const Stock = () => {
 							<View style={styles.title}>
 								<Text
 									style={{
-										fontSize: 24,
-										fontWeight: "600",
+										fontSize: 30,
+										fontWeight: "800",
 										fontFamily: "sans-serif",
-										color: "#3a3f47",
+										color: "#123f41",
+										textTransform:"capitalize"
 									}}>
 									This is what you have
 								</Text>
@@ -445,8 +467,8 @@ const Stock = () => {
 										style={{ width: 50, height: 50 }}
 										source={require("../../assets/cow4.png")} // Replace with your cow image
 									/>
-									<Text>Cows</Text>
-									<Text style={styles.quantityText}>
+									<Text style={{fontWeight:700, fontSize:20 , color:"#134042"}}>Cows</Text>
+									<Text style={styles.quantityText} style={{fontWeight:700, fontSize:15 , color:"#94a995"}}>
 										Quantity: {cowsData.length}
 									</Text>
 								</View>
@@ -455,8 +477,8 @@ const Stock = () => {
 										style={{ width: 50, height: 50 }}
 										source={require("../../assets/shep4.png")} // Replace with your sheep image
 									/>
-									<Text>Sheep</Text>
-									<Text style={styles.quantityText}>
+									<Text style={{fontWeight:700, fontSize:20 , color:"#134042"}}>Sheep</Text>
+									<Text style={styles.quantityText} style={{fontWeight:700, fontSize:15 , color:"#94a995"}}>
 										Quantity: {sheepData.length}
 									</Text>
 								</View>
@@ -465,8 +487,8 @@ const Stock = () => {
 										style={{ width: 50, height: 50 }}
 										source={require("../../assets/olives.png")} // Replace with your olive tree image
 									/>
-									<Text>Olive Trees:</Text>
-									<Text style={styles.quantityText}>
+									<Text style={{fontWeight:700, fontSize:20 , color:"#134042"}}>Olive Trees:</Text>
+									<Text style={styles.quantityText} style={{fontWeight:700, fontSize:15 , color:"#94a995"}}>
 										Quantity: {oliveTreeData.length}
 									</Text>
 								</View>
@@ -507,14 +529,18 @@ const styles = StyleSheet.create({
 	},
 	scrollView: {
 		flex: 1,
+		paddingVertical:30
 	},
 	all: {
 		alignItems: "center",
 		flex: 1,
+		
 	},
 	wrapper: {
-		marginTop: 20,
+		marginTop: 100,
 		width: "90%",
+		
+		
 	},
 	title: {
 		display: "flex",
@@ -532,14 +558,14 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		padding: 10,
 		borderWidth: 1,
-		borderColor: "gray",
+		borderColor: "#94a995",
 		borderRadius: 5,
 	},
 	plusButton: {
 		position: "absolute",
 		bottom: 40, // Adjust the value as needed to position the button at the desired distance from the bottom
 		right: 30,
-		backgroundColor: "blue", // Customize button styles as needed
+		backgroundColor: "#336b6d", // Customize button styles as needed
 		width: 50,
 		height: 50,
 		borderRadius: 25,
@@ -577,38 +603,52 @@ const styles = StyleSheet.create({
 		borderColor: "gray",
 		padding: 10,
 		borderRadius: 5,
-		justifyContent: "center",
-		alignItems: "center",
+		
 		marginBottom: 10,
-		width: "50%",
+textAlign: "left",
+
+		width: "80%",
+		
 	},
 	selectedOptionContainer: {
 		flexDirection: "row",
 		alignItems: "center",
-		width: 150,
+		width: "100%",
+		textAlign:"left"
+
 	},
 	selectedOptionText: {
 		marginLeft: 10,
+		textAlign:"left"
+		
 	},
 	placeholderText: {
 		color: "gray",
+		textAlign:"left"
+	
 	},
 	modalContainer: {
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: "rgba(0, 0, 0, 0.5)",
+		textAlign:"left"
+
 	},
 	modalContent: {
 		backgroundColor: "white",
 		borderRadius: 10,
 		padding: 20,
 		width: "80%",
+		textAlign:"left"
+
 	},
 	optionContainer: {
 		flexDirection: "row",
 		alignItems: "center",
 		marginBottom: 10,
+		textAlign:"left"
+		
 	},
 	optionImage: {
 		width: 24,
@@ -617,6 +657,9 @@ const styles = StyleSheet.create({
 	},
 	optionText: {
 		fontSize: 16,
+		textAlign:"left",
+
+		
 	},
 	// plusButton: {
 	// 	position: "absolute",
@@ -653,13 +696,13 @@ const styles = StyleSheet.create({
 		borderColor: "gray",
 		padding: 10,
 		borderRadius: 5,
-		width: "50%",
+		width: "80%",
 		marginBottom: 10,
+		textAlign:"left",
 		height: "10%",
 	},
 	inputwrapper: {
 		// width: "90%",
-
 		alignItems: "center",
 	},
 });

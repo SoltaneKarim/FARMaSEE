@@ -32,7 +32,7 @@ function StackLayout() {
 					name="notification"
 					options={{
 						headerStyle: {
-							backgroundColor: "#5db075",
+							backgroundColor: "#346c6e",
 						},
 
 						headerTitle: "",
@@ -45,7 +45,7 @@ function StackLayout() {
 						headerTitle: "",
 						headerShown: true,
 						headerStyle: {
-							backgroundColor: "#5db075",
+							backgroundColor: "#346c6e",
 						},
 					}}
 				/>
@@ -56,7 +56,7 @@ function StackLayout() {
 						headerTitle: "",
 						headerShown: true,
 						headerStyle: {
-							backgroundColor: "#5db075",
+							backgroundColor: "#346c6e",
 						},
 					}}
 				/>
@@ -67,7 +67,7 @@ function StackLayout() {
 						headerTitle: "",
 						headerShown: true,
 						headerStyle: {
-							backgroundColor: "#5db075",
+							backgroundColor: "#346c6e",
 						},
 					}}
 				/>
@@ -77,7 +77,7 @@ function StackLayout() {
 						headerTitle: "",
 						headerShown: false,
 						headerStyle: {
-							backgroundColor: "#5db075",
+							backgroundColor: "#346c6e",
 						},
 					}}
 				/>
@@ -87,8 +87,16 @@ function StackLayout() {
 						headerTitle: "",
 						headerShown: true,
 						headerStyle: {
-							backgroundColor: "#5db075",
+							backgroundColor: "#346c6e",
 						},
+					}}
+				/>
+				<Stack.Screen
+					name="groups"
+					options={{
+						headerTitle: "",
+						headerShown: true,
+						
 					}}
 				/>
 			</Stack>

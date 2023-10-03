@@ -43,11 +43,7 @@ const IPhone13ProMax3 = () => {
 									</Text>
 								</View>
 								<View style={styles.groupParent}>
-									<Image
-										style={styles.frameLayout}
-										contentFit="cover"
-										source={require("../../assets/search-normal.png")}
-									/>
+									
 									<TouchableOpacity onPress={() => router.push("notification")}>
 										<Image
 											style={[styles.frameItem, styles.frameLayout]}
@@ -154,19 +150,21 @@ const styles = StyleSheet.create({
 		},
 	},
 	augs2022Typo: {
-		opacity: 0.7,
+		
 		textAlign: "left",
-		color: Color.colorWhite,
+		color: "#26575a",
 		fontFamily: FontFamily.interMedium,
-		fontWeight: "500",
+		fontWeight: "700",
 	},
 	aboutToRipenFlexBox: {
 		textAlign: "center",
-		color: Color.colorWhite,
+		color:"#124042",
 	},
 	frameLayout: {
-		height: 30,
+		
 		width: 30,
+		
+		
 	},
 	groupChildLayout: {
 		height: 152,
@@ -203,7 +201,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		left: 0,
 		position: "absolute",
-		backgroundColor: Color.colorWhite,
+		// backgroundColor: Color.colorWhite,
 	},
 	newsLayout: {
 		height: 31,
@@ -269,6 +267,7 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		fontSize: 16,
 		textAlign: "center",
+		color:"#124042",
 		lineHeight: 21,
 		alignSelf: "stretch",
 		left: "-20%",
@@ -279,9 +278,11 @@ const styles = StyleSheet.create({
 		// left: "-20%",
 	},
 	frameItem: {
-		marginLeft: 7,
+		
 	},
 	groupParent: {
+		marginTop:25,
+		marginLeft:25,
 		flexDirection: "row",
 		justifyContent: "flex-start", // This will place it on the left
 	},
@@ -310,7 +311,7 @@ const styles = StyleSheet.create({
 
 	signIn: {
 		bottom: 1,
-		backgroundColor: "#5db075",
+		backgroundColor: "#e9e9e9",
 		width: windowWidth * 1, // Adjust the percentage as needed
 		transform: [
 			{
@@ -322,7 +323,7 @@ const styles = StyleSheet.create({
 	groupChild: {
 		bottom: 0,
 		borderRadius: 16,
-		backgroundColor: "rgba(255, 255, 255, 0.4)",
+		backgroundColor: "#346b6d",
 		right: 0,
 	},
 	vuesaxoutlinelocationIcon: {
@@ -355,7 +356,7 @@ const styles = StyleSheet.create({
 	text: {
 		fontSize: 49,
 		lineHeight: 74,
-		fontFamily: FontFamily.interSemiBold,
+		// fontFamily: FontFamily.interSemiBold,
 		fontWeight: "600",
 		textAlign: "left",
 		color: Color.colorWhite,
@@ -366,7 +367,6 @@ const styles = StyleSheet.create({
 		left: 66,
 		fontSize: 27,
 		lineHeight: 39,
-		fontFamily: FontFamily.interRegular,
 	},
 	parent: {
 		width: 98,
@@ -390,6 +390,7 @@ const styles = StyleSheet.create({
 		marginLeft: "3%",
 	},
 	frameGroup: {
+		// backgroundColor:"black",
 		justifyContent: "center",
 		left: "8%",
 		bottom: 19,
@@ -424,7 +425,6 @@ const styles = StyleSheet.create({
 		color: Color.colorGray_100,
 		height: 31,
 		textAlign: "center",
-		fontFamily: FontFamily.interSemiBold,
 		fontWeight: "600",
 	},
 	contactAnExpert: {
@@ -432,7 +432,6 @@ const styles = StyleSheet.create({
 		left: 274,
 		width: 128,
 		height: 22,
-		fontFamily: FontFamily.interMedium,
 		fontWeight: "500",
 		position: "absolute",
 	},
@@ -458,21 +457,19 @@ const styles = StyleSheet.create({
 	aboutToRipen: {
 		fontSize: FontSize.size_3xs,
 		lineHeight: 13,
-		fontFamily: FontFamily.interMedium,
 		fontWeight: "500",
 	},
 	aboutToRipenWrapper: {
 		top: 7,
 		left: 71,
 		borderRadius: Border.br_81xl,
-		backgroundColor: Color.colorGray_400,
+		// backgroundColor: Color.colorGray_400,
 		width: 102,
 		paddingHorizontal: Padding.p_3xs,
 		paddingVertical: Padding.p_7xs,
 		flexDirection: "row",
 	},
 	chiliPlant: {
-		fontFamily: FontFamily.interSemiBold,
 		fontWeight: "600",
 	},
 	vuesaxoutlinelocationIcon1: {
@@ -483,7 +480,6 @@ const styles = StyleSheet.create({
 		lineHeight: 16,
 		color: Color.colorDarkgray,
 		marginLeft: 4,
-		fontFamily: FontFamily.interMedium,
 		fontWeight: "500",
 	},
 	vuesaxoutlinelocationGroup: {
@@ -575,7 +571,7 @@ const styles = StyleSheet.create({
 	iphone13ProMax3: {
 		width: "100%",
 		flex: 1,
-		backgroundColor: Color.colorWhite,
+		// backgroundColor: Color.colorWhite,
 		borderRadius: Border.br_8xl,
 	},
 });

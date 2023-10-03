@@ -14,12 +14,12 @@ import { useSelector } from "react-redux";
 import { useRouter } from "expo-router";
 const Care = () => {
 	const user = useSelector((state) => state.user); // Assuming your user object in Redux has a 'name' property
-	console.log(user);
+	console.log("this is hiccm",user);
 	const router = useRouter();
 	const handlePayNowClick = async () => {
 		try {
 			// Replace 'your-api-endpoint' with the actual URL of your server's endpoint
-			const response = await axios.post("http://192.168.100.45:5000/chat/users", {
+			const response = await axios.post("http://192.168.1.17:5000/chat/users", {
 				specificId: user.id,
 				fullname: user.fullName,
 				messages: [],
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
 		backgroundColor: Color.primaryGreen500,
 	},
 	premiumTypo: {
-		fontFamily: FontFamily.latoBlack,
+		
 		fontWeight: "900",
 		textAlign: "center",
 	},
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
 		fontSize: FontSize.size_sm,
 		textAlign: "center",
 		color: Color.grayscaleText,
-		fontFamily: FontFamily.latoLight,
+	
 		fontWeight: "500",
 		position: "absolute",
 	},
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
 		fontSize: FontSize.size_sm,
 		textAlign: "center",
 		color: Color.grayscaleText,
-		fontFamily: FontFamily.latoLight,
+	
 		fontWeight: "500",
 		position: "absolute",
 	},
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
 		fontSize: FontSize.size_sm,
 		textAlign: "center",
 		color: Color.grayscaleText,
-		fontFamily: FontFamily.latoLight,
+	
 		fontWeight: "500",
 		position: "absolute",
 	},
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
 		fontSize: FontSize.size_sm,
 		textAlign: "center",
 		color: Color.grayscaleText,
-		fontFamily: FontFamily.latoLight,
+	
 		fontWeight: "500",
 		position: "absolute",
 	},
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		lineHeight: 21,
 		textAlign: "center",
-		fontFamily: FontFamily.latoLight,
+	
 		fontWeight: "500",
 		color: Color.grayscaleText,
 	},
@@ -321,13 +321,13 @@ const styles = StyleSheet.create({
 		lineHeight: 20,
 		fontSize: FontSize.size_lg,
 		textAlign: "center",
-		fontFamily: FontFamily.latoLight,
+		
 		fontWeight: "500",
 	},
 	text: {
 		fontSize: 28,
 		lineHeight: 32,
-		fontFamily: FontFamily.latoBlack,
+		
 		fontWeight: "900",
 		letterSpacing: 1,
 		color: Color.grayscaleWhite,
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
 	getPremium: {
 		fontSize: 24,
 		lineHeight: 32,
-		fontFamily: FontFamily.latoBlack,
+		
 		fontWeight: "900",
 		color: Color.grayscaleText,
 		top: -80,
@@ -357,7 +357,6 @@ const styles = StyleSheet.create({
 	},
 	getNewFeatures: {
 		lineHeight: 22,
-		fontFamily: FontFamily.latoRegular,
 		color: Color.grayscaleLightText,
 		width: 295,
 		marginTop: 8,
@@ -415,7 +414,7 @@ const styles = StyleSheet.create({
 	premiumStatus: {
 		left: 121,
 		lineHeight: 24,
-		fontFamily: FontFamily.latoBlack,
+		
 		fontWeight: "900",
 		textAlign: "center",
 		letterSpacing: 1,

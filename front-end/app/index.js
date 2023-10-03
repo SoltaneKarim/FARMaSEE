@@ -7,11 +7,12 @@ import Login from "../components/Login/Login.jsx";
 import Chou from "../components/chatbest/chatbest.jsx";
 import Identify from "../components/identify/identify.jsx";
 import Test from "../components/test/test.jsx";
+import Groups from "../components/groups/groups.jsx";
 const App = () => {
     return (
       <SafeAreaView style={styles.container}>
     
-         <Loader/>
+         <Loader />
 
       </SafeAreaView>
     );

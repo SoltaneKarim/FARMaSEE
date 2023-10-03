@@ -150,7 +150,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#32325D",
     marginTop: 10,
-    fontFamily : "Poppins"
   },
   address: {
     fontSize: 16,
