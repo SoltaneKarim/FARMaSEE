@@ -43,7 +43,7 @@ const Groups = () => {
   useEffect(() => {
     // Fetch group data
     axios
-      .get(`http://192.168.1.17:5000/group/one/${user.id}`, {
+      .get(`http://192.168.1.20:5000/group/one/${user.id}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -59,7 +59,7 @@ const Groups = () => {
 
     // Fetch animal data
     axios
-      .get("http://192.168.1.17:5000/animal")
+      .get("http://192.168.1.20:5000/animal")
       .then((response) => {
         setAnimals(response.data);
       })
@@ -69,7 +69,7 @@ const Groups = () => {
 
     // Fetch tree data
     axios
-      .get("http://192.168.1.17:5000/tree")
+      .get("http://192.168.1.20:5000/tree")
       .then((response) => {
         setTrees(response.data);
       })
@@ -90,7 +90,7 @@ const Groups = () => {
 		};
 
 		axios
-			.post("http://192.168.1.17:5000/group", newGroup)
+			.post("http://192.168.1.20:5000/group", newGroup)
 			.then((response) => {
 				console.log("Group added successfully:", response.data);
 				setGroupName("");
@@ -145,7 +145,7 @@ const Groups = () => {
 					style: "destructive",
 					onPress: () => {
 						axios
-							.delete(`http://192.168.1.17:5000/group/one/${user.id}/${item.id}`)
+							.delete(`http://192.168.1.20:5000/group/one/${user.id}/${item.id}`)
 							.then((response) => {
 								console.log("Group deleted successfully:", response.data);
 								setGroupData((prevData) =>

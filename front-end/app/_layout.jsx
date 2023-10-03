@@ -1,8 +1,8 @@
 import React from "react";
 import { Stack, useNavigation } from "expo-router";
 import { Button, Image, TouchableHighlight, LogBox } from "react-native";
-import { Provider } from "react-redux";
 import store from "../redux/store";
+import { Provider } from "react-redux";
 function StackLayout() {
 	const navigation = useNavigation();
 	//

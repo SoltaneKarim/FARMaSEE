@@ -6,10 +6,7 @@ import HomeScreen from "../screens/HomeScreen.js";
 
 const weather = () => {
   return (
-
   <HomeScreen />
-
-  
   )
 }
 

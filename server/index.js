@@ -16,7 +16,8 @@ connectDatabase(); // Call the database connection function
 app.use('/chat', userRoutes);
 
 ///////////////////////////////
-const { getAllAnimals, addAnimal, updateAnimal, deleteAnimal, getAllTrees, addTree, updateTree,getTreesBySpecificId, deleteTree, getAllResources, addResource, updateResource, deleteResource, getAllWallets, addWallet, updateWallet, deleteWallet, getAllUsers, addUser, updateUser, deleteUser, getAllCommerces, addCommerce, updateCommerce, deleteCommerce, getAllPrices, addPrice, updatePrice, deletePrice, getAllDiseases, addDisease, updateDisease, deleteDisease, getAllGroups, addGroup, updateGroup, deleteGroup, getAllPerte, addPerte, updatePerte, deletePerte, getAllDoctors, addDoctor, updateDoctor, deleteDoctor, getAllWorkers, addWorker, updateWorker, deleteWorker, getAllHistory, addHistory, updateHistory, deleteHistory,deleteBySpecificId ,getBySpecificId,getAnimalsBySpecificId} = require("./database/index.js")
+const {verify, getAllAnimals, addAnimal, updateAnimal, deleteAnimal, getAllTrees, addTree, updateTree,getTreesBySpecificId, deleteTree, getAllResources, addResource, updateResource, deleteResource, getAllWallets, addWallet, updateWallet, deleteWallet, getAllUsers, addUser, updateUser, deleteUser, getAllCommerces, addCommerce, updateCommerce, deleteCommerce, getAllPrices, addPrice, updatePrice, deletePrice, getAllDiseases, addDisease, updateDisease, deleteDisease, getAllGroups, addGroup, updateGroup, deleteGroup, getAllPerte, addPerte, updatePerte, deletePerte, getAllDoctors, addDoctor, updateDoctor, deleteDoctor, getAllWorkers, addWorker, updateWorker, deleteWorker, getAllHistory, addHistory, updateHistory, deleteHistory, add,deleteBySpecificId ,getBySpecificId,getAnimalsBySpecificId} = require("./database/index.js")
+
 
 app.use(cors())
 app.use(bodyParser.json());
@@ -95,6 +96,10 @@ app.get("/perte", getAllPerte)
 app.post("/perte", addPerte)
 app.put("/perte/:id", updatePerte)
 app.delete("/perte/:id", deletePerte)
+
+
+app.post("/payment", add )
+app.post("/payment/:id", verify )
 
 
 app.listen(port, () => {

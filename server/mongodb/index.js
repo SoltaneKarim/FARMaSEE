@@ -4,7 +4,7 @@ const User = require('./Models/userModels.js');
 (async () => {
   try {
     await connectDatabase();
-  // console.log("u connected to mongo");
+  // console.log("u r connected to mongo");
   } catch (error) {
     console.error('Error:', error);
   }

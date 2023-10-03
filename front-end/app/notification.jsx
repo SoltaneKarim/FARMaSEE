@@ -3,7 +3,7 @@ import Notifications from "../components/Notifications/Notifications";
 
 function noti() {
   return (
-  <Notifications/>
+    <Notifications/>
   )
 }
 

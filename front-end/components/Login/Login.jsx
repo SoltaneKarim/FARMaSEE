@@ -53,7 +53,7 @@ const AuthScreen = () => {
 	const handleLogin = async () => {
 		try {
 			setLoading(true); // Set loading to true while waiting for the response
-			const response = await axios.get("http://192.168.1.17:5000/user");
+			const response = await axios.get("http://192.168.1.20:5000/user");
 			const users = response.data;
 			const lowerCaseEmail = email.toLowerCase();
 			const user = users.find(
@@ -77,12 +77,12 @@ const AuthScreen = () => {
 		}
 	};
 
-	const handleSignUp = async () => {
+	const handleSignUp = async () => { 
 		setLoading(true);
 
 		try {
 			// Continue with user registration including the image URL
-			const userResponse = await axios.post("http://192.168.1.17:5000/user", {
+			const userResponse = await axios.post("http://192.168.1.20:5000/user", {
 				fullName,
 				email,
 				password,
