@@ -1,110 +1,187 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Image, TouchableOpacity } from "react-native";
-import { Color, FontFamily, FontSize, Border, Padding } from "./GlobalStyle.js";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Text, StyleSheet, View, Image, TouchableOpacity, ScrollView, Linking } from 'react-native';
+import { Color, FontFamily, FontSize, Border, Padding } from './GlobalStyle.js';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'expo-router';
 
 const Care = () => {
-  const handlePayNowClick = () => {
-    alert("Pay Now clicked!");
+  const [form, setForm] = useState({ amount: '50000' });
+  const [link, setLink] = useState('');
+  const user = useSelector((state) => state.user);
+  const router = useRouter();
+
+  const handlePayNowClick = async () => {
+    console.log('hello')
+    try {
+      // Send the payment request
+      const response = await axios.post('http://192.168.1.92:5000/payment', form);
+      console.log('response', response)
+      setLink(result.link)
+      const { result } = response.data;
+
+      // Always open the payment URL, regardless of the payment status
+      Linking.openURL(result.link)
+
+      // Optionally, you can also create the user here if needed
+      const userResponse = await axios.post('http://192.168.1.92:5000/chat/users', {
+        specificId: user.id,
+        fullname: user.fullName,
+        messages: [],
+      });
+
+      // Handle the response, such as showing a success message or redirecting the user
+      console.log('User created successfully:', userResponse.data);
+      router.push('paymentSuccess')
+    } catch (error) {
+      // Handle errors, such as displaying an error message to the user
+      console.error('Error:', error);
+    }
   };
+
+  // const handleUrlChange = async (event) => {
+  //   const { url } = event;
+
+  //   // Check if the URL matches your success_link
+  //   if (url.includes('http://192.168.100.44:5000/success')) {
+  //     // Handle successful payment
+  //     router.push('paymentSuccess'); // Navigate to the success screen
+  //   }
+  // };
+
+  // Add an event listener to handle URL changes
+  // useEffect(() => {
+  //   const handleAppStateChange = (nextAppState) => {
+  //     if (nextAppState === 'active') {
+  //       Linking.getInitialURL().then((url) => {
+  //         if (url) {
+  //           handleUrlChange({ url });
+  //         }
+  //       });
+  //       Linking.addEventListener('url', handleUrlChange);
+  //     } else {
+  //       Linking.removeEventListener('url', handleUrlChange);
+  //     }
+  //   };
+
+  //   // Add the listener when the component mounts
+  //   Linking.addEventListener('url', handleUrlChange);
+  //   Linking.getInitialURL().then((url) => {
+  //     if (url) {
+  //       handleUrlChange({ url });
+  //     }
+  //   });
+
+  //   // Remove the event listener when the component unmounts to avoid memory leaks
+  //   return () => {
+  //     Linking.removeEventListener('url', handleUrlChange);
+  //   };
+  // }, []);
+
+
   return (
-    <View style={styles.paymentSuccess}>
+    <ScrollView>
+      <View style={styles.paymentSuccess}>
       <TouchableOpacity onPress={handlePayNowClick}>
         <View style={[styles.button, styles.buttonFlexBox]}>
           <Text style={styles.primaryButton}>Pay Now</Text>
         </View>
       </TouchableOpacity>
-      <View style={styles.content}>
-        <Image
-          style={styles.backgroundIcon}
-          contentFit="cover"
-          source={require("../../assets/icons/Background.png")}
+        <View style={styles.content}>
+        <WebView
+          source={{ uri: link }}
+          scalesPageToFit={true}
         />
-        <Image
-          style={[styles.vectorIcon, styles.vectorIconLayout1]}
-          contentFit="cover"
-          source={require("../../assets/icons/taswira2-removebg.png")}
-        />
-        <Image
-          style={[styles.vectorIcon1, styles.vectorIconLayout1]}
-          contentFit="cover"
-          source={require("../../assets/icons/taswira2-removebg.png")}
-        />
-        <Image
-          style={[styles.vectorIcon2, styles.vectorIconPosition1]}
-          contentFit="cover"
-          source={require("../../assets/icons/taswira2-removebg.png")}
-        />
-        <Image
-          style={[styles.vectorIcon3, styles.vectorIconPosition]}
-          contentFit="cover"
-          source={require("../../assets/icons/taswira2-removebg.png")}
-        />
-        <Image
-          style={[styles.vectorIcon4, styles.vectorIconLayout]}
-          contentFit="cover"
-          source={require("../../assets/icons/taswira2-removebg.png")}
-        />
-        <Image
-          style={[styles.vectorIcon5, styles.vectorIconLayout]}
-          contentFit="cover"
-          source={require("../../assets/icons/taswira2-removebg.png")}
-        />
-        <View style={[styles.icon, styles.iconFlexBox]}>
+
           <Image
-            style={styles.icon1}
+            style={styles.backgroundIcon}
             contentFit="cover"
-            source={require("../../assets/icons/Icon.png")}
+            source={require("../../assets/icons/Background.png")}
+          />
+          <Image
+            style={[styles.vectorIcon, styles.vectorIconLayout1]}
+            contentFit="cover"
+            source={require("../../assets/icons/taswira2-removebg.png")}
+          />
+          <Image
+            style={[styles.vectorIcon1, styles.vectorIconLayout1]}
+            contentFit="cover"
+            source={require("../../assets/icons/taswira2-removebg.png")}
+          />
+          <Image
+            style={[styles.vectorIcon2, styles.vectorIconPosition1]}
+            contentFit="cover"
+            source={require("../../assets/icons/taswira2-removebg.png")}
+          />
+          <Image
+            style={[styles.vectorIcon3, styles.vectorIconPosition]}
+            contentFit="cover"
+            source={require("../../assets/icons/taswira2-removebg.png")}
+          />
+          <Image
+            style={[styles.vectorIcon4, styles.vectorIconLayout]}
+            contentFit="cover"
+            source={require("../../assets/icons/taswira2-removebg.png")}
+          />
+          <Image
+            style={[styles.vectorIcon5, styles.vectorIconLayout]}
+            contentFit="cover"
+            source={require("../../assets/icons/taswira2-removebg.png")}
+          />
+          <View style={[styles.icon, styles.iconFlexBox]}>
+            <Image
+              style={styles.icon1}
+              contentFit="cover"
+              source={require("../../assets/icons/Icon.png")}
+            />
+          </View>
+          <View style={styles.content1}>
+            <Text style={styles.price}>Price</Text>
+            <Text style={[styles.text, styles.premiumTypo]}>$125.5</Text>
+          </View>
+          <View style={[styles.content2, styles.buttonFlexBox]}>
+            <Text style={[styles.getPremium, styles.premiumTypo]}>
+              Get Premium
+            </Text>
+            <Text style={styles.getNewFeatures}>Get new features</Text>
+          </View>
+          <View style={styles.line} />
+          <Text style={[styles.management, styles.managementTypo]}>
+            Management
+          </Text>
+          <Text style={[styles.veterinarian, styles.managementTypo]}>
+            Veterinarian
+          </Text>
+          <Text style={[styles.chat, styles.chatTypo]}>Chat</Text>
+          <Text style={[styles.healthCare, styles.chatTypo]}>Health-care</Text>
+          <Image
+            style={[styles.xIcon, styles.iconLayout]}
+            contentFit="cover"
+            source={require("../../assets/icons/X.png")}
+          />
+          <Image
+            style={[styles.xIcon1, styles.iconLayout]}
+            contentFit="cover"
+            source={require("../../assets/icons/X.png")}
           />
         </View>
-        <View style={styles.content1}>
-          <Text style={styles.price}>Price</Text>
-          <Text style={[styles.text, styles.premiumTypo]}>$125.5</Text>
-        </View>
-        <View style={[styles.content2, styles.buttonFlexBox]}>
-          <Text style={[styles.getPremium, styles.premiumTypo]}>
-            Get Premium
-          </Text>
-          <Text style={styles.getNewFeatures}>Get new features</Text>
-        </View>
-        <View style={styles.line} />
-        <Text style={[styles.management, styles.managementTypo]}>
+        <Text style={[styles.management1, styles.management1Typo]}>
           Management
         </Text>
-        <Text style={[styles.veterinarian, styles.managementTypo]}>
+        <Text style={[styles.veterinarian1, styles.management1Typo]}>
           Veterinarian
         </Text>
-        <Text style={[styles.chat, styles.chatTypo]}>Chat</Text>
-        <Text style={[styles.healthCare, styles.chatTypo]}>Health-care</Text>
-        <Image
-          style={[styles.xIcon, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../../assets/icons/X.png")}
-        />
-        <Image
-          style={[styles.xIcon1, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../../assets/icons/X.png")}
-        />
+        <Text style={[styles.chat1, styles.chat1Typo]}>Chat</Text>
+        <Text style={[styles.healthCare1, styles.chat1Typo]}>Health-care</Text>
       </View>
-      <View style={styles.headerPosition}>
-        <View style={[styles.headerChild, styles.headerPosition]} />
-        <Text style={[styles.premiumStatus, styles.icon2Position]}>
-          Premium Status
-        </Text>
-      </View>
-      <Text style={[styles.management1, styles.management1Typo]}>
-        Management
-      </Text>
-      <Text style={[styles.veterinarian1, styles.management1Typo]}>
-        Veterinarian
-      </Text>
-      <Text style={[styles.chat1, styles.chat1Typo]}>Chat</Text>
-      <Text style={[styles.healthCare1, styles.chat1Typo]}>Health-care</Text>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  iheb: {
+    width: "100%",
+  },
   buttonFlexBox: {
     alignItems: "center",
     position: "absolute",
@@ -178,13 +255,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     overflow: "hidden",
   },
-  headerPosition: {
-    height: 80,
-    width: "100%",
-    left: 0,
-    top: 0,
-    position: "absolute",
-  },
   icon2Position: {
     top: 28,
     position: "absolute",
@@ -235,7 +305,7 @@ const styles = StyleSheet.create({
     height: 488,
     width: 327,
     left: 18,
-    top:-30
+    top: -30,
   },
   vectorIcon: {
     bottom: "26.35%",
@@ -253,8 +323,7 @@ const styles = StyleSheet.create({
     width: "7.03%",
     height: "4.81%",
     position: "absolute",
-    overflow: "hidden",
-    
+    // overflow: "hidden",
   },
   vectorIcon3: {
     maxHeight: "100%",
@@ -310,9 +379,9 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     justifyContent: "space-between",
     left: 18,
-    alignItems: "center",
-    flexDirection: "row",
-    width: 327,
+    // alignItems: "center",
+    // flexDirection: "row",
+    width: "100%",
     position: "absolute",
   },
   getPremium: {
@@ -321,8 +390,8 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.latoBlack,
     fontWeight: "900",
     color: Color.grayscaleText,
-    top:-80,
-    left: 25
+    top: -80,
+    left: 25,
   },
   getNewFeatures: {
     lineHeight: 22,
@@ -332,8 +401,8 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: FontSize.size_sm,
     textAlign: "center",
-    top:-85,
-    left: 25
+    top: -85,
+    left: 25,
   },
   content2: {
     top: 88,
@@ -349,10 +418,10 @@ const styles = StyleSheet.create({
     height: 1,
     left: 41,
     position: "absolute",
-    top:234
+    top: 234,
   },
   management: {
-    left:33,
+    left: 33,
   },
   veterinarian: {
     left: 174,
@@ -374,7 +443,7 @@ const styles = StyleSheet.create({
   content: {
     top: 138,
     height: 520,
-    width: 327,
+    // width: 327,
     left: 24,
     position: "absolute",
   },
@@ -407,7 +476,7 @@ const styles = StyleSheet.create({
   paymentSuccess: {
     backgroundColor: "#CDEDD8",
     flex: 1,
-    width: "100%",
+    // width: "100%",
     height: 812,
   },
 });

@@ -1,38 +1,24 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity, TextInput } from "react-native";
 import { Color, FontFamily } from "./GlobalStyles";
-import { useSelector } from "react-redux";
-
+import { UseSelector, useSelector } from "react-redux"
 const Profile = () => {
-	const userName = useSelector((state) => state.user); // Assuming your user object in Redux has a 'name' property
-    console.log("this is it",userName);
+  const currentUser = useSelector((state) => state.user); // Assuming your user object in Redux has a 'name' property
 
-
-
-  const [walletAmount, setWalletAmount] = useState("1.1444449");
-
-  const handleMessageClick = () => {
-    console.log("Message clicked");
-    // Add your logic here for what should happen when "MESSAGE" is clicked.
-  };
-
+  const [walletAmount, setWalletAmount] = useState(0);
+  
   const handleLogoutClick = () => {
     console.log("Logout clicked");
-    // Add your logic here for what should happen when "LOGOUT" is clicked.
   };
 
   const handlePlusClick = () => {
-    console.log("+ clicked");
-    // Add your logic here for what should happen when "+" is clicked.
+    const incrementedAmount = walletAmount + 1;
+    setWalletAmount(incrementedAmount);
   };
 
   const handleMinusClick = () => {
-    console.log("- clicked");
-    // Add your logic here for what should happen when "-" is clicked.
-  };
-
-  const handleWalletAmountChange = (newAmount) => {
-    setWalletAmount(newAmount);
+    const decrementedAmount = walletAmount - 1;
+    setWalletAmount(decrementedAmount);
   };
 
   return (
@@ -55,17 +41,18 @@ const Profile = () => {
         Jessica Jones, 27
       </Text>
 
-      <TouchableOpacity style={styles.default} onPress={() => handleLogoutClick("LOGOUT")}>
-        <View style={[styles.message, styles.messagePosition]}>
-          <View style={[styles.bg, styles.bgPosition]} />
-          <Text style={[styles.message1, styles.message1Typo]}>LOGOUT</Text>
+      <TouchableOpacity  onPress={() => handleLogoutClick("LOGOUT")}>
+        <View style={styles.message}>
+          <View style={styles.bgPosition} />
+          <Text style={styles.message1Typo}>LOGOUT</Text>
         </View>
       </TouchableOpacity>
-      <Image
-        style={[styles.defaultIcon, styles.iconLayout]}
+      <TouchableOpacity>
+      <Image style={styles.imageDefault}
         contentFit="cover"
-        source={user.image}
+        source={{uri:currentUser?.imageUrl}}
       />
+      </TouchableOpacity>
       <View style={styles.money}>
         <TouchableOpacity onPress={handlePlusClick}>
           <Text style={[styles.text, styles.textTypo]}>+</Text>
@@ -75,9 +62,9 @@ const Profile = () => {
         </TouchableOpacity>
         <TextInput
           style={[styles.text2, styles.text2Typo]}
-          value={walletAmount}
-          onChangeText={handleWalletAmountChange}
+          value={walletAmount.toString()}
           keyboardType="numeric"
+          onChangeText={(newAmount) => setWalletAmount(parseFloat(newAmount))}
         />
 
         <Text style={[styles.spinach, styles.text2Typo]}>WALLET</Text>
@@ -112,11 +99,12 @@ const styles = StyleSheet.create({
     },
     backgroundColor: Color.colorDarkslategray_100,
     bottom: "0%",
-    height: "82%",
-    left: "-59%",
-    top: "195%",
+    height: "2000%",
+    left: "-71%",
+    top: "11500%",
     position: "absolute",
-    width: "100%",
+    width: "120%",
+    borderRadius:5
   },
   message1Typo: {
     color: Color.colorWhite,
@@ -124,10 +112,11 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     letterSpacing: 0,
     fontSize: 14,
-    top: "220%",
+    top: "12100%",
     textAlign: "center",
-    lineHeight: 14,
-    left:-73
+    lineHeight: 15,
+    left:-73,
+    height:20
   },
   hoverPosition: {
     display: "none",
@@ -193,31 +182,12 @@ const styles = StyleSheet.create({
     left: "29.5%",
     textAlign: "left",
   },
-  message1: {
-    left: "29%",
-  },
-  default: {
-    bottom: "0%",
-    right: "0%",
-    height: "100%",
-    left: "0%",
-    top: "10%",
-    position: "absolute",
-    width: "100%",
-  },
   message: {
     height: "5%",
     width: "30%",
-    top: "12.5%",
+    top: "52.5%",
     right: "30.16%",
     left: "55%",
-  },
-  defaultIcon: {
-    height: "25.76%",
-    width: "53%",
-    top: "0.5%",
-    right: "25.49%",
-    left: "25.77%",
   },
   text: {
     width: "14%",
@@ -278,6 +248,13 @@ const styles = StyleSheet.create({
     height: 535,
     width: "100%",
   },
+  imageDefault: {
+    width: 150,
+    height: 150, // Increase the height to match the width to make it a circle
+    top: -20,
+    left: 130,
+    borderRadius: 90, // Half of the width and height
+  }
 });
 
 export default Profile;

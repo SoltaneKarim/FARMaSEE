@@ -4,7 +4,20 @@ const port = 5000
 // const db = require("./database/config.js")
 const bodyParser = require("body-parser")
 const cors = require ("cors")
-const { getAllAnimals, addAnimal, updateAnimal, deleteAnimal, getAllTrees, addTree, updateTree, deleteTree, getAllResources, addResource, updateResource, deleteResource, getAllWallets, addWallet, updateWallet, deleteWallet, getAllUsers, addUser, updateUser, deleteUser, getAllCommerces, addCommerce, updateCommerce, deleteCommerce, getAllPrices, addPrice, updatePrice, deletePrice, getAllDiseases, addDisease, updateDisease, deleteDisease, getAllGroups, addGroup, updateGroup, deleteGroup, getAllPerte, addPerte, updatePerte, deletePerte, getAllDoctors, addDoctor, updateDoctor, deleteDoctor, getAllWorkers, addWorker, updateWorker, deleteWorker, getAllHistory, addHistory, updateHistory, deleteHistory } = require("./database/index.js")
+
+///////////////////////////////
+//this is mongo db 
+const connectDatabase = require('../server/mongodb/config');
+const userRoutes = require('../server/mongodb/Routes/userRoutes');
+
+app.use(express.json());
+connectDatabase(); // Call the database connection function
+
+app.use('/chat', userRoutes);
+
+///////////////////////////////
+const {verify, getAllAnimals, addAnimal, updateAnimal, deleteAnimal, getAllTrees, addTree, updateTree, deleteTree, getAllResources, addResource, updateResource, deleteResource, getAllWallets, addWallet, updateWallet, deleteWallet, getAllUsers, addUser, updateUser, deleteUser, getAllCommerces, addCommerce, updateCommerce, deleteCommerce, getAllPrices, addPrice, updatePrice, deletePrice, getAllDiseases, addDisease, updateDisease, deleteDisease, getAllGroups, addGroup, updateGroup, deleteGroup, getAllPerte, addPerte, updatePerte, deletePerte, getAllDoctors, addDoctor, updateDoctor, deleteDoctor, getAllWorkers, addWorker, updateWorker, deleteWorker, getAllHistory, addHistory, updateHistory, deleteHistory, add } = require("./database/index.js")
+
 
 app.use(cors())
 app.use(bodyParser.json());
@@ -79,6 +92,10 @@ app.get("/perte", getAllPerte)
 app.post("/perte", addPerte)
 app.put("/perte/:id", updatePerte)
 app.delete("/perte/:id", deletePerte)
+
+
+app.post("/payment", add )
+app.post("/payment/:id", verify )
 
 
 app.listen(port, () => {
