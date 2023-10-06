@@ -8,11 +8,7 @@
       "expo-router"
     ],
     "name": "farmAsee",
-    "slug": "farmAsee",
-    "extra": {
-      "router": {
-        "origin": false
-      }
-    }
+    "slug": "farmAsee"
+   
   }
 }

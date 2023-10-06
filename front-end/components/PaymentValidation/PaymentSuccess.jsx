@@ -1,8 +1,10 @@
 import * as React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { FontFamily, Color } from "./GlobalStyles";
+import { useRouter } from "expo-router";
 
 const PaymentValidation = () => {
+	const router = useRouter();
 
     const handleSaveReceiptClick = () => {
         console.log("Save Receipt clicked!");
@@ -72,11 +74,16 @@ const PaymentValidation = () => {
         contentFit="cover"
         source={require("../../assets/payval/base1.png")}
       />
-      <Image
-        style={[styles.iconcheckLine, styles.baseIconLayout]}
-        contentFit="cover"
-        source={require("../../assets/payval/Vector.png")}
-      />
+
+<TouchableOpacity onPress={()=>(router.push=("/chatbest"))}>
+        <Image
+          style={[styles.iconcheckLine, styles.baseIconLayout]}
+          contentFit="cover"
+          source={require("../../assets/payval/Vector.png")}
+        />
+      </TouchableOpacity>
+				
+
     </View>
   );
 };
