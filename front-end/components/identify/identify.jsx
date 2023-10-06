@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Linking } from "react-native";
+
 import {
 	View,
 	Text,
@@ -94,16 +96,29 @@ const Identify = () => {
 		});
 	};
 
-	const predefinedColors = ['#94a995', '#27585b', '#0f4141', '#346c6e', '#e0dfdb', '#486d6f', '#468456'];
+	const predefinedColors = [
+		"#94a995",
+		"#27585b",
+		"#0f4141",
+		"#346c6e",
+		"#e0dfdb",
+		"#486d6f",
+		"#468456",
+	];
 
 	const pieChartData = disease?.map((item, index) => ({
 		name: item.name,
 		population: item.probability,
 		color: predefinedColors[index % predefinedColors.length],
 		legendFontColor: "#7F7F7F",
-		legendFontSize: 9,
-	  }));
-
+		legendFontSize: 12,
+	}));
+	const openGoogleSearch = (diseaseName) => {
+		const searchQuery = `https://www.google.com/search?q=${
+			plantData.name
+		}+${encodeURIComponent(diseaseName)}`;
+		Linking.openURL(searchQuery);
+	};
 	const chartConfig = {
 		backgroundGradientFrom: "#ffffff",
 		backgroundGradientTo: "#ffffff",
@@ -154,7 +169,7 @@ const Identify = () => {
 
 				{plantData?.similar_images && (
 					<>
-						<Text style={styles.plantName}>Similar Images</Text>
+						<Text style={styles.plantName}>Ideal pictures for your plant</Text>
 						<FlatList
 							data={plantData.similar_images}
 							keyExtractor={(item) => item.id}
@@ -171,20 +186,44 @@ const Identify = () => {
 					</>
 				)}
 				<ScrollView horizontal={true}>
-					<View style={{justifyContent:"center",alignItems:"center"}}>
+					<View style={{ justifyContent: "center", alignItems: "center" }}>
 						{disease && disease.length > 0 && (
-							<PieChart
-								data={pieChartData}
-								width={Dimensions.get("window").width}
-								height={Dimensions.get("window").height * 0.2} // Adjust the height as needed
-								chartConfig={chartConfig}
-								accessor="population"
-								backgroundColor="transparent"
-							/>
+							<ScrollView horizontal={true}>
+								<View
+									style={{ justifyContent: "center", alignItems: "center" }}>
+									<Text style={styles.plantName}>
+										Pie of probable diseases:
+									</Text>
+
+									<PieChart
+										data={pieChartData}
+										width={Dimensions.get("window").width}
+										height={Dimensions.get("window").height * 0.2}
+										chartConfig={chartConfig}
+										accessor="population"
+										backgroundColor="transparent"
+									/>
+								</View>
+							</ScrollView>
 						)}
 					</View>
 				</ScrollView>
+				<Text style={styles.plantName}>Click to find more:</Text>
+				<FlatList
+					data={disease}
+					keyExtractor={(item) => item.name}
+					horizontal={true}
+					contentContainerStyle={styles.diseaseList}
+					renderItem={({ item }) => (
+						<TouchableOpacity
+							onPress={() => openGoogleSearch(item.name)}
+							style={styles.diseaseItem}>
+							<Text style={styles.diseaseName}>{item.name}</Text>
+						</TouchableOpacity>
+					)}
+				/>
 			</View>
+			
 		</ScrollView>
 	);
 };
@@ -241,7 +280,28 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		color: "white",
-		fontSize: 25
+		fontSize: 25,
+	},
+	diseaseName: {
+		color: "blue",
+		textDecorationLine: "underline",
+		margin: 5,
+	},
+	diseaseList: {
+		// paddingHorizontal: 16, // Adjust horizontal padding as needed
+	},
+	diseaseItem: {
+		justifyContent: "center",
+		backgroundColor: "#336b6d", // Background color for the TouchableOpacity
+		paddingHorizontal: 12,
+		// paddingVertical: 8,
+		marginHorizontal: 8, // Adjust horizontal margin as needed
+		borderRadius: 4,
+	},
+	diseaseName: {
+		color: "white",
+		fontWeight: "bold",
+		textTransform: "capitalize",
 	},
 });
 

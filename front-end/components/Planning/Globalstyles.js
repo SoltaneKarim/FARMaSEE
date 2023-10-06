@@ -1,8 +1,3 @@
-// /* fonts */
-// export const FontFamily = {
-//     interRegular: "sans-serif",
-//     poppinsSemiBold: "sans-serif",
-//   };
 //   /* font sizes */
 //   export const FontSize = {
 //     size_xs: 12,

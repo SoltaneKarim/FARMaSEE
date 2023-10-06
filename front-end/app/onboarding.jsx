@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import { View, StyleSheet, Text, Dimensions } from "react-native";
 import { Video } from "expo-av";
 import Onboarding from "react-native-onboarding-swiper";
@@ -8,23 +8,7 @@ const OnboardingWithVideo = () => {
   const videoRef = useRef(null);
   const router = useRouter(); // Initialize the router
 
-  useEffect(() => {
-    const loadVideo = async (videoSource) => {
-      try {
-        await videoRef.current.loadAsync(videoSource);
-        await videoRef.current.playAsync();
-        videoRef.current.setIsLoopingAsync(true);
-      } catch (error) {
-        console.error("Error loading or playing the video:", error);
-      }
-    };
-
-    // Load the first video when the component mounts
-    loadVideo(require("../assets/Mp4/1.mp4"));
-  }, [videoRef]);
-
   const windowWidth = Dimensions.get("window").width;
-  const windowHeight = Dimensions.get("window").height;
 
   const handleOnFinish = () => {
     // Navigate to the "Login" page after finishing the onboarding
@@ -54,6 +38,8 @@ const OnboardingWithVideo = () => {
                 source={require("../assets/Mp4/1.mp4")}
                 useNativeControls={false}
                 resizeMode="cover"
+                isLooping
+                shouldPlay
               />
             </View>
           ),
@@ -80,6 +66,8 @@ const OnboardingWithVideo = () => {
                 source={require("../assets/Mp4/2.mp4")}
                 useNativeControls={false}
                 resizeMode="cover"
+                isLooping
+                shouldPlay
               />
             </View>
           ),
