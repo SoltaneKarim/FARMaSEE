@@ -54,7 +54,7 @@ const NewsList = () => {
         <Image
           source={{ uri: item.urlToImage }}
           style={{
-            width: 200,
+            width: "100%",
             height: 150,
             borderTopLeftRadius: 18,
             borderTopRightRadius: 18,
