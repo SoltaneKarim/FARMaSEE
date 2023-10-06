@@ -1,54 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, Alert, StyleSheet, Modal } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, Image, TextInput, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 
 const ProfileComponent = () => {
-  const [wallet, setWallet] = useState(0);
-  const [amount, setAmount] = useState(0);
-  const [password, setPassword] = useState('');
-  const [isPasswordDialogVisible, setIsPasswordDialogVisible] = useState(false);
-  const [isWalletAlertVisible, setIsWalletAlertVisible] = useState(false);
+  const [wallet, setWallet] = useState('0'); // Use a string for TextInput value
   const [isWalletInputVisible, setIsWalletInputVisible] = useState(false);
-  const [isIncrementing, setIsIncrementing] = useState(true); // State to track if user wants to increment (true) or decrement (false)
+  const walletInputRef = useRef(null); // Reference to the TextInput
 
-  const handleIncrement = () => {
-    setIsPasswordDialogVisible(true);
-    setIsIncrementing(true); // User wants to increment
-  };
-
-  const handleDecrement = () => {
-    setIsPasswordDialogVisible(true);
-    setIsIncrementing(false); // User wants to decrement
-  };
-
-  const handleConfirmPassword = () => {
-    if (password === 'yourpassword') { // Replace 'yourpassword' with the actual password
-      if (isPasswordDialogVisible) {
-        if (amount !== 0) {
-          if (isIncrementing) {
-            setWallet(wallet + amount);
-          } else {
-            setWallet(wallet - amount);
-          }
-          setIsPasswordDialogVisible(false);
-          setAmount(0);
-          setPassword('');
-        } else {
-          Alert.alert('Invalid Amount', 'Please enter a valid amount.');
-        }
-      }
-    } else {
-      setIsPasswordDialogVisible(false);
-      setPassword('');
-      Alert.alert('Invalid Password', 'Please enter the correct password.');
-    }
-  };
-
-  const handleCancelPassword = () => {
-    setIsPasswordDialogVisible(false);
-    setPassword('');
-  };
-
-  // Function to handle the Wallet text click
   const handleWalletTextClick = () => {
     setIsWalletInputVisible(true);
   };
@@ -62,17 +19,24 @@ const ProfileComponent = () => {
     // You can add logic here to handle the input value
   };
 
+  useEffect(() => {
+    if (isWalletInputVisible) {
+      // Focus on the TextInput when the modal is displayed
+      walletInputRef.current.focus();
+    }
+  }, [isWalletInputVisible]);
+
   return (
     <View style={styles.container}>
       <Image
         source={require('../../assets/profile/DEFAULT.png')} // Replace with your image source
         style={styles.profileImage}
       />
-      <Text style={styles.name}>John Doe</Text>
       <Image
         source={require('../../assets/profile/verified-logo.png')} // Replace with your verified logo source
         style={styles.verifiedLogo}
       />
+      <Text style={styles.name}>John Doe</Text>
       <Text style={styles.address}>123 Main St, City</Text>
       <View style={styles.logoGrid}>
         {/* Add your logos here */}
@@ -81,28 +45,9 @@ const ProfileComponent = () => {
         <Image source={require('../../assets/tree.png')} style={styles.logo} />
         {/* Add more logos as needed */}
       </View>
-      <View style={styles.walletContainer}>
-        <TouchableOpacity onPress={handleWalletTextClick} style={styles.walletInputContainer}>
-          <Text style={styles.walletText}>Wallet: {wallet} TND</Text>
-        </TouchableOpacity>
-      </View>
-      {isPasswordDialogVisible && (
-        <View style={styles.confirmationContainer}>
-          <TextInput
-            style={styles.passwordInput}
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            secureTextEntry
-            placeholder="Enter Password"
-          />
-          <TouchableOpacity onPress={handleCancelPassword} style={styles.cancelButton}>
-            <Text style={styles.cancelButtonText}>Cancel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleConfirmPassword} style={styles.confirmButton}>
-            <Text style={styles.confirmButtonText}>Confirm</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      <TouchableOpacity onPress={handleWalletTextClick} style={styles.walletInputContainer}>
+        <Text style={styles.walletText}>Wallet: {wallet} TND</Text>
+      </TouchableOpacity>
 
       {/* Wallet input modal */}
       <Modal
@@ -113,15 +58,14 @@ const ProfileComponent = () => {
       >
         <View style={styles.walletInputModal}>
           <Text style={styles.walletInputLabel}>Enter Amount:</Text>
-          <View style={styles.amountContainer}>
-            <TouchableOpacity onPress={() => setAmount(amount + 1)} style={styles.amountButton}>
-              <Text style={styles.amountButtonText}>+</Text>
-            </TouchableOpacity>
-            <Text style={styles.amountText}>{amount}</Text>
-            <TouchableOpacity onPress={() => setAmount(amount - 1)} style={styles.amountButton}>
-              <Text style={styles.amountButtonText}>-</Text>
-            </TouchableOpacity>
-          </View>
+          {/* Add autoFocus prop to TextInput */}
+          <TextInput
+            ref={walletInputRef}
+            style={styles.walletInput}
+            onChangeText={(text) => setWallet(text)}
+            value={wallet}
+            keyboardType="numeric" // Use numeric keyboard for numbers
+          />
           <TouchableOpacity onPress={handleWalletInputCancel} style={styles.walletInputCancelButton}>
             <Text style={styles.walletInputCancelButtonText}>Cancel</Text>
           </TouchableOpacity>
@@ -134,179 +78,54 @@ const ProfileComponent = () => {
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     padding: 20,
   },
   profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50, // to make it round
+    width: 200,
+    height: 200,
+    borderRadius: 50, 
+    top:40
   },
   name: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 10,
-  },
-  verifiedLogo: {
-    width: 20,
-    height: 20,
-    marginLeft: 5,
   },
   address: {
-    marginTop: 5,
+    fontSize: 15,
+    top:5
   },
   logoGrid: {
-    flexDirection: 'row',
-    marginTop: 20,
+    flexDirection: 'row', 
+
   },
   logo: {
-    width: 50,
-    height: 50,
-    margin: 5,
-  },
-  walletContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  amountInput: {
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    width: 100,
-    textAlign: 'center',
-    fontSize: 18,
-  },
-  walletButton: {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-    marginHorizontal: 5,
-  },
-  walletButtonText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  walletText: {
-    marginTop: 20,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  confirmationContainer: {
-    marginTop: 20,
-    alignItems: 'center',
-  },
-  passwordInput: {
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    width: 200,
-    textAlign: 'center',
-    fontSize: 18,
-  },
-  confirmButton: {
-    backgroundColor: 'green',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 10,
-  },
-  confirmButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  cancelButton: {
-    backgroundColor: 'red',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 10,
-  },
-  cancelButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
+    width: 70,
+    height: 70,
+    top:25,
+    
   },
   walletInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    position: 'relative',
   },
   walletText: {
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: 'bold',
-  },
-
-
-  walletInputModal: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  walletInput: {
-    width: 200,
-    height: 40,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-  },
-  walletInputCancelButton: {
-    backgroundColor: 'red',
-    padding: 10,
-    borderRadius: 5,
-  },
-  walletInputCancelButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  walletInputConfirmButton: {
-    backgroundColor: 'green',
-    padding: 10,
-    borderRadius: 5,
-  },
-  walletInputConfirmButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
+    top:50
   },
   walletInputModal: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'gray', // Change the background color to gray
   },
   walletInputLabel: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  amountContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  amountButton: {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-  },
-  amountButtonText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  amountText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginHorizontal: 20,
   },
   walletInputCancelButton: {
     backgroundColor: 'red',
@@ -328,61 +147,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  walletContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 20,
+  verifiedLogo: {
+    width: 20,
+    height: 20,
+    top:25,
+    left:80
   },
-  walletButton: {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-    marginHorizontal: 5,
-  },
-  walletButtonText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-
-  // Modal styles
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalInput: {
-    width: 200,
-    height: 40,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-    backgroundColor: 'white',
-  },
-  modalCancelButton: {
-    backgroundColor: 'red',
-    padding: 10,
-    borderRadius: 5,
-  },
-  modalCancelButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  modalConfirmButton: {
-    backgroundColor: 'green',
-    padding: 10,
-    borderRadius: 5,
-  },
-  modalConfirmButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
+  
 });
-
 
 export default ProfileComponent;
