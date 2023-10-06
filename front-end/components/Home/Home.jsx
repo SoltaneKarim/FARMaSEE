@@ -9,7 +9,7 @@ import {
   Image,
 } from "react-native";
 import News from "./News";
-import { Color, FontFamily, FontSize, Border, Padding } from "./GlobalStyle.js";
+import { Color,  FontSize, Border, Padding } from "./GlobalStyle.js";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
 import { Dimensions } from "react-native";
@@ -152,7 +152,6 @@ const styles = StyleSheet.create({
 
     textAlign: "left",
     color: "#26575a",
-    fontFamily: FontFamily.interMedium,
     fontWeight: "700",
   },
   aboutToRipenFlexBox: {
@@ -176,7 +175,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "left",
     color: Color.colorWhite,
-    fontFamily: FontFamily.interMedium,
     fontWeight: "500",
   },
   textPosition: {
@@ -193,7 +191,6 @@ const styles = StyleSheet.create({
     lineHeight: 23,
     fontSize: 16,
     textAlign: "left",
-    fontFamily: FontFamily.interMedium,
     fontWeight: "500",
   },
   groupItemPosition: {
@@ -355,7 +352,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 49,
     lineHeight: 74,
-    // fontFamily: FontFamily.interSemiBold,
     fontWeight: "600",
     textAlign: "left",
     color: Color.colorWhite,
@@ -527,7 +523,6 @@ const styles = StyleSheet.create({
   home: {
     color: Color.colorDarkslategray,
     marginTop: 6,
-    fontFamily: FontFamily.interRegular,
   },
   vuesaxboldhome2Parent: {
     paddingHorizontal: Padding.p_9xs,

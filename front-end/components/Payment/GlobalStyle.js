@@ -1,11 +1,4 @@
-/* fonts */
-export const FontFamily = {
-    latoLight: "Lato-Light",
-    latoBlack: "Lato-Black",
-    latoRegular: "Lato-Regular",
-    defaultBoldSubheadline: "SF Pro Text",
-    generalSans: "General Sans",
-  };
+
   /* font sizes */
   export const FontSize = {
     size_sm: 14,

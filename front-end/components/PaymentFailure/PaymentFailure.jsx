@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { Color, FontFamily } from "./GlobalStyles";
+import { Color } from "./GlobalStyles";
 
 const TransferFailed = () => {
   const handleButtonClick = () => {
@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
   },
   displayTypo: {
     color: Color.rhinoDark500Main,
-    fontFamily: FontFamily.manropeMedium,
     fontWeight: "700",
     top:250
   },
@@ -145,7 +144,6 @@ const styles = StyleSheet.create({
   },
   oopsTransferFailed: {
     top: 165,
-    fontFamily: FontFamily.manropeMedium,
     fontWeight: "500",
     lineHeight: 16,
     letterSpacing: -0.1,
@@ -159,7 +157,6 @@ const styles = StyleSheet.create({
     letterSpacing: -0.2,
     lineHeight: 26,
     fontWeight: "700",
-    fontFamily: FontFamily.manropeBold,
     left:160
   },
   separatorIcon: {
@@ -172,7 +169,6 @@ const styles = StyleSheet.create({
   },
   displayXlmedium: {
     color: Color.rhinoDark300,
-    fontFamily: FontFamily.manropeRegular,
     left: 70,
   },
   displayXlmedium1: {
@@ -186,35 +182,29 @@ const styles = StyleSheet.create({
   },
   displayXlmedium2: {
     color: Color.rhinoDark300,
-    fontFamily: FontFamily.manropeRegular,
     left: 70,
   },
   displayXlmedium3: {
     left: 270,
     color: Color.rhinoDark500Main,
-    fontFamily: FontFamily.manropeMedium,
     fontWeight: "700",
   },
   displayXlmedium4: {
     color: Color.rhinoDark300,
-    fontFamily: FontFamily.manropeRegular,
     left: 70,
   },
   displayXlmedium5: {
     left: 270,
     color: Color.rhinoDark500Main,
-    fontFamily: FontFamily.manropeMedium,
     fontWeight: "700",
   },
   displayXlmedium6: {
     color: Color.rhinoDark300,
-    fontFamily: FontFamily.manropeRegular,
     left: 70,
   },
   displayXlmedium7: {
     left: 270,
     color: Color.rhinoDark500Main,
-    fontFamily: FontFamily.manropeMedium,
     fontWeight: "700",
   },
   separatorIcon1: {
@@ -238,7 +228,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 11,
     color: Color.mandyRed500Main,
-    fontFamily: FontFamily.manropeRegular,
     left: 53,
     width: 300,
     textAlign: "center",
@@ -288,7 +277,6 @@ const styles = StyleSheet.create({
     top: "68.6%",
     left: "50%",
     fontWeight: "700",
-    fontFamily: FontFamily.manropeSemiBold,
     color: "#101010",
     textAlign: "center",
     lineHeight: 16,

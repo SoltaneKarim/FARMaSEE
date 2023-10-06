@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/webpack-config": "^18.1.3",
     "@react-native-async-storage/async-storage": "^1.18.1",
     "@react-native-community/checkbox": "^0.5.16",
     "@react-native-community/cli-platform-android": "^11.3.8",
@@ -16,7 +17,7 @@
     "@react-native-picker/picker": "^2.5.0",
     "@react-native/gradle-plugin": "^0.73.1",
     "@react-navigation/bottom-tabs": "^6.5.7",
-    "@react-navigation/native": "^6.1.6",
+    "@react-navigation/native": "^6.1.8",
     "@react-navigation/native-stack": "^6.9.12",
     "@rneui/base": "^4.0.0-rc.8",
     "@rneui/themed": "^4.0.0-rc.8",
@@ -41,6 +42,7 @@
     "moment-timezone": "^0.5.43",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
+    "react-dom": "^18.2.0",
     "react-native": "0.71.8",
     "react-native-animatable": "^1.3.3",
     "react-native-biometrics": "^3.0.1",
@@ -63,6 +65,7 @@
     "react-native-modal-datetime-picker": "^17.1.0",
     "react-native-modal-dropdown": "^1.0.2",
     "react-native-onboarding-swiper": "^1.2.0",
+    "react-native-paystack-webview": "^4.0.3",
     "react-native-picker-select": "^8.1.0",
     "react-native-progress": "^5.0.0",
     "react-native-ratings": "^8.1.0",
@@ -75,7 +78,7 @@
     "react-native-toggle-element": "^2.0.1",
     "react-native-vector-icons": "^10.0.0",
     "react-native-video": "^5.2.1",
-    "react-native-web": "~0.18.10",
+    "react-native-web": "^0.18.12",
     "react-native-webview": "^13.6.0",
     "react-redux": "^8.1.2",
     "redux": "^4.2.1"

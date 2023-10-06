@@ -1,9 +1,5 @@
 /* fonts */
-export const FontFamily = {
-    interRegular: "sans-serif",
-    interMedium: "sans-serif",
-    interSemiBold: "Inter-SemiBold",
-  };
+
   /* font sizes */
   export const FontSize = {
     size_xs: 12,

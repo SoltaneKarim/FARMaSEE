@@ -1,98 +1,94 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
+import { Paystack, paystackProps } from "react-native-paystack-webview";
 import axios from 'axios';
 import { Text, StyleSheet, View, Image, TouchableOpacity, ScrollView, Linking } from 'react-native';
-import { Color, FontFamily, FontSize, Border, Padding } from './GlobalStyle.js';
+import { Color, FontSize, Border, Padding } from './GlobalStyle.js';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'expo-router';
 
 const Care = () => {
-  const [form, setForm] = useState({ amount: '50000' });
-  const [link, setLink] = useState('');
   const user = useSelector((state) => state.user);
-  const router = useRouter();
-
+  const paystackWebViewRef = useRef(paystackProps.PayStackRef);
   const handlePayNowClick = async () => {
-    console.log('hello')
     try {
-      // Send the payment request
-      const response = await axios.post('http://192.168.1.20:5000/payment', form);
-      console.log('response', response)
-      setLink(result.link)
-      const { result } = response.data;
+      // Start the Paystack transaction
+      paystackWebViewRef.current.startTransaction();
 
-      // Always open the payment URL, regardless of the payment status
-      Linking.openURL(result.link)
-
-      // Optionally, you can also create the user here if needed
-      const userResponse = await axios.post('http://192.168.1.20:5000/chat/users', {
-        specificId: user.id,
-        fullname: user.fullName,
-        messages: [],
+      // Wait for the transaction to complete and get the transaction status
+      const { status } = await new Promise((resolve) => {
+        // Assuming you have an event listener for transaction completion
+        // You should adapt this part to your actual code
+        paystackWebViewRef.current.on('transaction_complete', (res) => {
+          resolve(res);
+        });
       });
 
-      // Handle the response, such as showing a success message or redirecting the user
-      console.log('User created successfully:', userResponse.data);
-      router.push('paymentSuccess')
+      // Check if the transaction status is "success"
+      if (status === 'success') {
+        // Assuming you have access to the user object from Redux
+        const { id, fullName } = user;
+
+        // Define the user data you want to send to the server
+        const userData = {
+          specificId: id,
+          fullname: fullName,
+          messages: [],
+        };
+
+        // Make a POST request to create the user
+        const userResponse = await axios.post('http://192.168.1.19:5000/chat/users', userData);
+
+        // Log the response from the server
+        console.log('User created successfully:', userResponse.data);
+      }
     } catch (error) {
-      // Handle errors, such as displaying an error message to the user
       console.error('Error:', error);
     }
   };
 
-  // const handleUrlChange = async (event) => {
-  //   const { url } = event;
 
-  //   // Check if the URL matches your success_link
-  //   if (url.includes('http://192.168.100.44:5000/success')) {
-  //     // Handle successful payment
-  //     router.push('paymentSuccess'); // Navigate to the success screen
+
+
+
+
+  // const [form, setForm] = useState({ amount: '99000' });
+  // const user = useSelector((state) => state.user);
+  // const router = useRouter();
+
+  // const handlePayNowClick = async () => {
+  //   try {
+  //     const response = await axios.post('http://192.168.1.19:5000/payment', form);
+  //     const { result } = response.data;
+
+  //     Linking.openURL(result.link)
+
+  //     const res = await axios.post(`http://192.168.1.19:5000/payment/${result.payment_id}`)
+  //     console.log("res", res.data.result);
+
+  //     router.push('paymentSuccess')
+
+  //     const userResponse = await axios.post('http://192.168.1.19:5000/chat/users', {
+  //       specificId: user.id,
+  //       fullname: user.fullName,
+  //       messages: [],
+  //     });
+  //     console.log('User created successfully:', userResponse.data);
+  //   }
+  //   catch (error) {
+  //     console.error('Error:', error);
   //   }
   // };
-
-  // Add an event listener to handle URL changes
-  // useEffect(() => {
-  //   const handleAppStateChange = (nextAppState) => {
-  //     if (nextAppState === 'active') {
-  //       Linking.getInitialURL().then((url) => {
-  //         if (url) {
-  //           handleUrlChange({ url });
-  //         }
-  //       });
-  //       Linking.addEventListener('url', handleUrlChange);
-  //     } else {
-  //       Linking.removeEventListener('url', handleUrlChange);
-  //     }
-  //   };
-
-  //   // Add the listener when the component mounts
-  //   Linking.addEventListener('url', handleUrlChange);
-  //   Linking.getInitialURL().then((url) => {
-  //     if (url) {
-  //       handleUrlChange({ url });
-  //     }
-  //   });
-
-  //   // Remove the event listener when the component unmounts to avoid memory leaks
-  //   return () => {
-  //     Linking.removeEventListener('url', handleUrlChange);
-  //   };
-  // }, []);
-
 
   return (
     <ScrollView>
       <View style={styles.paymentSuccess}>
-      <TouchableOpacity onPress={handlePayNowClick}>
-        <View style={[styles.button, styles.buttonFlexBox]}>
-          <Text style={styles.primaryButton}>Pay Now</Text>
-        </View>
-      </TouchableOpacity>
-        <View style={styles.content}>
-        {/* <WebView
-          source={{ uri: link }}
-          scalesPageToFit={true}
-        /> */}
+        <TouchableOpacity onPress={handlePayNowClick}>
+          <View style={[styles.button, styles.buttonFlexBox]}>
+            <Text style={styles.primaryButton}>Pay Now</Text>
+          </View>
+        </TouchableOpacity>
 
+        <View style={styles.content}>
           <Image
             style={styles.backgroundIcon}
             contentFit="cover"
@@ -137,7 +133,7 @@ const Care = () => {
           </View>
           <View style={styles.content1}>
             <Text style={styles.price}>Price</Text>
-            <Text style={[styles.text, styles.premiumTypo]}>$125.5</Text>
+            <Text style={[styles.text, styles.premiumTypo]}>99.000 TND</Text>
           </View>
           <View style={[styles.content2, styles.buttonFlexBox]}>
             <Text style={[styles.getPremium, styles.premiumTypo]}>
@@ -152,8 +148,8 @@ const Care = () => {
           <Text style={[styles.veterinarian, styles.managementTypo]}>
             Veterinarian
           </Text>
-          <Text style={[styles.chat, styles.chatTypo]}>Chat</Text>
-          <Text style={[styles.healthCare, styles.chatTypo]}>Health-care</Text>
+          <Text style={[styles.chat, styles.chatTypo]}>Health Care</Text>
+          <Text style={[styles.healthCare, styles.chatTypo]}>Chat</Text>
           <Image
             style={[styles.xIcon, styles.iconLayout]}
             contentFit="cover"
@@ -171,8 +167,25 @@ const Care = () => {
         <Text style={[styles.veterinarian1, styles.management1Typo]}>
           Veterinarian
         </Text>
-        <Text style={[styles.chat1, styles.chat1Typo]}>Chat</Text>
-        <Text style={[styles.healthCare1, styles.chat1Typo]}>Health-care</Text>
+        <Text style={[styles.chat1, styles.chat1Typo]}>Health Care</Text>
+        <Text style={[styles.healthCare1, styles.chat1Typo]}>Chat</Text>
+
+        <Paystack
+          paystackKey="pk_test_4f6ffc3f55e513cdeb56e13dd9680afd61cb3702"
+          paystackSecretKey="sk_test_55df4d0e2ef238bf1c941f52e317c5fbd46eea7a"
+          billingEmail="samuelagbenyo067@gmail.com"
+          amount={99000}
+          billingName="Samuel Agbenyo"
+          billingMobile="0594602088"
+          currency='GHS'
+          onCancel={(e) => {
+            console.log(e);
+          }}
+          onSuccess={(res) => {
+            console.log(res);
+          }}
+          ref={paystackWebViewRef}
+        />
       </View>
     </ScrollView>
   );
@@ -219,7 +232,6 @@ const styles = StyleSheet.create({
     backgroundColor: Color.primaryGreen500,
   },
   premiumTypo: {
-    fontFamily: FontFamily.latoBlack,
     fontWeight: "900",
     textAlign: "center",
   },
@@ -230,7 +242,6 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_sm,
     textAlign: "center",
     color: Color.grayscaleText,
-    fontFamily: FontFamily.latoLight,
     fontWeight: "500",
     position: "absolute",
   },
@@ -241,7 +252,6 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_sm,
     textAlign: "center",
     color: Color.grayscaleText,
-    fontFamily: FontFamily.latoLight,
     fontWeight: "500",
     position: "absolute",
   },
@@ -266,7 +276,6 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_sm,
     textAlign: "center",
     color: Color.grayscaleText,
-    fontFamily: FontFamily.latoLight,
     fontWeight: "500",
     position: "absolute",
   },
@@ -277,7 +286,6 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_sm,
     textAlign: "center",
     color: Color.grayscaleText,
-    fontFamily: FontFamily.latoLight,
     fontWeight: "500",
     position: "absolute",
   },
@@ -285,7 +293,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 21,
     textAlign: "center",
-    fontFamily: FontFamily.latoLight,
     fontWeight: "500",
     color: Color.grayscaleText,
   },
@@ -359,13 +366,11 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontSize: FontSize.size_lg,
     textAlign: "center",
-    fontFamily: FontFamily.latoLight,
     fontWeight: "500",
   },
   text: {
     fontSize: 28,
     lineHeight: 32,
-    fontFamily: FontFamily.latoBlack,
     fontWeight: "900",
     letterSpacing: 1,
     color: Color.grayscaleWhite,
@@ -387,7 +392,6 @@ const styles = StyleSheet.create({
   getPremium: {
     fontSize: 24,
     lineHeight: 32,
-    fontFamily: FontFamily.latoBlack,
     fontWeight: "900",
     color: Color.grayscaleText,
     top: -80,
@@ -395,7 +399,6 @@ const styles = StyleSheet.create({
   },
   getNewFeatures: {
     lineHeight: 22,
-    fontFamily: FontFamily.latoRegular,
     color: Color.grayscaleLightText,
     width: 295,
     marginTop: 8,
@@ -430,7 +433,7 @@ const styles = StyleSheet.create({
     left: 30,
   },
   healthCare: {
-    left: 176,
+    left: 172,
   },
   xIcon: {
     bottom: "26.54%",
@@ -453,7 +456,6 @@ const styles = StyleSheet.create({
   premiumStatus: {
     left: 121,
     lineHeight: 24,
-    fontFamily: FontFamily.latoBlack,
     fontWeight: "900",
     textAlign: "center",
     letterSpacing: 1,
@@ -471,7 +473,7 @@ const styles = StyleSheet.create({
     left: 55,
   },
   healthCare1: {
-    left: 200,
+    left: 194,
   },
   paymentSuccess: {
     backgroundColor: "#CDEDD8",

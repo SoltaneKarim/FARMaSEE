@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity, TextInput } from "react-native";
-import { Color, FontFamily } from "./GlobalStyles";
+import { Color, } from "./GlobalStyles";
 import { UseSelector, useSelector } from "react-redux"
 const Profile = () => {
   const currentUser = useSelector((state) => state.user); // Assuming your user object in Redux has a 'name' property
@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
   },
   message1Typo: {
     color: Color.colorWhite,
-    fontFamily: FontFamily.openSansBold,
     fontWeight: "700",
     letterSpacing: 0,
     fontSize: 14,
@@ -130,7 +129,6 @@ const styles = StyleSheet.create({
   },
   
   text2Typo: {
-    fontFamily: FontFamily.poppinsMedium,
     fontWeight: "700",
     letterSpacing: 1,
     position: "absolute",
@@ -169,7 +167,6 @@ const styles = StyleSheet.create({
     left: "35%",
     fontSize: 16,
     fontWeight: "400",
-    fontFamily: FontFamily.openSansLight,
     textAlign: "left",
     lineHeight: 15,
     color: Color.colorDarkslateblue,
@@ -178,7 +175,6 @@ const styles = StyleSheet.create({
     top: "23%",
     fontSize: 23,
     lineHeight: 22,
-    fontFamily: FontFamily.openSansRegular,
     left: "29.5%",
     textAlign: "left",
   },
@@ -212,7 +208,6 @@ const styles = StyleSheet.create({
     fontSize: 33,
     color: "#1b5630",
     textAlign: "center",
-    fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
     letterSpacing: 1,
   },

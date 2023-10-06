@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { Color, FontFamily, FontSize, Border, Padding } from "./Globalstyle.js";
+import { Color,  FontSize, Border, Padding } from "./Globalstyle.js";
 import { useRouter } from "expo-router";
 const IPhone13ProMax3 = () => {
   const router = useRouter();
@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
 		opacity: 0.7,
 		textAlign: "left",
 		color: Color.colorWhite,
-		fontFamily: FontFamily.interMedium,
 		fontWeight: "500",
 	},
 	aboutToRipenFlexBox: {
@@ -119,7 +118,6 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		textAlign: "left",
 		color: Color.colorWhite,
-		fontFamily: FontFamily.interMedium,
 		fontWeight: "500",
 	},
 	textPosition: {
@@ -136,7 +134,6 @@ const styles = StyleSheet.create({
 		lineHeight: 23,
 		fontSize: 16,
 		textAlign: "left",
-		fontFamily: FontFamily.interMedium,
 		fontWeight: "500",
 	},
 	groupItemPosition: {
@@ -208,7 +205,6 @@ const styles = StyleSheet.create({
 	},
 	checkYourPlants: {
 		marginTop: 4,
-		fontFamily: FontFamily.interSemiBold,
 		fontWeight: "600",
 		fontSize: 16,
 		textAlign: "center",
@@ -295,7 +291,6 @@ const styles = StyleSheet.create({
 	text: {
 		fontSize: 49,
 		lineHeight: 74,
-		fontFamily: FontFamily.interSemiBold,
 		fontWeight: "600",
 		textAlign: "left",
 		color: Color.colorWhite,
@@ -306,7 +301,6 @@ const styles = StyleSheet.create({
 		left: 66,
 		fontSize: 27,
 		lineHeight: 39,
-		fontFamily: FontFamily.interRegular,
 	},
 	parent: {
 		width: 98,
@@ -361,7 +355,6 @@ const styles = StyleSheet.create({
 		color: Color.colorGray_100,
 		height: 31,
 		textAlign: "center",
-		fontFamily: FontFamily.interSemiBold,
 		fontWeight: "600",
 	},
 	contactAnExpert: {
@@ -369,7 +362,6 @@ const styles = StyleSheet.create({
 		left: 274,
 		width: 128,
 		height: 22,
-		fontFamily: FontFamily.interMedium,
 		fontWeight: "500",
 		position: "absolute",
 	},
@@ -395,7 +387,6 @@ const styles = StyleSheet.create({
 	aboutToRipen: {
 		fontSize: FontSize.size_3xs,
 		lineHeight: 13,
-		fontFamily: FontFamily.interMedium,
 		fontWeight: "500",
 	},
 	aboutToRipenWrapper: {
@@ -409,7 +400,6 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 	},
 	chiliPlant: {
-		fontFamily: FontFamily.interSemiBold,
 		fontWeight: "600",
 	},
 	vuesaxoutlinelocationIcon1: {
@@ -420,7 +410,6 @@ const styles = StyleSheet.create({
 		lineHeight: 16,
 		color: Color.colorDarkgray,
 		marginLeft: 4,
-		fontFamily: FontFamily.interMedium,
 		fontWeight: "500",
 	},
 	vuesaxoutlinelocationGroup: {
@@ -469,7 +458,6 @@ const styles = StyleSheet.create({
 	home: {
 		color: Color.colorDarkslategray,
 		marginTop: 6,
-		fontFamily: FontFamily.interRegular,
 	},
 	vuesaxboldhome2Parent: {
 		paddingHorizontal: Padding.p_9xs,
