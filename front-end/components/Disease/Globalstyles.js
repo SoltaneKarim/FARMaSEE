@@ -1,8 +1,5 @@
 /* fonts */
-export const FontFamily = {
-    interMedium: "Inter-Medium",
-    poppinsSemiBold: "Poppins-SemiBold",
-  };
+
   /* font sizes */
   export const FontSize = {
     size_3xs_8: 10,

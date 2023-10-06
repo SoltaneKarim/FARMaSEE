@@ -13,7 +13,7 @@ const IPhone13ProMax5 = () => {
 
 	useEffect(() => {
 		// Make an Axios GET request to fetch group data
-		Axios.get(`http://192.168.100.62:5000/group/one/${user.id}`)
+		Axios.get(`http://192.168.100.61:5000/group/one/${user.id}`)
 			.then((response) => {
 				setGroups(response.data.data);
 			})

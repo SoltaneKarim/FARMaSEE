@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import News from "./News";
-import { Color, FontFamily, FontSize, Border, Padding } from "./GlobalStyle.js";
+import { Color,  FontSize, Border, Padding } from "./GlobalStyle.js";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
 import { Dimensions } from "react-native";
@@ -25,7 +25,7 @@ const IPhone13ProMax3 = () => {
 	useEffect(() => {
 		// Fetch group data when the component mounts
 		axios
-			.get(`http://192.168.100.62:5000/group/one/${user.id}`, {
+			.get(`http://192.168.100.61:5000/group/one/${user.id}`, {
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -120,11 +120,11 @@ const IPhone13ProMax3 = () => {
 														styles.partlyCloudyTypo,
 													]}
 												>
-													Colomadu, Indonesia
+													Kef, Tunisia
 												</Text>
 											</View>
 											<Text style={[styles.augs2022, styles.augs2022Typo]}>
-												20 Augs 2022
+												14 Oct 2023
 											</Text>
 										</View>
 									</View>
@@ -203,12 +203,11 @@ const styles = StyleSheet.create({
 	},
 	augs2022Typo: {
 		textAlign: "left",
-		color: "#26575a",
-		fontFamily: FontFamily.interMedium,
+		color: "white",
 		fontWeight: "700",
 	},
 	aboutToRipenFlexBox: {
-		textAlign: "center",
+		textAlign: "center", 
 		color: "#124042",
 	},
 	frameLayout: {
@@ -226,7 +225,6 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		textAlign: "left",
 		color: Color.colorWhite,
-		fontFamily: FontFamily.interMedium,
 		fontWeight: "500",
 	},
 	textPosition: {
@@ -243,7 +241,6 @@ const styles = StyleSheet.create({
 		lineHeight: 23,
 		fontSize: 16,
 		textAlign: "left",
-		fontFamily: FontFamily.interMedium,
 		fontWeight: "500",
 	},
 	groupItemPosition: {
@@ -389,6 +386,8 @@ const styles = StyleSheet.create({
 		fontSize: 13,
 		lineHeight: 20,
 		marginLeft: 35,
+		left:80,
+		top:5
 	},
 	frameInner: {
 		width: 329,
@@ -403,7 +402,6 @@ const styles = StyleSheet.create({
 	text: {
 		fontSize: 49,
 		lineHeight: 74,
-		// fontFamily: FontFamily.interSemiBold,
 		fontWeight: "600",
 		textAlign: "left",
 		color: Color.colorWhite,
@@ -574,7 +572,6 @@ const styles = StyleSheet.create({
 	home: {
 		color: Color.colorDarkslategray,
 		marginTop: 6,
-		fontFamily: FontFamily.interRegular,
 	},
 	vuesaxboldhome2Parent: {
 		paddingHorizontal: Padding.p_9xs,

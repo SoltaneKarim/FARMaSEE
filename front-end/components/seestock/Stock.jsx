@@ -77,7 +77,7 @@ const Stock = () => {
 
 			try {
 				const response = await axios.post(
-					"http://192.168.100.62:5000/tree",
+					"http://192.168.100.61:5000/tree",
 					treeData,
 				);
 
@@ -116,7 +116,7 @@ const Stock = () => {
 
 		// Send the data to the server using Axios
 		axios
-			.post("http://192.168.100.62:5000/animal", data)
+			.post("http://192.168.100.61:5000/animal", data)
 			.then((response) => {
 				// Handle the response (e.g., display a success message)
 				console.log("Animal data successfully posted:", response.data);
@@ -140,7 +140,7 @@ const Stock = () => {
 	const fetchAnimalData = async () => {
 		try {
 			const response = await axios.get(
-				`http://192.168.100.62:5000/animal/one/${user.id}`,
+				`http://192.168.100.61:5000/animal/one/${user.id}`,
 			);
 
 			if (response.status === 200) {
@@ -157,7 +157,7 @@ const Stock = () => {
 	const fetchTreeData = async () => {
 		try {
 			const response = await axios.get(
-				`http://192.168.100.62:5000/tree/one/${user.id}`,
+				`http://192.168.100.61:5000/tree/one/${user.id}`,
 			);
 
 			if (response.status === 200) {
@@ -449,7 +449,6 @@ const Stock = () => {
 									style={{
 										fontSize: 30,
 										fontWeight: "800",
-										fontFamily: "sans-serif",
 										color: "#123f41",
 										textTransform:"capitalize"
 									}}>

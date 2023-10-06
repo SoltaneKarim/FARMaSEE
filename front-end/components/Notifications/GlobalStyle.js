@@ -1,10 +1,5 @@
   /* fonts */
-export const FontFamily = {
-    poppinsSemiBold: "sans-serif",
-    poppinsRegular: "Poppins-Regular",
-    poppinsMedium: "Poppins-Medium",
-    interRegular: "sans-serif",
-  };
+ex
   /* font sizes */
   export const FontSize = {
     size_xs: 12,
