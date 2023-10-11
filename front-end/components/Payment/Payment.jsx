@@ -24,7 +24,7 @@ const Care = () => {
 		try {
 			// Send the payment request
 			const response = await axios.post(
-				"http://192.168.100.62:5000/payment",
+				"http://192.168.100.49:5000/payment",
 				form,
 			);
 			console.log("response", response);
@@ -36,7 +36,7 @@ const Care = () => {
 
 			// Optionally, you can also create the user here if needed
 			const userResponse = await axios.post(
-				"http://192.168.100.62:5000/chat/users",
+				"http://192.168.100.49:5000/chat/users",
 				{
 					specificId: user.id,
 					fullname: user.fullName,

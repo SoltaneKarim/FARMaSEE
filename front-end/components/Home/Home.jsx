@@ -25,7 +25,7 @@ const IPhone13ProMax3 = () => {
 	useEffect(() => {
 		// Fetch group data when the component mounts
 		axios
-			.get(`http://192.168.100.62:5000/group/one/${user.id}`, {
+			.get(`http://192.168.100.49:5000/group/one/${user.id}`, {
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -74,13 +74,10 @@ const IPhone13ProMax3 = () => {
 								<View style={styles.groupParent}>
 									<TouchableOpacity
 										onPress={() => {
-											if (!groupNearOneHour) {
+											
 												// Navigate to the "notification" screen
-												router.push("notification");
-											} else {
-												// Handle the case when there is no group near one hour
-												// You can display a message or take any other action here
-											}
+												router.push("search");
+										
 										}}
 									>
 										<Image

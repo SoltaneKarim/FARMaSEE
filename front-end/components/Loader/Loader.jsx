@@ -23,7 +23,7 @@ function Loader() {
   return (
     <View style={styles.main}>
       <Image source={require("../../assets/ic_login_logo.png")} />
-      <Text style={styles.farmasee}> Farm@see</Text>
+      <Text style={styles.farmasee}> Farm2see</Text>
     </View>
   );
 }

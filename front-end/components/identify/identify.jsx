@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Linking } from "react-native";
-
+import { useRouter ,useLocalSearchParams} from "expo-router";
 import {
 	View,
 	Text,
@@ -19,6 +20,8 @@ import { Video } from "expo-av";
 import { PieChart } from "react-native-chart-kit";
 
 const Identify = () => {
+	const router = useRouter();
+
 	const [imageUri, setImageUri] = useState(null);
 	const [plantData, setPlantData] = useState(null);
 	const [disease, setDisease] = useState(null);
@@ -30,7 +33,7 @@ const Identify = () => {
 	console.log("this is howhealthy", howhealthy);
 	console.log("this is disease", disease);
 
-	const apiKey = "OUOOtHOzvM8LbOVf8UuMwc5y2WYeQU62zx3udSknRvIeKoUXbC";
+	const apiKey = "Nac0yBJQPE96qd9i5Mt2c0mu5FLzKHTTcoVLv1OcVGOGsGGHj2";
 
 	const selectImage = async () => {
 		const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -113,12 +116,17 @@ const Identify = () => {
 		legendFontColor: "#7F7F7F",
 		legendFontSize: 12,
 	}));
-	const openGoogleSearch = (diseaseName) => {
-		const searchQuery = `https://www.google.com/search?q=${
-			plantData.name
-		}+${encodeURIComponent(diseaseName)}`;
-		Linking.openURL(searchQuery);
-	};
+	const openSearchWithQuery = async (diseaseName) => {
+		// Use router.push to navigate to the "search" component
+		router.push("search");
+	  
+		try {
+		  // Set the "searchedone" local storage value to diseaseName
+		  await AsyncStorage.setItem('searchedone', diseaseName);
+		} catch (error) {
+		  console.error('Error setting local storage:', error);
+		}
+	  };
 	const chartConfig = {
 		backgroundGradientFrom: "#ffffff",
 		backgroundGradientTo: "#ffffff",
@@ -208,7 +216,6 @@ const Identify = () => {
 						)}
 					</View>
 				</ScrollView>
-				<Text style={styles.plantName}>Click to find more:</Text>
 				<FlatList
 					data={disease}
 					keyExtractor={(item) => item.name}
@@ -216,14 +223,13 @@ const Identify = () => {
 					contentContainerStyle={styles.diseaseList}
 					renderItem={({ item }) => (
 						<TouchableOpacity
-							onPress={() => openGoogleSearch(item.name)}
+							onPress={() => openSearchWithQuery(item.name)} // Updated this line
 							style={styles.diseaseItem}>
 							<Text style={styles.diseaseName}>{item.name}</Text>
 						</TouchableOpacity>
 					)}
 				/>
 			</View>
-			
 		</ScrollView>
 	);
 };
