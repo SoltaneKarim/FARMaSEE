@@ -99,6 +99,16 @@ function StackLayout() {
 						
 					}}
 				/>
+				<Stack.Screen
+					name="search"
+					options={{
+						headerTitle: "",
+						headerShown: true,
+						headerStyle: {
+							backgroundColor: "#346c6e",
+						},
+					}}
+				/>
 			</Stack>
 		</Provider>
 	);
