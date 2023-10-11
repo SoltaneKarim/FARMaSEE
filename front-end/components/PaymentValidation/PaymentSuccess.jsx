@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
-import { FontFamily, Color } from "./GlobalStyles";
+import { Color } from "./GlobalStyles";
 import { useRouter } from "expo-router";
 
 const PaymentValidation = () => {
@@ -175,7 +175,6 @@ const styles = StyleSheet.create({
     marginLeft: -31.03,
     color: "#101010",
     top: 153,
-    fontFamily: FontFamily.manropeSemiBold,
     fontWeight: "700",
     left: "90%",
   },
@@ -198,7 +197,6 @@ const styles = StyleSheet.create({
   },
   transferSuccessfullyDone: {
     top: 170,
-    fontFamily: FontFamily.manropeMedium,
     fontWeight: "500",
     lineHeight: 16,
     letterSpacing: -0.1,
@@ -212,7 +210,6 @@ const styles = StyleSheet.create({
     letterSpacing: -0.2,
     lineHeight: 26,
     fontWeight: "700",
-    fontFamily: FontFamily.manropeBold,
     left:160
   },
   separatorIcon: {
@@ -220,46 +217,38 @@ const styles = StyleSheet.create({
   },
   displayXlmedium: {
     color: Color.rhinoDark300,
-    fontFamily: FontFamily.manropeRegular,
     left: 65,
   },
   displayXlmedium1: {
     left: 260,
     color: Color.rhinoDark500Main,
-    fontFamily: FontFamily.manropeMedium,
     fontWeight: "500",
   },
   displayXlmedium2: {
     color: Color.rhinoDark300,
-    fontFamily: FontFamily.manropeRegular,
     left: 65,
   },
   displayXlmedium3: {
     left: 260,
     color: Color.rhinoDark500Main,
-    fontFamily: FontFamily.manropeMedium,
     fontWeight: "500",
   },
   displayXlmedium4: {
     color: Color.rhinoDark300,
-    fontFamily: FontFamily.manropeRegular,
     left: 65,
   },
   displayXlmedium5: {
     left: 260,
     color: Color.rhinoDark500Main,
-    fontFamily: FontFamily.manropeMedium,
     fontWeight: "500",
   },
   displayXlmedium6: {
     color: Color.rhinoDark300,
-    fontFamily: FontFamily.manropeRegular,
     left: 65,
   },
   displayXlmedium7: {
     left: 260,
     color: Color.rhinoDark500Main,
-    fontFamily: FontFamily.manropeMedium,
     fontWeight: "500",
   },
   baseIcon: {

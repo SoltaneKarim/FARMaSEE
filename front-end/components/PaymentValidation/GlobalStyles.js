@@ -1,10 +1,3 @@
-/* fonts */
-export const FontFamily = {
-    manropeMedium: "Manrope-Medium",
-    manropeRegular: "Manrope-Regular",
-    manropeSemiBold: "Manrope-SemiBold",
-    manropeBold: "Manrope-Bold",
-  };
   /* font sizes */
   export const FontSize = {
     size_4xs_8: 9,
